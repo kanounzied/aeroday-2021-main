@@ -5,7 +5,7 @@ class Button extends StatefulWidget {
   final String label;
   bool isSelected = false;
   final Function onTap;
-  Button({this.label, this.onTap, this.isSelected});
+  Button({required this.label, required this.onTap, required this.isSelected});
   @override
   _ButtonState createState() => _ButtonState();
 }

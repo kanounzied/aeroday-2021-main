@@ -43,23 +43,39 @@ class _SideBarState extends State<SideBar> {
                         Container(
                           height: 70,
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
-                                margin: EdgeInsets.symmetric(horizontal: 7),
-                                child: Icon(
-                                  Icons.air,
-                                  color: red,
-                                  size: 30,
-                                ),
-                              ),
-                              Flexible(
-                                child: Text(
-                                  pageNames[selectedIndex],
-                                  style: TextStyle(
-                                    color: dark,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 19,
+                              Row(
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.symmetric(horizontal: 7),
+                                    child: Icon(
+                                      Icons.air,
+                                      color: red,
+                                      size: 30,
+                                    ),
                                   ),
+                                  Container(
+                                    width: screenWidth * 0.36,
+                                    child: Text(
+                                      pageNames[selectedIndex],
+                                      style: TextStyle(
+                                        color: dark,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 19,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    Navigator.pop(context);
+                                  });
+                                },
+                                icon: Icon(
+                                  Icons.close_rounded,
                                 ),
                               ),
                             ],
@@ -109,10 +125,10 @@ class _SideBarState extends State<SideBar> {
 
   void _navigate(index) {
     String checkRoute(index) {
-      String route = '/';
+      String route = '/home';
       switch (index) {
         case 0:
-          route = '/';
+          route = '/home';
           break;
         case 1:
           route = '/voteAC';
@@ -124,9 +140,7 @@ class _SideBarState extends State<SideBar> {
       return route;
     }
 
-    Navigator.popAndPushNamed(
-      context,
-      checkRoute(index),
-    );
+    Navigator.pop(context);
+    Navigator.pushReplacementNamed(context, checkRoute(index));
   }
 }

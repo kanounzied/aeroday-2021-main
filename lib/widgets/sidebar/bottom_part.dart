@@ -5,7 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 class BottomPart extends StatelessWidget {
   String eventName = 'Aerochallenge';
   int id = 00000;
-  BottomPart({this.eventName, this.id});
+  BottomPart({required this.eventName, required this.id});
   @override
   Widget build(BuildContext context) {
     return Container(
