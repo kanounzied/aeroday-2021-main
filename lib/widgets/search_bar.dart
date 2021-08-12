@@ -1,6 +1,5 @@
 import 'package:aeroday_2021/constants/app_constants.dart';
 import 'package:flutter/material.dart';
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
 class SearchBar extends StatefulWidget {
   Function(String) onSearchTextChanged;
@@ -60,26 +59,3 @@ class _SearchBarState extends State<SearchBar> {
     );
   }
 }
-
-/*
-FloatingSearchBar(
-      builder: (context, transition) {
-        return Container(
-          height: 100,
-        );
-      }, //search list
-      transitionDuration: const Duration(milliseconds: 400),
-      transitionCurve: Curves.easeInOut,
-      hint: 'Search...',
-      width: 0.8 * MediaQuery.of(context).size.width,
-      debounceDelay: const Duration(milliseconds: 400),
-      borderRadius: BorderRadius.circular(6),
-      height: 39,
-      automaticallyImplyDrawerHamburger: false,
-      automaticallyImplyBackButton: false,
-      iconColor: dark,
-      backgroundColor: Colors.white,
-      shadowColor: Colors.transparent,
-      backdropColor: Colors.transparent,
-      onQueryChanged: widget.onSearchTextChanged,
-    )*/
