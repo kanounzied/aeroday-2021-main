@@ -1,9 +1,12 @@
+import 'package:aeroday_2021/screens/vote_ac.dart';
+import 'package:aeroday_2021/screens/vote_vpd.dart';
 import 'package:flutter/material.dart';
-import 'config/responsive_size.dart';
+import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'config/responsive_size.dart';
 import 'screens/signup_screen/signup_screen.dart';
 
-import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_core/firebase_core.dart' as firebase;
 
 void main() {
   runApp(Home());
@@ -17,16 +20,17 @@ class Home extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        textTheme: GoogleFonts.robotoTextTheme(Theme.of(context).textTheme,)
+        textTheme: GoogleFonts.robotoTextTheme(Theme.of(context).textTheme,),
     primarySwatch: Colors.blue,
       ),
       home: MyApp(),
-      initialRoute: '/home',
-      routes: {
-      '/home': (context) => Home(),
-      '/voteAC': (context) => VoteAC(),
-    '/voteVPD': (context) => VoteVPD(),
-    },
+    // TODO: Find a new place to store the routes
+    //   initialRoute: '/home',
+    //   routes: {
+    //   '/home': (context) => Home(),
+    //   '/voteAC': (context) => VoteAC(),
+    // '/voteVPD': (context) => VoteVPD(),
+    // },
     );
   }
 }
@@ -41,7 +45,7 @@ class MyApp extends StatefulWidget {
 class _AppState extends State<MyApp> {
   /// The future is part of the state of our widget. We should not call `initializeApp`
   /// directly inside [build].
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+  final Future<firebase.FirebaseApp> _initialization = firebase.Firebase.initializeApp();
   SizeConfig sizeConfig = new SizeConfig();
   @override
   Widget build(BuildContext context) {
@@ -68,8 +72,6 @@ class _AppState extends State<MyApp> {
             ),
           );
       },
-        ),
-      ),
-    );
-  }
+
+    );}
 }

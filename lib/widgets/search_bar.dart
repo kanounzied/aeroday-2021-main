@@ -47,7 +47,7 @@ class _SearchBarState extends State<SearchBar> {
                 ),
                 onPressed: () {
                   setState(() {
-                    FocusScope.of(context).unfocus();
+                    //FocusScope.of(context).unfocus();
                   });
                 },
               ),
