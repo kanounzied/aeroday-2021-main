@@ -164,6 +164,7 @@ class _SignUpScreen extends State<SignUpScreen> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xFF323A40), // Gray
       body: SafeArea(
         // SafeArea to avoid system's bar for notifications
@@ -243,7 +244,7 @@ class _SignUpScreen extends State<SignUpScreen> {
                         margin: EdgeInsets.only(top: 40),
                         child: ElevatedButton(
                           style: ButtonStyle(
-                            fixedSize:
+                            minimumSize:
                                 MaterialStateProperty.all<Size>(Size(150, 40)),
                             shape: MaterialStateProperty.all<
                                 RoundedRectangleBorder>(RoundedRectangleBorder(

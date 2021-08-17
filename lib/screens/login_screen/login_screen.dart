@@ -2,6 +2,10 @@ import 'package:aeroday_2021/screens/signup_screen/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../../config/responsive_size.dart';
+import '../../config/responsive_size.dart';
+import '../../config/responsive_size.dart';
+
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreen createState() => _LoginScreen();
@@ -26,7 +30,7 @@ class _LoginScreen extends State<LoginScreen> {
               return new AlertDialog(
                   title: Text("Erreur de verification"),
                   content: SizedBox(
-                    height: 120,
+                    height: SizeConfig.defaultSize * 12,
                     child: Column(
                       children: <Widget>[
                         Text(
@@ -59,7 +63,7 @@ class _LoginScreen extends State<LoginScreen> {
               return new AlertDialog(
                   title: Text("Erreur d'inscription"),
                   content: SizedBox(
-                    height: 120,
+                    height: SizeConfig.defaultSize *  12,
                     child: Column(
                       children: <Widget>[
                         Text("Votre email n'exist pas."),
@@ -102,6 +106,7 @@ class _LoginScreen extends State<LoginScreen> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xFF323A40),
       body: SafeArea(
         child: Container(
@@ -158,7 +163,7 @@ class _LoginScreen extends State<LoginScreen> {
                       Container(
                         margin: EdgeInsets.only(top: 15),
                         height: 60,
-                        width: 300,
+                        width: SizeConfig.defaultSize * 30,
                         child: TextFormField(
                           controller: passController,
                           obscureText: true,
@@ -178,7 +183,7 @@ class _LoginScreen extends State<LoginScreen> {
                         margin: EdgeInsets.only(top: 40),
                         child: ElevatedButton(
                           style: ButtonStyle(
-                            fixedSize:
+                            minimumSize:
                                 MaterialStateProperty.all<Size>(Size(150, 40)),
                             shape: MaterialStateProperty.all<
                                 RoundedRectangleBorder>(RoundedRectangleBorder(
@@ -187,10 +192,10 @@ class _LoginScreen extends State<LoginScreen> {
                             backgroundColor:
                                 MaterialStateProperty.all(Color(0xFFD95252)),
                           ),
-                          child: const Text(
-                            "Connecter",
+                          child: Text(
+                            "Se connecter",
                             style: TextStyle(
-                              fontSize: 18,
+                              fontSize: SizeConfig.defaultSize * 1.8,
                             ),
                           ),
                           onPressed: signupButtonCalled,
