@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "875669636989",
+    "project_id": "aeroday-2021",
+    "storage_bucket": "aeroday-2021.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:875669636989:android:06f4c9d6e847453f176e14",
+        "android_client_info": {
+          "package_name": "com.example.aeroday_2021"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "875669636989-g24gkoeq9jfborpm25i7tpj861gchbvs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC52Nu7VI4H5siHLiwD5hCDr6JnjEQKkbg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "875669636989-g24gkoeq9jfborpm25i7tpj861gchbvs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
