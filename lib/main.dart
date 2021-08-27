@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'config/responsive_size.dart';
-import 'config/responsive_size.dart';
 import 'screens/signup_screen/signup_screen.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -22,7 +21,6 @@ class Home extends StatelessWidget {
     );
   }
 }
-
 
 class MyApp extends StatefulWidget {
   // Create the initialization Future outside of `build`:
@@ -54,11 +52,11 @@ class _AppState extends State<MyApp> {
 
         // Otherwise, show something whilst waiting for initialization to complete
         return Scaffold(
-            backgroundColor: Color(0xFF323A40),
-            body: SafeArea(
-              child: Text("loading"),
-            ),
-          );
+          backgroundColor: Color(0xFF323A40),
+          body: SafeArea(
+            child: Text("loading"),
+          ),
+        );
       },
     );
   }

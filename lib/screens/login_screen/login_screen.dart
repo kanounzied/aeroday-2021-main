@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../config/responsive_size.dart';
-import '../../config/responsive_size.dart';
-import '../../config/responsive_size.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -30,7 +28,7 @@ class _LoginScreen extends State<LoginScreen> {
               return new AlertDialog(
                   title: Text("Erreur de verification"),
                   content: SizedBox(
-                    height: SizeConfig.defaultSize * 12,
+                    height: SizeConfig.screenHeight * 0.13,
                     child: Column(
                       children: <Widget>[
                         Text(
@@ -39,7 +37,8 @@ class _LoginScreen extends State<LoginScreen> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Container(
-                              margin: EdgeInsets.only(top: 30),
+                              margin: EdgeInsets.only(
+                                  top: SizeConfig.screenHeight * 0.04),
                               child: ElevatedButton(
                                 onPressed: () {
                                   Navigator.pop(context);
@@ -63,7 +62,7 @@ class _LoginScreen extends State<LoginScreen> {
               return new AlertDialog(
                   title: Text("Erreur d'inscription"),
                   content: SizedBox(
-                    height: SizeConfig.defaultSize *  12,
+                    height: SizeConfig.screenHeight * 0.13,
                     child: Column(
                       children: <Widget>[
                         Text("Votre email n'exist pas."),
@@ -71,7 +70,8 @@ class _LoginScreen extends State<LoginScreen> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Container(
-                              margin: EdgeInsets.only(top: 30),
+                              margin: EdgeInsets.only(
+                                  top: SizeConfig.screenHeight * 0.04),
                               child: ElevatedButton(
                                 onPressed: () {
                                   Navigator.pop(context);
@@ -118,9 +118,11 @@ class _LoginScreen extends State<LoginScreen> {
                   color: Color(0xFF323A40),
                 ),
               ),
-              new Image.asset('assets/logo.png', width: 200.0, height: 100.0),
+              new Image.asset('assets/logo.png',
+                  width: SizeConfig.screenWidth * 0.52,
+                  height: SizeConfig.screenHeight * 0.13),
               SizedBox(
-                height: 20,
+                height: SizeConfig.screenHeight * 0.025,
                 child: Container(
                   color: Color(0xFF323A40),
                 ),
@@ -138,32 +140,35 @@ class _LoginScreen extends State<LoginScreen> {
                   child: Column(
                     children: <Widget>[
                       Container(
-                        margin: EdgeInsets.only(top: 10),
+                        margin: EdgeInsets.only(
+                            top: SizeConfig.screenHeight * 0.011),
                         child: new Image.asset(
                           "assets/login_icon.png",
                           width: 50,
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.only(top: 30),
-                        height: 60,
-                        width: 300,
+                        margin: EdgeInsets.only(
+                            top: SizeConfig.screenHeight * 0.04),
+                        height: SizeConfig.screenHeight * 0.08,
+                        width: SizeConfig.screenWidth * 0.75,
                         child: TextFormField(
                           controller: emailController,
                           decoration: InputDecoration(
                             hintText: 'Email',
                             labelText: 'Votre address email',
                             contentPadding: new EdgeInsets.symmetric(
-                                vertical: 25.0, horizontal: 10.0),
+                                vertical: 25.0, horizontal: 15.0),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(32.0)),
                           ),
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.only(top: 15),
-                        height: 60,
-                        width: SizeConfig.defaultSize * 30,
+                        margin: EdgeInsets.only(
+                            top: SizeConfig.screenHeight * 0.02),
+                        height: SizeConfig.screenHeight * 0.08,
+                        width: SizeConfig.screenWidth * 0.75,
                         child: TextFormField(
                           controller: passController,
                           obscureText: true,
@@ -173,18 +178,20 @@ class _LoginScreen extends State<LoginScreen> {
                             hintText: 'Mot de passe',
                             labelText: 'Votre mot de passe',
                             contentPadding: new EdgeInsets.symmetric(
-                                vertical: 25.0, horizontal: 10.0),
+                                vertical: 25.0, horizontal: 15.0),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(32.0)),
                           ),
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.only(top: 40),
+                        margin: EdgeInsets.only(
+                            top: SizeConfig.screenHeight * 0.05),
                         child: ElevatedButton(
                           style: ButtonStyle(
-                            minimumSize:
-                                MaterialStateProperty.all<Size>(Size(150, 40)),
+                            minimumSize: MaterialStateProperty.all<Size>(Size(
+                                SizeConfig.screenWidth * 0.38,
+                                SizeConfig.screenHeight * 0.06)),
                             shape: MaterialStateProperty.all<
                                 RoundedRectangleBorder>(RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
@@ -202,7 +209,8 @@ class _LoginScreen extends State<LoginScreen> {
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.only(top: 40),
+                        margin: EdgeInsets.only(
+                            top: SizeConfig.screenHeight * 0.05),
                         child: GestureDetector(
                           onTap: () {
                             // Password lost click
@@ -218,11 +226,13 @@ class _LoginScreen extends State<LoginScreen> {
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.only(top: 100),
+                        margin: EdgeInsets.only(
+                            top: SizeConfig.screenHeight * 0.13),
                         child: Text("Vous n'avez pas de compte ?"),
                       ),
                       Container(
-                        margin: EdgeInsets.only(top: 5),
+                        margin: EdgeInsets.only(
+                            top: SizeConfig.screenHeight * 0.007),
                         child: GestureDetector(
                           onTap: () {
                             // Signup click

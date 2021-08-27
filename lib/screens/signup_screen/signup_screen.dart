@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import '../login_screen/login_screen.dart';
 
+import '../../config/responsive_size.dart';
+
 class SignUpScreen extends StatefulWidget {
   @override
   _SignUpScreen createState() => _SignUpScreen();
@@ -74,7 +76,7 @@ class _SignUpScreen extends State<SignUpScreen> {
               return new AlertDialog(
                   title: Text("Erreur d'inscription"),
                   content: SizedBox(
-                    height: 120,
+                    height: SizeConfig.screenHeight * 0.13,
                     child: Column(
                       children: <Widget>[
                         Text("Votre mot de passe est faible."),
@@ -82,7 +84,8 @@ class _SignUpScreen extends State<SignUpScreen> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Container(
-                              margin: EdgeInsets.only(top: 30),
+                              margin: EdgeInsets.only(
+                                  top: SizeConfig.screenHeight * 0.04),
                               child: ElevatedButton(
                                 onPressed: () {
                                   Navigator.pop(context);
@@ -105,7 +108,7 @@ class _SignUpScreen extends State<SignUpScreen> {
               return new AlertDialog(
                   title: Text("Erreur d'inscription"),
                   content: SizedBox(
-                    height: 120,
+                    height: SizeConfig.screenHeight * 0.13,
                     child: Column(
                       children: <Widget>[
                         Text("Email est deja utilisé."),
@@ -113,7 +116,8 @@ class _SignUpScreen extends State<SignUpScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                              margin: EdgeInsets.only(top: 30),
+                              margin: EdgeInsets.only(
+                                  top: SizeConfig.screenHeight * 0.04),
                               child: ElevatedButton(
                                 onPressed: () {
                                   // Redirect to login
@@ -131,7 +135,8 @@ class _SignUpScreen extends State<SignUpScreen> {
                               width: 10,
                             ),
                             Container(
-                              margin: EdgeInsets.only(top: 30),
+                              margin: EdgeInsets.only(
+                                  top: SizeConfig.screenHeight * 0.04),
                               child: ElevatedButton(
                                 onPressed: () {
                                   Navigator.pop(context);
@@ -186,13 +191,14 @@ class _SignUpScreen extends State<SignUpScreen> {
           child: Column(
             children: <Widget>[
               Container(
-                margin: EdgeInsets.only(top: 5),
+                margin: EdgeInsets.only(top: SizeConfig.screenHeight * 0.005),
                 child: new Image.asset('assets/logo.png',
-                    width: 200.0, height: 100.0),
+                    width: SizeConfig.screenWidth * 0.52,
+                    height: SizeConfig.screenHeight * 0.13),
               ),
               Expanded(
                 child: Container(
-                  margin: EdgeInsets.only(top: 20),
+                  margin: EdgeInsets.only(top: SizeConfig.screenHeight * 0.02),
                   decoration: new BoxDecoration(
                     color: Color(0xFFF2F2F2),
                     borderRadius: BorderRadius.only(
@@ -206,25 +212,27 @@ class _SignUpScreen extends State<SignUpScreen> {
                         "Signup icon",
                       ),
                       Container(
-                        margin: EdgeInsets.only(top: 80),
-                        height: 60,
-                        width: 300,
+                        margin:
+                            EdgeInsets.only(top: SizeConfig.screenHeight * 0.1),
+                        height: SizeConfig.screenHeight * 0.08,
+                        width: SizeConfig.screenWidth * 0.75,
                         child: TextFormField(
                           controller: emailController,
                           decoration: InputDecoration(
                             hintText: 'Email',
                             labelText: 'Votre address email',
                             contentPadding: new EdgeInsets.symmetric(
-                                vertical: 25.0, horizontal: 10.0),
+                                vertical: 25.0, horizontal: 15.0),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(32.0)),
                           ),
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.only(top: 15),
-                        height: 60,
-                        width: 300,
+                        margin: EdgeInsets.only(
+                            top: SizeConfig.screenHeight * 0.02),
+                        height: SizeConfig.screenHeight * 0.08,
+                        width: SizeConfig.screenWidth * 0.75,
                         child: TextFormField(
                           controller: passController,
                           obscureText: true,
@@ -234,18 +242,20 @@ class _SignUpScreen extends State<SignUpScreen> {
                             hintText: 'Mot de passe',
                             labelText: 'Votre mot de passe',
                             contentPadding: new EdgeInsets.symmetric(
-                                vertical: 25.0, horizontal: 10.0),
+                                vertical: 25.0, horizontal: 15.0),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(32.0)),
                           ),
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.only(top: 40),
+                        margin: EdgeInsets.only(
+                            top: SizeConfig.screenHeight * 0.05),
                         child: ElevatedButton(
                           style: ButtonStyle(
-                            minimumSize:
-                                MaterialStateProperty.all<Size>(Size(150, 40)),
+                            minimumSize: MaterialStateProperty.all<Size>(Size(
+                                SizeConfig.screenWidth * 0.38,
+                                SizeConfig.screenHeight * 0.06)),
                             shape: MaterialStateProperty.all<
                                 RoundedRectangleBorder>(RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
@@ -253,26 +263,30 @@ class _SignUpScreen extends State<SignUpScreen> {
                             backgroundColor:
                                 MaterialStateProperty.all(Color(0xFFD95252)),
                           ),
-                          child: const Text(
+                          child: Text(
                             "Signup",
                             style: TextStyle(
-                              fontSize: 18,
+                              fontSize: SizeConfig.defaultSize * 1.8,
                             ),
                           ),
                           onPressed: signupButtonCalled,
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.only(top: 50),
+                        margin: EdgeInsets.only(
+                            top: SizeConfig.screenHeight * 0.065),
                         child: new Image.asset('assets/drone_image.png',
-                            width: 200.0, height: 100.0),
+                            width: SizeConfig.screenWidth * 0.52,
+                            height: SizeConfig.screenHeight * 0.13),
                       ),
                       Container(
-                        margin: EdgeInsets.only(top: 60),
+                        margin: EdgeInsets.only(
+                            top: SizeConfig.screenHeight * 0.08),
                         child: Text("Vous avez déjà un compte?"),
                       ),
                       Container(
-                        margin: EdgeInsets.only(top: 5),
+                        margin: EdgeInsets.only(
+                            top: SizeConfig.screenHeight * 0.007),
                         child: GestureDetector(
                           onTap: () {
                             // Redirect login_screen
