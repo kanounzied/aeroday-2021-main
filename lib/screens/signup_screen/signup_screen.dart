@@ -25,7 +25,7 @@ class _SignUpScreen extends State<SignUpScreen> {
         password: passController.text,
       );
       // Send email verification
-      userCredential.user.sendEmailVerification();
+      userCredential.user!.sendEmailVerification();
 
       // Logout inorder to wait for email confirmation
       await FirebaseAuth.instance.signOut();

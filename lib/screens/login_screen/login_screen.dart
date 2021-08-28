@@ -20,8 +20,9 @@ class _LoginScreen extends State<LoginScreen> {
         email: emailController.text,
         password: passController.text,
       );
-      if (!userCredential.user.emailVerified) {
-        userCredential.user.sendEmailVerification();
+
+      if (!userCredential.user!.emailVerified) {
+        userCredential.user!.sendEmailVerification();
         showDialog(
             context: context,
             builder: (BuildContext context) {

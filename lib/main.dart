@@ -12,7 +12,6 @@ void main() {
   runApp(Home());
 }
 
-
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -38,10 +37,11 @@ class _AppState extends State<MyApp> {
   /// directly inside [build].
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
   SizeConfig sizeConfig = new SizeConfig();
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    
+
     sizeConfig.init(context);
     return FutureBuilder(
       // Initialize FlutterFire:
@@ -55,29 +55,27 @@ class _AppState extends State<MyApp> {
         // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
           return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              textTheme: GoogleFonts.robotoTextTheme(
-                Theme.of(context).textTheme,
+              debugShowCheckedModeBanner: false,
+              theme: ThemeData(
+                textTheme: GoogleFonts.robotoTextTheme(
+                  Theme.of(context).textTheme,
+                ),
               ),
-            ),
-            initialRoute: '/home',
-            routes: {
-              '/home': (context) => Home(),
-              '/voteAC': (context) => VoteAC(),
-              '/voteVPD': (context) => VoteVPD(),
-            }
-          );
+              initialRoute: '/home',
+              routes: {
+                '/home': (context) => SignUpScreen(),
+                '/voteAC': (context) => VoteAC(),
+                '/voteVPD': (context) => VoteVPD(),
+              });
         }
 
         // Otherwise, show something whilst waiting for initialization to complete
         return Scaffold(
           backgroundColor: Color(0xFF323A40),
           body: SafeArea(
-            child: Text("loading"),
+            child: Text("loadingfff"),
           ),
         );
-
       },
     );
   }
