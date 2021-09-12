@@ -78,3 +78,29 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  fonts:
+    - family: Assistant
+      fonts:
+        - asset: assets/fonts/Assistant/Assistant-Regular.ttf
+        
+        - asset: assets/fonts/Assistant/Assistant-SemiBold.ttf
+          weight: 100
+        - asset: assets/fonts/Assistant/Assistant-Bold.ttf
+          weight: 200
+        - asset: assets/fonts/Assistant/Assistant-ExtraBold.ttf
+          weight: 300
+        
+        - asset: assets/fonts/Assistant/Assistant-Light.ttf
+          weight: 400
+        - asset: assets/fonts/Assistant/Assistant-ExtraLight.ttf
+          weight: 500
+
+    - family: JusticeLeague
+      fonts:
+        - asset: assets/fonts/JusticeLeague/JUSTICE LEAGUE.ttf
+
+    - family: Nexa
+      fonts:
+        - asset: assets/fonts/Nexa/Nexa Light.otf
+        - asset: assets/fonts/Nexa/Nexa Bold.otf
+          weight: 700

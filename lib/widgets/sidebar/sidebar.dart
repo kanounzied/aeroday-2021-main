@@ -1,4 +1,4 @@
-import 'package:aeroday_2021/screens/home.dart';
+import 'package:aeroday_2021/screens/home_screen/home.dart';
 import 'package:aeroday_2021/screens/vote_ac.dart';
 import 'package:aeroday_2021/screens/vote_vpd.dart';
 import 'package:flutter/material.dart';
