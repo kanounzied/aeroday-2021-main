@@ -3,7 +3,6 @@ import 'package:aeroday_2021/widgets/sidebar/sidebar.dart';
 import 'package:flutter/material.dart';
 
 import '../../widgets/upcomings_cercle/circle.dart';
-import '../../widgets/upcomings_verticalbar/vertical_bar.dart';
 
 import '../../config/responsive_size.dart';
 
@@ -13,9 +12,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeState extends State<HomeScreen> {
-  // TODO : Fix screen for samsung A30
-
-  double boxPerc = .648;
+  double boxPerc = .68;
   double timeCircleRad = 11;
   double boxCircleRad = 4;
 
@@ -101,32 +98,10 @@ class _HomeState extends State<HomeScreen> {
                         Row(
                           children: [
                             Container(
+                              height: SizeConfig.screenHeight * .065,
+                              alignment: Alignment.centerLeft,
                               margin: EdgeInsets.only(
-                                left: SizeConfig.screenWidth * .175,
-                                top: 30,
-                              ),
-                              width: 10,
-                              height: SizeConfig.screenHeight * .08,
-                              child: CustomPaint(
-                                painter: CirclePaint(
-                                  innerColor: Color(0x00F2F2F2),
-                                  outerColor: Color.fromRGBO(143, 187, 192, 0),
-                                  rad: timeCircleRad,
-                                  drawLine: true,
-                                  lineColor: Color(0xFFeae5ee),
-                                  lineLen: SizeConfig.screenHeight * .065,
-                                ),
-                              ),
-                            ),
-                            // VerticalBar(
-                            //   color: Color(0xFFeae5ee),
-                            //   len: SizeConfig.screenHeight * .065,
-                            //   topMargin: 30.0,
-                            // ),
-                            Container(
-                              alignment: Alignment.topLeft,
-                              margin: EdgeInsets.only(
-                                  top: 40, left: SizeConfig.screenWidth * .07),
+                                  top: 40, left: SizeConfig.screenWidth * .25),
                               child: Text(
                                 "2 Octobre 2021",
                                 style: TextStyle(
@@ -163,6 +138,9 @@ class _HomeState extends State<HomeScreen> {
                                   drawLine: true,
                                   lineColor: Color(0xFFe3aeb3),
                                   lineLen: SizeConfig.screenHeight * .125,
+                                  drawUpperLine: true,
+                                  lineUpperColor: Color(0xFFeae5ee),
+                                  lineUpperLen: SizeConfig.screenHeight * .065,
                                 ),
                               ),
                             )
@@ -173,14 +151,11 @@ class _HomeState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             // Box 1 (Checkin + Fly test)
-                            VerticalBar(
-                              color: Color(0x00e4b9be),
-                              len: SizeConfig.screenHeight * .070,
-                              topMargin: SizeConfig.screenHeight * .001,
-                            ),
+
                             Container(
+                              //constraints: BoxConstraints.expand(),
                               alignment: Alignment.topLeft,
-                              height: SizeConfig.screenHeight * .115,
+                              //height: SizeConfig.screenHeight * .115,
                               width: SizeConfig.screenWidth * boxPerc,
                               decoration: BoxDecoration(
                                   color: Color(0xffd95252),
@@ -190,7 +165,7 @@ class _HomeState extends State<HomeScreen> {
                                     topRight: Radius.circular(10),
                                   )),
                               margin: EdgeInsets.only(
-                                  top: 0, left: SizeConfig.screenWidth * .07),
+                                  top: 0, left: SizeConfig.screenWidth * .25),
                               child: Container(
                                 margin: EdgeInsets.only(
                                   top: 18,
@@ -249,7 +224,7 @@ class _HomeState extends State<HomeScreen> {
                                             left: SizeConfig.screenWidth * .03,
                                             top: 4,
                                           ),
-                                          width: SizeConfig.screenWidth * 0.5,
+                                          width: SizeConfig.screenWidth * 0.58,
                                           child: Text(
                                             "Fly test (Port one aeromodelisme)",
                                             style: boxContentStyle,
@@ -257,6 +232,17 @@ class _HomeState extends State<HomeScreen> {
                                         )
                                       ],
                                     ),
+                                    // Spacing
+                                    Row(
+                                      children: [
+                                        Container(
+                                          child: Text(""),
+                                          width: 10,
+                                          height:
+                                              SizeConfig.screenHeight * .025,
+                                        )
+                                      ],
+                                    )
                                   ],
                                 ),
                               ),
@@ -297,15 +283,10 @@ class _HomeState extends State<HomeScreen> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            VerticalBar(
-                              color: Color(0x00e4b9be),
-                              len: SizeConfig.screenHeight * .070,
-                              topMargin: SizeConfig.screenHeight * .001,
-                            ),
                             // Box 2 (Pause)
                             Container(
                               alignment: Alignment.topLeft,
-                              height: SizeConfig.screenHeight * .070,
+                              //height: SizeConfig.screenHeight * .070,
                               width: SizeConfig.screenWidth * boxPerc,
                               decoration: BoxDecoration(
                                   color: Color(0xffdc7070),
@@ -315,7 +296,7 @@ class _HomeState extends State<HomeScreen> {
                                     topRight: Radius.circular(10),
                                   )),
                               margin: EdgeInsets.only(
-                                  top: 0, left: SizeConfig.screenWidth * .07),
+                                  top: 0, left: SizeConfig.screenWidth * .25),
                               child: Container(
                                 margin: EdgeInsets.only(
                                   top: 18,
@@ -350,6 +331,17 @@ class _HomeState extends State<HomeScreen> {
                                         )
                                       ],
                                     ),
+                                    // Spacing
+                                    Row(
+                                      children: [
+                                        Container(
+                                          child: Text(""),
+                                          width: 10,
+                                          height:
+                                              SizeConfig.screenHeight * .025,
+                                        )
+                                      ],
+                                    )
                                   ],
                                 ),
                               ),
@@ -390,15 +382,10 @@ class _HomeState extends State<HomeScreen> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            VerticalBar(
-                              color: Color(0x00e4c3c8),
-                              len: SizeConfig.screenHeight * .070,
-                              topMargin: SizeConfig.screenHeight * .001,
-                            ),
                             // Box 3 (Airshow)
                             Container(
                               alignment: Alignment.topLeft,
-                              height: SizeConfig.screenHeight * .070,
+                              //height: SizeConfig.screenHeight * .070,
                               width: SizeConfig.screenWidth * boxPerc,
                               decoration: BoxDecoration(
                                   color: Color(0xffdd8c8c),
@@ -408,7 +395,7 @@ class _HomeState extends State<HomeScreen> {
                                     topRight: Radius.circular(10),
                                   )),
                               margin: EdgeInsets.only(
-                                  top: 0, left: SizeConfig.screenWidth * .07),
+                                  top: 0, left: SizeConfig.screenWidth * .25),
                               child: Container(
                                 margin: EdgeInsets.only(
                                   top: 18,
@@ -440,6 +427,17 @@ class _HomeState extends State<HomeScreen> {
                                             "Airshow",
                                             style: boxContentStyle,
                                           ),
+                                        )
+                                      ],
+                                    ),
+                                    // Spacing
+                                    Row(
+                                      children: [
+                                        Container(
+                                          child: Text(""),
+                                          width: 10,
+                                          height:
+                                              SizeConfig.screenHeight * .025,
                                         )
                                       ],
                                     ),
@@ -483,15 +481,10 @@ class _HomeState extends State<HomeScreen> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            VerticalBar(
-                              color: Color(0x00e6ced3),
-                              len: SizeConfig.screenHeight * .070,
-                              topMargin: SizeConfig.screenHeight * .001,
-                            ),
                             // Box 4 (Cloture)
                             Container(
                               alignment: Alignment.topLeft,
-                              height: SizeConfig.screenHeight * .070,
+                              //height: SizeConfig.screenHeight * .070,
                               width: SizeConfig.screenWidth * boxPerc,
                               decoration: BoxDecoration(
                                   color: Color(0xffdfa9a9),
@@ -501,7 +494,7 @@ class _HomeState extends State<HomeScreen> {
                                     topRight: Radius.circular(10),
                                   )),
                               margin: EdgeInsets.only(
-                                  top: 0, left: SizeConfig.screenWidth * .07),
+                                  top: 0, left: SizeConfig.screenWidth * .25),
                               child: Container(
                                 margin: EdgeInsets.only(
                                   top: 18,
@@ -533,6 +526,17 @@ class _HomeState extends State<HomeScreen> {
                                             "Cloture et remise des prix",
                                             style: boxContentStyle,
                                           ),
+                                        )
+                                      ],
+                                    ),
+                                    // Spacing
+                                    Row(
+                                      children: [
+                                        Container(
+                                          child: Text(""),
+                                          width: 10,
+                                          height:
+                                              SizeConfig.screenHeight * .025,
                                         )
                                       ],
                                     ),
@@ -576,14 +580,10 @@ class _HomeState extends State<HomeScreen> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            VerticalBar(
-                              color: Color(0x00eae0e3),
-                              len: SizeConfig.screenHeight * .05,
-                              topMargin: SizeConfig.screenHeight * .001,
-                            ),
                             Container(
+                              height: SizeConfig.screenHeight * .05,
                               margin: EdgeInsets.only(
-                                  top: 8, left: SizeConfig.screenWidth * .07),
+                                  top: 8, left: SizeConfig.screenWidth * .25),
                               child: Text(
                                 "9 Octobre 2021",
                                 style: TextStyle(
@@ -619,7 +619,7 @@ class _HomeState extends State<HomeScreen> {
                                   rad: timeCircleRad,
                                   drawLine: true,
                                   lineColor: Color(0xFFe9e1de),
-                                  lineLen: SizeConfig.screenHeight * .247,
+                                  lineLen: SizeConfig.screenHeight * .29,
                                 ),
                               ),
                             )
@@ -629,15 +629,10 @@ class _HomeState extends State<HomeScreen> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            VerticalBar(
-                              color: Color(0x00e9e1de),
-                              len: SizeConfig.screenHeight * .2,
-                              topMargin: SizeConfig.screenHeight * .001,
-                            ),
                             // Box 5 (challenge 24h)
                             Container(
                               alignment: Alignment.topLeft,
-                              height: SizeConfig.screenHeight * .2,
+                              //height: SizeConfig.screenHeight * .2,
                               width: SizeConfig.screenWidth * boxPerc,
                               decoration: BoxDecoration(
                                   color: Color(0xffe8d7ba),
@@ -647,7 +642,7 @@ class _HomeState extends State<HomeScreen> {
                                     topRight: Radius.circular(10),
                                   )),
                               margin: EdgeInsets.only(
-                                  top: 0, left: SizeConfig.screenWidth * .07),
+                                  top: 0, left: SizeConfig.screenWidth * .25),
                               child: Container(
                                 margin: EdgeInsets.only(
                                   top: 18,
@@ -732,7 +727,7 @@ class _HomeState extends State<HomeScreen> {
                                             children: [
                                               Container(
                                                 width: SizeConfig.screenWidth *
-                                                    .53,
+                                                    .58,
                                                 child: Text(
                                                   "Challenge 24h Aeroentrepreneur",
                                                   style: TextStyle(
@@ -761,6 +756,17 @@ class _HomeState extends State<HomeScreen> {
                                         )
                                       ],
                                     ),
+                                    // Spacing
+                                    Row(
+                                      children: [
+                                        Container(
+                                          child: Text(""),
+                                          width: 10,
+                                          height:
+                                              SizeConfig.screenHeight * .025,
+                                        )
+                                      ],
+                                    ),
                                   ],
                                 ),
                               ),
@@ -772,13 +778,10 @@ class _HomeState extends State<HomeScreen> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            VerticalBar(
-                              color: Color(0x00eae0e3),
-                              len: SizeConfig.screenHeight * .05,
-                            ),
                             Container(
+                              height: SizeConfig.screenHeight * .05,
                               margin: EdgeInsets.only(
-                                  top: 15, left: SizeConfig.screenWidth * .07),
+                                  top: 20, left: SizeConfig.screenWidth * .25),
                               child: Text(
                                 "10 Octobre 2021",
                                 style: TextStyle(
@@ -824,15 +827,10 @@ class _HomeState extends State<HomeScreen> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            VerticalBar(
-                              color: Color(0x00d9dde3),
-                              len: SizeConfig.screenHeight * .42,
-                              topMargin: SizeConfig.screenHeight * .001,
-                            ),
                             // Box 6 (atelier)
                             Container(
                               alignment: Alignment.topLeft,
-                              height: SizeConfig.screenHeight * .42,
+                              //height: SizeConfig.screenHeight * .42,
                               width: SizeConfig.screenWidth * boxPerc,
                               decoration: BoxDecoration(
                                   color: Color(0xffbed1d3),
@@ -842,7 +840,7 @@ class _HomeState extends State<HomeScreen> {
                                     topRight: Radius.circular(10),
                                   )),
                               margin: EdgeInsets.only(
-                                  top: 0, left: SizeConfig.screenWidth * .07),
+                                  top: 0, left: SizeConfig.screenWidth * .25),
                               child: Container(
                                 margin: EdgeInsets.only(
                                   top: 18,
@@ -1093,6 +1091,17 @@ class _HomeState extends State<HomeScreen> {
                                         )
                                       ],
                                     ),
+                                    // Spacing
+                                    Row(
+                                      children: [
+                                        Container(
+                                          child: Text(""),
+                                          width: 10,
+                                          height:
+                                              SizeConfig.screenHeight * .025,
+                                        )
+                                      ],
+                                    )
                                   ],
                                 ),
                               ),
@@ -1134,15 +1143,10 @@ class _HomeState extends State<HomeScreen> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            VerticalBar(
-                              color: Color.fromRGBO(202, 208, 222, 0),
-                              len: SizeConfig.screenHeight * .07,
-                              topMargin: SizeConfig.screenHeight * .001,
-                            ),
                             // Box 7 (pause)
                             Container(
                               alignment: Alignment.topLeft,
-                              height: SizeConfig.screenHeight * .07,
+                              //height: SizeConfig.screenHeight * .07,
                               width: SizeConfig.screenWidth * boxPerc,
                               decoration: BoxDecoration(
                                   color: Color.fromRGBO(160, 195, 199, 1),
@@ -1152,7 +1156,7 @@ class _HomeState extends State<HomeScreen> {
                                     topRight: Radius.circular(10),
                                   )),
                               margin: EdgeInsets.only(
-                                  top: 0, left: SizeConfig.screenWidth * .07),
+                                  top: 0, left: SizeConfig.screenWidth * .25),
                               child: Container(
                                 margin: EdgeInsets.only(
                                   top: 18,
@@ -1189,6 +1193,17 @@ class _HomeState extends State<HomeScreen> {
                                             style: boxContentStyle,
                                           ),
                                         ),
+                                      ],
+                                    ),
+                                    // Spacing
+                                    Row(
+                                      children: [
+                                        Container(
+                                          child: Text(""),
+                                          width: 10,
+                                          height:
+                                              SizeConfig.screenHeight * .025,
+                                        )
                                       ],
                                     ),
                                   ],
@@ -1232,16 +1247,10 @@ class _HomeState extends State<HomeScreen> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            VerticalBar(
-                              color: Color.fromRGBO(198, 218, 221, 0),
-                              len: SizeConfig.screenHeight * .26,
-                              topMargin: SizeConfig.screenHeight * .001,
-                            ),
-
                             // Box 8 (aerochallenge)
                             Container(
                               alignment: Alignment.topLeft,
-                              height: SizeConfig.screenHeight * .26,
+                              //height: SizeConfig.screenHeight * .26,
                               width: SizeConfig.screenWidth * boxPerc,
                               decoration: BoxDecoration(
                                   color: Color.fromRGBO(126, 179, 185, 1),
@@ -1251,7 +1260,7 @@ class _HomeState extends State<HomeScreen> {
                                     topRight: Radius.circular(10),
                                   )),
                               margin: EdgeInsets.only(
-                                  top: 0, left: SizeConfig.screenWidth * .07),
+                                  top: 0, left: SizeConfig.screenWidth * .25),
                               child: Container(
                                 margin: EdgeInsets.only(
                                   top: 18,
@@ -1436,6 +1445,17 @@ class _HomeState extends State<HomeScreen> {
                                               ),
                                             ],
                                           ),
+                                        )
+                                      ],
+                                    ),
+                                    // Spacing
+                                    Row(
+                                      children: [
+                                        Container(
+                                          child: Text(""),
+                                          width: 10,
+                                          height:
+                                              SizeConfig.screenHeight * .025,
                                         )
                                       ],
                                     ),
