@@ -1,5 +1,9 @@
+import 'dart:io';
+
+import 'package:aeroday_2021/screens/home_screen/home.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 
 import '../login_screen/login_screen.dart';
 
@@ -14,50 +18,74 @@ class _SignUpScreen extends State<SignUpScreen> {
   // TextEdit controllers to access the field's value
   final emailController = TextEditingController();
   final passController = TextEditingController();
+  final codeController = TextEditingController();
+
+  Future<bool> hasNetwork() async {
+    try {
+      final result = await InternetAddress.lookup('www.google.com');
+      print("h");
+      print(result);
+      return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
+    } on SocketException catch (_) {
+      print("false");
+      return false;
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (FirebaseAuth.instance.currentUser != null) {
+      // Already logged in
+      Future(() {
+        //FirebaseAuth.instance.signOut();
+        Navigator.pop(context);
+        Navigator.push(
+            // Open HomeScreen
+            context,
+            MaterialPageRoute(builder: (context) => HomeScreen()));
+      });
+    }
+  }
+
+  bool validateNumber(String number) {
+    number = number.replaceAll(' ', '');
+    return RegExp("[0-9]").hasMatch(number) && number.length == 8;
+  }
 
   // Signup button event
   void signupButtonCalled() async {
-    try {
-      // Try to sign up
-      UserCredential userCredential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailController.text,
-        password: passController.text,
-      );
-      // Send email verification
-      userCredential.user!.sendEmailVerification();
+    bool check = await hasNetwork().whenComplete(
+      () {
+        print("ready");
+      },
+    );
+    if (!check) {
+      print("net");
+      return;
+    }
 
-      // Logout inorder to wait for email confirmation
-      await FirebaseAuth.instance.signOut();
-
-      // Ask to check email & redirect to login_screen
+    if (!validateNumber(emailController.text)) {
       showDialog(
           context: context,
-          builder: (BuildContext contextDia) {
+          builder: (BuildContext context) {
             return new AlertDialog(
-                title: Text("Inscription"),
+                title: Text("Erreur d'inscription"),
                 content: SizedBox(
-                  height: 120,
+                  height: SizeConfig.screenHeight * 0.17,
                   child: Column(
                     children: <Widget>[
-                      Text(
-                          "Verifier votre email pour la confirmation de votre inscription."),
+                      Text("Votre numéro du téléphone est invalid."),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Container(
-                            margin: EdgeInsets.only(top: 30),
+                            margin: EdgeInsets.only(
+                                top: SizeConfig.screenHeight * 0.04),
                             child: ElevatedButton(
                               onPressed: () {
-                                // Redirect to login
-                                Navigator.pop(contextDia); // Close dialog
-                                Navigator.pop(context); // Close signup_screen
-
-                                Navigator.push(
-                                    // Open login_screen
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LoginScreen()));
+                                Navigator.pop(context);
                               },
                               child: Text("Ok"),
                             ),
@@ -68,18 +96,181 @@ class _SignUpScreen extends State<SignUpScreen> {
                   ),
                 ));
           });
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return new AlertDialog(
+      print("num invalid");
+      return;
+    }
+    List<String> l;
+    print("hello");
+    //try {
+    // Verify phone number + password
+    l = await FirebaseAuth.instance
+        .fetchSignInMethodsForEmail(emailController.text + "@gmail.com");
+    print("hell");
+    if (l.length != 0) {
+      // Redirect to login_screen
+      showDialog(
+          context: context,
+          builder: (BuildContext contextDia) {
+            return new AlertDialog(
+                title: Text("Erreur d'inscription"),
+                content: SizedBox(
+                  height: SizeConfig.screenHeight * 0.13,
+                  child: Column(
+                    children: <Widget>[
+                      Text("Numéro du telephone est deja utilisé."),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(
+                                top: SizeConfig.screenHeight * 0.04),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                // Redirect to login
+                                Navigator.pop(contextDia);
+                                Navigator.pop(context);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LoginScreen()));
+                              },
+                              child: Text("Connecter"),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(
+                                top: SizeConfig.screenHeight * 0.04),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(contextDia);
+                              },
+                              child: Text("OK"),
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ));
+          });
+
+      print("Exists");
+      return;
+    }
+    // } on FirebaseAuthException catch (e) {
+    //   if (e.code == 'network-request-failed') {
+    //     print("network error");
+    //     return;
+    //   }
+    //   print("error");
+    //   return;
+    // }
+    print("hi");
+
+    if (!RegExp("(?=.*[0-9a-zA-Z]).{6,}").hasMatch(passController.text)) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return new AlertDialog(
+                title: Text("Erreur d'inscription"),
+                content: SizedBox(
+                  height: SizeConfig.screenHeight * 0.13,
+                  child: Column(
+                    children: <Widget>[
+                      Text("Votre mot de passe est faible."),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(
+                                top: SizeConfig.screenHeight * 0.04),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text("Ok"),
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ));
+          });
+
+      print('The password provided is too weak.');
+      return;
+    }
+
+    try {
+      FirebaseAuth auth = FirebaseAuth.instance;
+
+      await FirebaseAuth.instance.verifyPhoneNumber(
+        phoneNumber: '+216 ' + emailController.text,
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          // Delete phone number account
+          await FirebaseAuth.instance.currentUser?.delete();
+
+          // Login/Signup
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+            email: emailController.text + "@gmail.com",
+            password: passController.text,
+          );
+
+          // Redirect to home
+          Navigator.pop(context); // Close signup_screen
+          Navigator.push(
+              // Open HomeScreen
+              context,
+              MaterialPageRoute(builder: (context) => HomeScreen()));
+        },
+        verificationFailed: (FirebaseAuthException e) {
+          if (e.code == 'invalid-phone-number') {
+            print('The provided phone number is not valid.');
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return new AlertDialog(
+                    title: Text("Erreur d'inscription"),
+                    content: SizedBox(
+                      height: SizeConfig.screenHeight * 0.17,
+                      child: Column(
+                        children: <Widget>[
+                          Text("Votre numéro du téléphone est invalid."),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(
+                                    top: SizeConfig.screenHeight * 0.04),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text("Ok"),
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ));
+              },
+            );
+          } else {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return new AlertDialog(
                   title: Text("Erreur d'inscription"),
                   content: SizedBox(
-                    height: SizeConfig.screenHeight * 0.13,
+                    height: SizeConfig.screenHeight * 0.17,
                     child: Column(
                       children: <Widget>[
-                        Text("Votre mot de passe est faible."),
+                        Text("Erreur inconnue au cour d'inscription!"),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -97,51 +288,90 @@ class _SignUpScreen extends State<SignUpScreen> {
                         ),
                       ],
                     ),
-                  ));
-            });
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        // Redirect to login_screen
-        showDialog(
+                  ),
+                );
+              },
+            );
+          }
+        },
+        codeSent: (String verificationId, int? resendToken) async {
+          // Ask to write 6 digits code
+          showDialog(
             context: context,
             builder: (BuildContext contextDia) {
               return new AlertDialog(
-                  title: Text("Erreur d'inscription"),
+                  title: Text("Verification"),
                   content: SizedBox(
-                    height: SizeConfig.screenHeight * 0.13,
+                    height: 195,
                     child: Column(
                       children: <Widget>[
-                        Text("Email est deja utilisé."),
+                        Text("Saisir le code composé de 6 chiffre."),
+                        Container(
+                          width: 150,
+                          margin: EdgeInsets.only(top: 20),
+                          child: TextFormField(
+                            maxLength: 6,
+                            keyboardType: TextInputType.number,
+                            inputFormatters: <TextInputFormatter>[
+                              FilteringTextInputFormatter.allow(
+                                  RegExp(r'[0-9]')),
+                            ],
+                            controller: codeController,
+                            decoration: InputDecoration(
+                              hintText: 'Code',
+                              labelText: 'Code',
+                              contentPadding: new EdgeInsets.symmetric(
+                                  vertical: 25.0, horizontal: 15.0),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(32.0)),
+                            ),
+                          ),
+                        ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Container(
-                              margin: EdgeInsets.only(
-                                  top: SizeConfig.screenHeight * 0.04),
+                              margin: EdgeInsets.only(top: 15),
                               child: ElevatedButton(
-                                onPressed: () {
+                                onPressed: () async {
+                                  // Create a PhoneAuthCredential with the code
+                                  PhoneAuthCredential credential =
+                                      PhoneAuthProvider.credential(
+                                          verificationId: verificationId,
+                                          smsCode: codeController.text);
+
+                                  // Sign the user in to check for code validation
+                                  try {
+                                    await auth.signInWithCredential(credential);
+                                  } on FirebaseAuthException catch (e) {
+                                    if (e.code == "invalid-verification-code") {
+                                      // TODO : invalid code handle
+                                      print("Invalid code");
+                                      return;
+                                    }
+                                  }
+
+                                  // Delete phone number account
+                                  await FirebaseAuth.instance.currentUser
+                                      ?.delete();
+
+                                  await FirebaseAuth.instance
+                                      .createUserWithEmailAndPassword(
+                                    email: emailController.text + "@gmail.com",
+                                    password: passController.text,
+                                  );
+
                                   // Redirect to login
-                                  Navigator.pop(contextDia);
-                                  Navigator.pop(context);
+                                  Navigator.pop(contextDia); // Close dialog
+
+                                  Navigator.pop(context); // Close signup_screen
                                   Navigator.push(
+                                      // Open HomeScreen
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => LoginScreen()));
+                                          builder: (context) => HomeScreen()));
                                 },
-                                child: Text("Connecter"),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(
-                                  top: SizeConfig.screenHeight * 0.04),
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text("OK"),
+                                child: Text("Ok"),
                               ),
                             )
                           ],
@@ -149,10 +379,15 @@ class _SignUpScreen extends State<SignUpScreen> {
                       ],
                     ),
                   ));
-            });
-        print('The account already exists for that email.');
-      }
-    } catch (e) {
+            },
+          );
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {},
+      );
+      print('sent');
+
+      await FirebaseAuth.instance.signOut();
+    } on FirebaseAuthException catch (e) {
       print(e);
     }
 
@@ -217,10 +452,14 @@ class _SignUpScreen extends State<SignUpScreen> {
                         height: SizeConfig.screenHeight * 0.08,
                         width: SizeConfig.screenWidth * 0.75,
                         child: TextFormField(
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                          ],
                           controller: emailController,
                           decoration: InputDecoration(
-                            hintText: 'Email',
-                            labelText: 'Votre address email',
+                            hintText: 'Numéro du téléphone',
+                            labelText: 'Votre numéro du téléphone',
                             contentPadding: new EdgeInsets.symmetric(
                                 vertical: 25.0, horizontal: 15.0),
                             border: OutlineInputBorder(

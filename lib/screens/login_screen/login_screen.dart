@@ -1,6 +1,9 @@
 import 'package:aeroday_2021/screens/signup_screen/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
+
+import 'package:aeroday_2021/screens/home_screen/home.dart';
 
 import '../../config/responsive_size.dart';
 
@@ -13,48 +16,61 @@ class _LoginScreen extends State<LoginScreen> {
   final emailController = TextEditingController();
   final passController = TextEditingController();
 
+  @override
+  void initState() {
+    super.initState();
+
+    if (FirebaseAuth.instance.currentUser != null) {
+      // Already logged in
+      Future(() {
+        Navigator.pop(context);
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomeScreen()));
+      });
+    }
+  }
+
   void signupButtonCalled() async {
     try {
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text,
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text + "@gmail.com",
         password: passController.text,
       );
 
-      if (!userCredential.user!.emailVerified) {
-        userCredential.user!.sendEmailVerification();
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return new AlertDialog(
-                  title: Text("Erreur de verification"),
-                  content: SizedBox(
-                    height: SizeConfig.screenHeight * 0.13,
-                    child: Column(
-                      children: <Widget>[
-                        Text(
-                            "Verifier votre email pour la confirmation de votre inscription."),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(
-                                  top: SizeConfig.screenHeight * 0.04),
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text("Ok"),
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  ));
-            });
-        await FirebaseAuth.instance.signOut();
-      }
+      // if (!userCredential.user!.emailVerified) {
+      //   userCredential.user!.sendEmailVerification();
+      //   showDialog(
+      //       context: context,
+      //       builder: (BuildContext context) {
+      //         return new AlertDialog(
+      //             title: Text("Erreur de verification"),
+      //             content: SizedBox(
+      //               height: SizeConfig.screenHeight * 0.13,
+      //               child: Column(
+      //                 children: <Widget>[
+      //                   Text(
+      //                       "Verifier votre email pour la confirmation de votre inscription."),
+      //                   Row(
+      //                     mainAxisAlignment: MainAxisAlignment.end,
+      //                     children: [
+      //                       Container(
+      //                         margin: EdgeInsets.only(
+      //                             top: SizeConfig.screenHeight * 0.04),
+      //                         child: ElevatedButton(
+      //                           onPressed: () {
+      //                             Navigator.pop(context);
+      //                           },
+      //                           child: Text("Ok"),
+      //                         ),
+      //                       )
+      //                     ],
+      //                   ),
+      //                 ],
+      //               ),
+      //             ));
+      //       });
+      //   await FirebaseAuth.instance.signOut();
+      // }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         showDialog(
@@ -63,16 +79,16 @@ class _LoginScreen extends State<LoginScreen> {
               return new AlertDialog(
                   title: Text("Erreur d'inscription"),
                   content: SizedBox(
-                    height: SizeConfig.screenHeight * 0.13,
+                    height: SizeConfig.screenHeight * 0.15,
                     child: Column(
                       children: <Widget>[
-                        Text("Votre email n'exist pas."),
+                        Text("Votre numéro du téléphone n'exist pas."),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Container(
                               margin: EdgeInsets.only(
-                                  top: SizeConfig.screenHeight * 0.04),
+                                  top: SizeConfig.screenHeight * 0.03),
                               child: ElevatedButton(
                                 onPressed: () {
                                   Navigator.pop(context);
@@ -88,12 +104,46 @@ class _LoginScreen extends State<LoginScreen> {
             });
         print('No user found for that email.');
       } else if (e.code == 'wrong-password') {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return new AlertDialog(
+                  title: Text("Mot de passe invalid"),
+                  content: SizedBox(
+                    height: SizeConfig.screenHeight * 0.13,
+                    child: Column(
+                      children: <Widget>[
+                        Text("Votre mot de passe est incorrect."),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(
+                                  top: SizeConfig.screenHeight * 0.04),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text("Ok"),
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ));
+            });
+
         print('Wrong password provided for that user.');
       }
     }
 
     // Redirect to home/voting page HERE
-
+    Navigator.pop(context); // Close signup_screen
+    Navigator.push(
+        // Open HomeScreen
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()));
     print("login");
     return null;
   }
@@ -106,6 +156,7 @@ class _LoginScreen extends State<LoginScreen> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xFF323A40),
@@ -154,10 +205,14 @@ class _LoginScreen extends State<LoginScreen> {
                         height: SizeConfig.screenHeight * 0.08,
                         width: SizeConfig.screenWidth * 0.75,
                         child: TextFormField(
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                          ],
                           controller: emailController,
                           decoration: InputDecoration(
-                            hintText: 'Email',
-                            labelText: 'Votre address email',
+                            hintText: 'Numéro du téléphone',
+                            labelText: 'Votre numéro du téléphone',
                             contentPadding: new EdgeInsets.symmetric(
                                 vertical: 25.0, horizontal: 15.0),
                             border: OutlineInputBorder(

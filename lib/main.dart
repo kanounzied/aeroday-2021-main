@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'config/responsive_size.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import 'package:aeroday_2021/screens/signup_screen/signup_screen.dart';
+
 void main() {
   runApp(Home());
 }
@@ -62,7 +64,7 @@ class _AppState extends State<MyApp> {
               ),
               initialRoute: '/home',
               routes: {
-                '/home': (context) => HomeScreen(),
+                '/home': (context) => SignUpScreen(),
                 '/voteAC': (context) => VoteAC(),
                 '/voteVPD': (context) => VoteVPD(),
               });
