@@ -12,10 +12,25 @@ class _VoteVPDState extends State<VoteVPD> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: dark,
-      appBar: AppBar(
-        title: Text('VPD'),
+      body: Builder(
+        builder: (BuildContext c) => SafeArea(
+          child: IconButton(
+            onPressed: () {
+              setState(() {
+                Scaffold.of(c).openDrawer();
+              });
+            },
+            icon: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                Icons.menu_rounded,
+                size: 40,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
       ),
-      body: Container(),
       drawer: SideBar(),
     );
   }

@@ -2,6 +2,7 @@ import 'package:aeroday_2021/constants/app_constants.dart';
 import 'package:aeroday_2021/screens/vote_ac.dart';
 import 'package:aeroday_2021/services/contestant_info.dart';
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ContestantCard extends StatefulWidget {
   ContestantInfo contestantInfo;
@@ -17,7 +18,7 @@ class _ContestantCardState extends State<ContestantCard> {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Container(
-      width: screenWidth * 0.8,
+      width: screenWidth * 0.85,
       height: 62,
       margin: EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
