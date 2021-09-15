@@ -64,7 +64,7 @@ class _AppState extends State<MyApp> {
               ),
               initialRoute: '/home',
               routes: {
-                '/home': (context) => SignUpScreen(),
+                '/home': (context) => HomeScreen(),
                 '/voteAC': (context) => VoteAC(),
                 '/voteVPD': (context) => VoteVPD(),
               });
