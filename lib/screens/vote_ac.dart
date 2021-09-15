@@ -11,25 +11,56 @@ class VoteAC extends StatefulWidget {
   _VoteACState createState() => _VoteACState();
 }
 
+bool drawSearchList = false;
+
 class _VoteACState extends State<VoteAC> {
+  int selectedNum = 0;
   final List<ContestantInfo> _contestantsList = [
     ContestantInfo(
       name: 'abc',
-      lastName: 'def',
+      lastName: 'devf',
       imageUrl: "https://picsum.photos/200",
       status: 1,
       votes: 5,
     ),
     ContestantInfo(
       name: 'kiki',
-      lastName: 'zy',
+      lastName: 'vwby',
       imageUrl: 'https://picsum.photos/200',
       status: 0,
       votes: 5,
     ),
     ContestantInfo(
-      name: 'bazera',
-      lastName: 'etzqa',
+      name: 'bezera',
+      lastName: 'zerqa',
+      imageUrl: 'https://picsum.photos/200',
+      status: 0,
+      votes: 5,
+    ),
+    ContestantInfo(
+      name: 'kamki',
+      lastName: 'hkh',
+      imageUrl: 'https://picsum.photos/200',
+      status: 0,
+      votes: 5,
+    ),
+    ContestantInfo(
+      name: 'bmmma',
+      lastName: 'eqsdfzqa',
+      imageUrl: 'https://picsum.photos/200',
+      status: 0,
+      votes: 5,
+    ),
+    ContestantInfo(
+      name: 'iyzzki',
+      lastName: 'zhjky',
+      imageUrl: 'https://picsum.photos/200',
+      status: 0,
+      votes: 5,
+    ),
+    ContestantInfo(
+      name: 'gfra',
+      lastName: 'egkjhqa',
       imageUrl: 'https://picsum.photos/200',
       status: 0,
       votes: 5,
@@ -106,16 +137,24 @@ class _VoteACState extends State<VoteAC> {
                         0.5, //height of list(maybe dynamic)
                     margin: EdgeInsets.only(top: 50),
                     child: Center(
-                      child: drawSearchList
-                          ? buildSearchList()
+                      child: drawSearchList || _searchList.isNotEmpty
+                          ? _searchList.isNotEmpty
+                              ? buildSearchList()
+                              : Padding(
+                                  padding: const EdgeInsets.only(bottom: 70),
+                                  child: Text(
+                                    "no search results!",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                )
                           : buildContestantList(),
                     ),
                   ),
                 ],
               ),
-              Positioned(
-                child: VoteCard(),
-                bottom: 0,
+              VoteCard(
+                onVoted: () {},
+                contInfo: _contestantsList[selectedNum],
               ),
             ],
           ),
@@ -130,7 +169,15 @@ class _VoteACState extends State<VoteAC> {
     return new ListView.builder(
       itemCount: _contestantsList.length,
       itemBuilder: (context, index) {
-        return ContestantCard(contestantInfo: _contestantsList[index]);
+        return ContestantCard(
+          index: index + 1,
+          contestantInfo: _contestantsList[index],
+          onPressed: (e) {
+            setState(() {
+              selectedNum = _contestantsList.indexOf(e);
+            });
+          },
+        );
       },
     );
   }
@@ -140,14 +187,22 @@ class _VoteACState extends State<VoteAC> {
     return new ListView.builder(
       itemCount: _searchList.length,
       itemBuilder: (context, index) {
-        return ContestantCard(contestantInfo: _searchList[index]);
+        return ContestantCard(
+          contestantInfo: _searchList[index],
+          index: _contestantsList.indexOf(_searchList[index]) + 1,
+          onPressed: (e) {
+            setState(() {
+              selectedNum = _contestantsList.indexOf(e);
+              _searchList.clear();
+            });
+          },
+        );
       },
     );
   }
 
   //function to update the list according to search input
 
-  bool drawSearchList = false;
   _onSearchTextChanged(String input) async {
     _searchList.clear();
     if (input.isEmpty) {
@@ -157,16 +212,23 @@ class _VoteACState extends State<VoteAC> {
       return;
     }
 
-    drawSearchList = false;
+    drawSearchList = true;
     _contestantsList.forEach((contestant) {
       print(contestant.name.contains(input).toString() +
           contestant.lastName.contains(input).toString() +
+          (contestant.name + ' ' + contestant.lastName)
+              .contains(input)
+              .toString() +
           contestant.name);
-
       if (contestant.name.contains(input) ||
-          contestant.lastName.contains(input)) {
+              contestant.lastName.contains(
+                  input) /*||
+          (contestant.name + ' ' + contestant.lastName).contains(input)*/
+          ) {
         drawSearchList = true;
         _searchList.add(contestant);
+        print(_searchList);
+        print('zeb');
       }
     });
     drawSearchList = _searchList.isEmpty;
