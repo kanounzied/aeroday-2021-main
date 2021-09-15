@@ -52,6 +52,7 @@ class _SearchBarState extends State<SearchBar> {
                 },
               ),
             ),
+            onSubmitted: widget.onSearchTextChanged,
             onChanged: widget.onSearchTextChanged,
           ),
         ),

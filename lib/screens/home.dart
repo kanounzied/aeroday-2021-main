@@ -2,12 +2,12 @@ import 'package:aeroday_2021/constants/app_constants.dart';
 import 'package:aeroday_2021/widgets/sidebar/sidebar.dart';
 import 'package:flutter/material.dart';
 
-class VoteVPD extends StatefulWidget {
+class Home extends StatefulWidget {
   @override
-  _VoteVPDState createState() => _VoteVPDState();
+  _HomeState createState() => _HomeState();
 }
 
-class _VoteVPDState extends State<VoteVPD> {
+class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
