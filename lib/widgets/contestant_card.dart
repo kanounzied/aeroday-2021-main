@@ -101,25 +101,12 @@ class _ContestantCardState extends State<ContestantCard> {
                               ),
                             ),
                           ),
-                          Container(
-                            margin: EdgeInsets.only(left: 5),
-                            width: 10,
-                            height: 10,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: widget.contestantInfo.status == 1
-                                  ? green
-                                  : Colors.transparent,
-                            ),
-                          )
                         ],
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 5, left: 4),
                         child: Text(
-                          'votes : ' +
-                              widget.contestantInfo.votes.toString() +
-                              '%',
+                          'Team Name: ' + widget.contestantInfo.teamName,
                           style: TextStyle(
                             color: light,
                             fontSize: 14,
