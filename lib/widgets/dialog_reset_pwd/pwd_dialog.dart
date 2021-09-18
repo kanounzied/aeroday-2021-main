@@ -9,7 +9,8 @@ class PwdDialog extends StatefulWidget {
 
 class _PwdDialogState extends State<PwdDialog> {
   int nbStep = 1;
-
+  String pwd1 = "";
+  String pwd2 = "";
   Widget contentBox(context) {
     return Container(
       padding: EdgeInsets.all(SizeConfig.defaultSize * 2.5),
@@ -136,6 +137,8 @@ class _PwdDialogState extends State<PwdDialog> {
               ),
               onPressed: () {
                 if (nbStep < 3) {
+                  if(pwd1 == pwd2 && !pwd1.isEmpty && nbStep == 2)
+                    //Firebase pwd reset
                   setState(() {
                     nbStep++;
                   });
