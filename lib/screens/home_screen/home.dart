@@ -41,21 +41,24 @@ class _HomeState extends State<HomeScreen> {
         centerTitle: true,
         title: Text('Timeline'),
         flexibleSpace: SafeArea(
-          child: Container(
-            alignment: Alignment.centerRight,
-            margin: EdgeInsets.only(right: SizeConfig.screenWidth * .01),
-            child: GestureDetector(
-              onTap: () async {
-                print("tap");
-                await FirebaseAuth.instance.signOut();
-              },
-              child: Icon(
-                Icons.logout,
-                color: Color(0xFFFFFFFF),
-                size: SizeConfig.defaultSize * 3,
-              ),
-            ),
-          ),
+          child: FirebaseAuth.instance.currentUser == null
+              ? Container() // Not logged in
+              : Container(
+                  alignment: Alignment.centerRight,
+                  margin: EdgeInsets.only(right: SizeConfig.screenWidth * .03),
+                  child: GestureDetector(
+                    onTap: () async {
+                      print("tap");
+                      await FirebaseAuth.instance.signOut();
+                      setState(() {});
+                    },
+                    child: Icon(
+                      Icons.logout,
+                      color: Color(0xFFFFFFFF),
+                      size: SizeConfig.defaultSize * 3,
+                    ),
+                  ),
+                ),
         ),
       ),
       body: SafeArea(

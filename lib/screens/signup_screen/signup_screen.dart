@@ -42,11 +42,11 @@ class _SignUpScreen extends State<SignUpScreen> {
       // Already logged in
       Future(() {
         FirebaseAuth.instance.signOut();
-        // Navigator.pop(context);
-        // Navigator.push(
-        //     // Open HomeScreen
-        //     context,
-        //     MaterialPageRoute(builder: (context) => HomeScreen()));
+        Navigator.pop(context);
+        Navigator.push(
+            // Open HomeScreen
+            context,
+            MaterialPageRoute(builder: (context) => HomeScreen()));
       });
     }
   }
@@ -178,7 +178,7 @@ class _SignUpScreen extends State<SignUpScreen> {
                                 onPressed: () {
                                   // Redirect to login
                                   Navigator.pop(contextDia);
-                                  Navigator.pop(context);
+                                  //Navigator.pop(context);
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -522,7 +522,7 @@ class _SignUpScreen extends State<SignUpScreen> {
                                   // Redirect to login
                                   Navigator.pop(contextDia); // Close dialog
 
-                                  Navigator.pop(context); // Close signup_screen
+                                  //Navigator.pop(context); // Close signup_screen
                                   Navigator.push(
                                       // Open HomeScreen
                                       context,
@@ -714,7 +714,7 @@ class _SignUpScreen extends State<SignUpScreen> {
                               onTap: () {
                                 // Redirect login_screen
                                 print("redirect login");
-                                Navigator.pop(context);
+                                //Navigator.pop(context);
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(

@@ -75,7 +75,7 @@ class _LoginScreen extends State<LoginScreen> {
         } else {
           print(FirebaseAuth.instance.currentUser);
           // Redirect to home/voting page HERE
-          Navigator.pop(context); // Close signup_screen
+          //Navigator.pop(context); // Close signup_screen
           Navigator.push(
               // Open HomeScreen
               context,
@@ -434,7 +434,7 @@ class _LoginScreen extends State<LoginScreen> {
                               onTap: () {
                                 // Signup click
                                 print("inscription");
-                                Navigator.pop(context);
+                                //Navigator.pop(context);
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
