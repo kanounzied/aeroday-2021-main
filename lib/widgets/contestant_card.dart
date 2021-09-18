@@ -10,6 +10,7 @@ class ContestantCard extends StatefulWidget {
   Function onPressed;
   int index;
   //bool isVoted ;
+  //test
   ContestantCard(
       {required this.contestantInfo,
       required this.onPressed,
