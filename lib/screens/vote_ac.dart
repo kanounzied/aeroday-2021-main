@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'package:aeroday_2021/services/contestant_info.dart';
 import 'package:aeroday_2021/widgets/vote_card.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:aeroday_2021/constants/app_constants.dart';
 import 'package:aeroday_2021/widgets/search_bar.dart';
 import 'package:aeroday_2021/widgets/sidebar/sidebar.dart';
 import 'package:aeroday_2021/widgets/contestant_card.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class VoteAC extends StatefulWidget {
   @override
@@ -17,68 +17,6 @@ bool drawSearchList = false;
 
 class _VoteACState extends State<VoteAC> {
   int selectedNum = 0;
-<<<<<<< HEAD
-  final List<ContestantInfo> _contestantsList = [
-    ContestantInfo(
-      name: 'abc',
-      lastName: 'devf',
-      imageUrl: "https://picsum.photos/200",
-      teamName: 'Dream Team 54',
-    ),
-    ContestantInfo(
-      name: 'kiki',
-      lastName: 'vwby',
-      imageUrl: 'https://picsum.photos/200',
-      teamName: 'Dream Team 54',
-    ),
-    ContestantInfo(
-      name: 'bezera',
-      lastName: 'zerqa',
-      imageUrl: 'https://picsum.photos/200',
-      teamName: 'Dream Team 54',
-    ),
-    ContestantInfo(
-      name: 'kamki',
-      lastName: 'hkh',
-      imageUrl: 'https://picsum.photos/200',
-      teamName: 'Dream Team 54',
-    ),
-    ContestantInfo(
-      name: 'bmmma',
-      lastName: 'eqsdfzqa',
-      imageUrl: 'https://picsum.photos/200',
-      teamName: 'Dream Team 54',
-    ),
-    ContestantInfo(
-      name: 'iyzzki',
-      lastName: 'zhjky',
-      imageUrl: 'https://picsum.photos/200',
-      teamName: 'Dream Team 54',
-    ),
-    ContestantInfo(
-      name: 'gfra',
-      lastName: 'egkjhqa',
-      imageUrl: 'https://picsum.photos/200',
-      teamName: 'Dream Team 54',
-    ),
-  ]; //hardcoded list for testing (will be replaced with getContestantDetails() functionnality, eventually, maybe, one day..)
-  List<ContestantInfo> _searchList = [];
-
-  Future<Null> getContestantDetails() async {
-    dynamic collectionStream = FirebaseFirestore.instance
-        .collection('contestant')
-        .get()
-        .then((QuerySnapshot querySnapshot) => {
-              querySnapshot.docs.forEach((doc) {
-                print(doc.data());
-              })
-            }); //TODO:Get the list of contestants and store it in responce
-    setState(() {
-      /* for (Map user in response) {
-        _contestantsList.add(ContestantInfo.fromMap(user));
-      }*/
-    });
-=======
   List<ContestantInfo> _contestantsList = [];
   List<ContestantInfo> _searchList = [];
 
@@ -95,7 +33,6 @@ class _VoteACState extends State<VoteAC> {
       });
       setState(() {});
     }); //TODO:Get the list of contestants and store it in responce
->>>>>>> c95f508 (added contestant loading from firebase(finally zby))
   }
 
   @override
@@ -188,7 +125,6 @@ class _VoteACState extends State<VoteAC> {
   }
 
   Widget buildContestantList() {
-    print('AAAAcontlst');
     return new ListView.builder(
       itemCount: _contestantsList.length,
       itemBuilder: (context, index) {
@@ -206,7 +142,6 @@ class _VoteACState extends State<VoteAC> {
   }
 
   Widget buildSearchList() {
-    print('BBBBsearchlst');
     return new ListView.builder(
       itemCount: _searchList.length,
       itemBuilder: (context, index) {
@@ -236,22 +171,17 @@ class _VoteACState extends State<VoteAC> {
 
     drawSearchList = true;
     _contestantsList.forEach((contestant) {
-      print(contestant.name.contains(input).toString() +
-          contestant.lastName.contains(input).toString() +
-          (contestant.name + ' ' + contestant.lastName)
-              .contains(input)
-              .toString() +
-          contestant.name);
-      if (contestant.name.contains(input) ||
-          contestant.lastName.contains(input) ||
-          (contestant.name + ' ' + contestant.lastName).contains(input)) {
+      if (contestant.name.toLowerCase().contains(input.toLowerCase()) ||
+          contestant.lastName.toLowerCase().contains(input.toLowerCase()) ||
+          (contestant.name.toLowerCase() +
+                  ' ' +
+                  contestant.lastName.toLowerCase())
+              .contains(input.toLowerCase())) {
         drawSearchList = true;
         _searchList.add(contestant);
-        print(_searchList);
       }
     });
     drawSearchList = _searchList.isEmpty;
     setState(() {});
-    print(drawSearchList);
   }
 }

@@ -198,10 +198,6 @@ class _VoteCardState extends State<VoteCard> {
                   SizedBox(
                     height: 30,
                   ),
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 5e3fece (ceci est une situation critique)
                   //button
                   GestureDetector(
                     onTap: () {
@@ -250,64 +246,7 @@ class _VoteCardState extends State<VoteCard> {
                           barrierDismissible: true,
                         );
                       }
-<<<<<<< HEAD
                     },
-=======
-                  /* VoteButton(
-                    isVoted: userHasVoted,
-                    clickButton: (v) {
-                      if (FirebaseAuth.instance.currentUser != null) {
-                        v = !v;
-                        setState(() {});
-                      } else {
-                        AlertDialog(
-                          content: Text('You must be logged in to vote!'),
-                        );
-                      }
-                    },
-                  ),*/
-                  //button
-                  GestureDetector(
-                    onTap: () {
-                      if (FirebaseAuth.instance.currentUser != null) {
-                        userHasVoted = !userHasVoted;
-                        setState(() {});
-                      } else {
-                        print('couldnt vote');
-                        showDialog(
-                          context: context,
-                          builder: (c) {
-                            return AlertDialog(
-                              title: Text('Verification error:'),
-                              content: Text('You must be signed in to vote!'),
-                              actions: [
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.of(c).pop();
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  LoginScreen()));
-                                    },
-                                    child: const Text('Sign in')),
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(c, 'Dismiss');
-                                    },
-                                    child: const Text('Dismiss')),
-                              ],
-                              elevation: 21,
-                            );
-                          },
-                          barrierDismissible: true,
-                        );
-                      }
-                    },
->>>>>>> a249433e687c237bffc278e19cb2f338b4662511
-=======
-                    },
->>>>>>> 5e3fece (ceci est une situation critique)
                     child: AnimatedContainer(
                       width: MediaQuery.of(context).size.width * 0.65,
                       height: 70,
