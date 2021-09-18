@@ -2,7 +2,6 @@ import 'package:aeroday_2021/screens/home_screen/home.dart';
 import 'package:aeroday_2021/screens/vote_ac.dart';
 import 'package:aeroday_2021/screens/vote_vpd.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'config/responsive_size.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -57,11 +56,6 @@ class _AppState extends State<MyApp> {
         if (snapshot.connectionState == ConnectionState.done) {
           return MaterialApp(
               debugShowCheckedModeBanner: false,
-              theme: ThemeData(
-                textTheme: GoogleFonts.robotoTextTheme(
-                  Theme.of(context).textTheme,
-                ),
-              ),
               initialRoute: '/home',
               routes: {
                 '/home': (context) => HomeScreen(),

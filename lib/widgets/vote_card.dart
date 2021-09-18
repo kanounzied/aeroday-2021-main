@@ -308,14 +308,80 @@ class _VoteCardState extends State<VoteCard> {
                   SizedBox(
                     height: 30,
                   ),
-                  /*VoteButton(
-                    isVoted: widget.contInfo.isVoted,
-                    clickButton: () {
-                      widget.contInfo.isVoted = !widget.contInfo.isVoted;
-                      widget.onVoted(widget.contInfo.isVoted);
-                      //TODO:implement update voteNumber
+                  //button
+                  GestureDetector(
+                    onTap: () {
+                      if (user != null) {
+                        FirebaseFirestore.instance
+                            .collection('user')
+                            .doc(user?.uid)
+                            .get()
+                            .then((DocumentSnapshot ds) {
+                          String voteID = ds.get(FieldPath(['voteID']));
+                          // if (voteID == widget.contInfo.id) {
+                          if (true) {
+                            print('its already selected'); //TODO:handle voting
+                            userHasVoted = !userHasVoted;
+                          }
+                          setState(() {});
+                        });
+                      } else {
+                        print('couldnt vote');
+                        showDialog(
+                          context: context,
+                          builder: (c) {
+                            return AlertDialog(
+                              title: Text('Verification error:'),
+                              content: Text('You must be signed in to vote!'),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.of(c).pop();
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  LoginScreen()));
+                                    },
+                                    child: const Text('Sign in')),
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(c, 'Dismiss');
+                                    },
+                                    child: const Text('Dismiss')),
+                              ],
+                              elevation: 21,
+                            );
+                          },
+                          barrierDismissible: true,
+                        );
+                      }
                     },
-                  ),*/
+                    child: AnimatedContainer(
+                      width: MediaQuery.of(context).size.width * 0.65,
+                      height: 70,
+                      duration: Duration(milliseconds: 150),
+                      curve: Curves.easeOut,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Color(0xFF323A40),
+                          width: 4,
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(7)),
+                        color: Color(userHasVoted ? 0xFF323A40 : 0xFFFFFFFF),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'VOTE${userHasVoted ? 'D' : ''}',
+                          style: TextStyle(
+                            color: Color(0xFF51A678),
+                            fontSize: 26,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ), //button
                 ],
               ),
             ),

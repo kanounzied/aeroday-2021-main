@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:aeroday_2021/services/contestant_info.dart';
 import 'package:aeroday_2021/widgets/vote_card.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ bool drawSearchList = false;
 
 class _VoteACState extends State<VoteAC> {
   int selectedNum = 0;
+<<<<<<< HEAD
   final List<ContestantInfo> _contestantsList = [
     ContestantInfo(
       name: 'abc',
@@ -75,6 +77,24 @@ class _VoteACState extends State<VoteAC> {
         _contestantsList.add(ContestantInfo.fromMap(user));
       }*/
     });
+=======
+  List<ContestantInfo> _contestantsList = [];
+  List<ContestantInfo> _searchList = [];
+
+  Future<Null> getContestantDetails() async {
+    Map<String, dynamic> response;
+    dynamic collection = await FirebaseFirestore.instance
+        .collection('contestant')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        response = doc.data() as Map<String, dynamic>;
+
+        _contestantsList.add(ContestantInfo.fromMap(response));
+      });
+      setState(() {});
+    }); //TODO:Get the list of contestants and store it in responce
+>>>>>>> c95f508 (added contestant loading from firebase(finally zby))
   }
 
   @override
@@ -152,10 +172,12 @@ class _VoteACState extends State<VoteAC> {
                   ),
                 ],
               ),
-              VoteCard(
-                onVoted: () {},
-                contInfo: _contestantsList[selectedNum],
-              ),
+              _contestantsList.isNotEmpty
+                  ? VoteCard(
+                      onVoted: () {},
+                      contInfo: _contestantsList[selectedNum],
+                    )
+                  : Container(), //TODO: fix loader for bad net
             ],
           ),
         ),
@@ -208,7 +230,6 @@ class _VoteACState extends State<VoteAC> {
     if (input.isEmpty) {
       drawSearchList = false;
       setState(() {});
-      print('mario');
       return;
     }
 
@@ -226,7 +247,6 @@ class _VoteACState extends State<VoteAC> {
         drawSearchList = true;
         _searchList.add(contestant);
         print(_searchList);
-        print('zeb');
       }
     });
     drawSearchList = _searchList.isEmpty;

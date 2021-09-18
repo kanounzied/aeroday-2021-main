@@ -3,6 +3,7 @@ import 'package:aeroday_2021/screens/vote_ac.dart';
 import 'package:aeroday_2021/services/contestant_info.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ContestantCard extends StatefulWidget {
   ContestantInfo contestantInfo;
@@ -117,9 +118,7 @@ class _ContestantCardState extends State<ContestantCard> {
                       Container(
                         margin: EdgeInsets.only(top: 5, left: 4),
                         child: Text(
-                          'votes : ' +
-                              widget.contestantInfo.votes.toString() +
-                              '%',
+                          'Team: ' + widget.contestantInfo.teamName,
                           style: TextStyle(
                             color: light,
                             fontSize: 14,
