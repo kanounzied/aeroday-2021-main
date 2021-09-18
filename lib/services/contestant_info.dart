@@ -5,24 +5,24 @@ class ContestantInfo {
   String name;
   String lastName;
   String teamName;
-  //String id;
+  String id;
   ContestantInfo({
     required this.name,
     required this.lastName,
     required this.teamName,
     required this.imageUrl,
-    // this.id,
+    required this.id,
   });
 
   //returns a ContestantInfo() object filled with data from the map r
 
-  factory ContestantInfo.fromMap(Map r) {
+  factory ContestantInfo.fromMap(Map r, String id) {
     return new ContestantInfo(
       name: r['name'],
       lastName: r['lastName'],
       imageUrl: r['imageUrl'],
       teamName: r['teamName'],
-      //  id: r['id'],
+      id: id,
     );
   }
 }

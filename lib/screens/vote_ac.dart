@@ -29,7 +29,9 @@ class _VoteACState extends State<VoteAC> {
       querySnapshot.docs.forEach((doc) {
         response = doc.data() as Map<String, dynamic>;
 
-        _contestantsList.add(ContestantInfo.fromMap(response));
+        _contestantsList.add(ContestantInfo.fromMap(response, doc.id));
+        _contestantsList.add(ContestantInfo.fromMap(response, doc.id));
+        _contestantsList.add(ContestantInfo.fromMap(response, doc.id));
       });
       setState(() {});
     }); //TODO:Get the list of contestants and store it in responce
@@ -42,6 +44,7 @@ class _VoteACState extends State<VoteAC> {
     getContestantDetails();
   }
 
+  double dynamicHeight = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,10 +92,11 @@ class _VoteACState extends State<VoteAC> {
                   SearchBar(
                     onSearchTextChanged: _onSearchTextChanged,
                   ),
-                  Container(
+                  AnimatedContainer(
+                    duration: Duration(milliseconds: 150),
                     width: MediaQuery.of(context).size.width * 0.84,
-                    height: MediaQuery.of(context).size.height *
-                        0.5, //height of list(maybe dynamic)
+                    height: MediaQuery.of(context).size.height * 0.54 -
+                        dynamicHeight, //height of list(maybe dynamic)
                     margin: EdgeInsets.only(top: 50),
                     child: Center(
                       child: drawSearchList || _searchList.isNotEmpty
@@ -112,6 +116,12 @@ class _VoteACState extends State<VoteAC> {
               ),
               _contestantsList.isNotEmpty
                   ? VoteCard(
+                      onVoteCardExtended: (h) {
+                        setState(() {
+                          dynamicHeight = h;
+                          print(dynamicHeight);
+                        });
+                      },
                       onVoted: () {},
                       contInfo: _contestantsList[selectedNum],
                     )

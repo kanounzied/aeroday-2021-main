@@ -8,10 +8,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class VoteCard extends StatefulWidget {
   @override
   Function onVoted;
+  Function onVoteCardExtended;
   ContestantInfo contInfo;
   VoteCard({
     required this.onVoted,
     required this.contInfo,
+    required this.onVoteCardExtended,
   });
 
   _VoteCardState createState() => _VoteCardState();
@@ -53,6 +55,7 @@ class _VoteCardState extends State<VoteCard> {
                 _height = currPos - initPress + 256;
               }
             }
+            widget.onVoteCardExtended(_height - 140);
           });
         },
         onPanEnd: (_) {
@@ -77,6 +80,7 @@ class _VoteCardState extends State<VoteCard> {
             }
           });
           setState(() {});
+          widget.onVoteCardExtended(_height - 140);
         },
         onTap: () {
           setState(() {
@@ -90,6 +94,7 @@ class _VoteCardState extends State<VoteCard> {
               bot = true;
             }
           });
+          widget.onVoteCardExtended(_height - 140);
           setState(() {});
         },
         child: Stack(alignment: AlignmentDirectional.center, children: [
@@ -202,18 +207,69 @@ class _VoteCardState extends State<VoteCard> {
                   GestureDetector(
                     onTap: () {
                       if (user != null) {
-                        FirebaseFirestore.instance
+                        DocumentReference selectedContestantDoc =
+                            FirebaseFirestore.instance
+                                .collection('contestant')
+                                .doc(widget.contInfo.id);
+
+                        DocumentReference userDoc = FirebaseFirestore.instance
                             .collection('user')
-                            .doc(user?.uid)
-                            .get()
-                            .then((DocumentSnapshot ds) {
-                          String voteID = ds.get(FieldPath(['voteID']));
-                          // if (voteID == widget.contInfo.id) {
-                          if (true) {
-                            print('its already selected'); //TODO:handle voting
+                            .doc(user?.uid);
+
+                        userDoc.get().then((DocumentSnapshot ds) {
+                          String voteID = ds.get(
+                            FieldPath(['voteID']),
+                          );
+
+                          if (voteID == widget.contInfo.id) {
                             userHasVoted = !userHasVoted;
+                            //change user field voteid and decrement votes for contestant
+                            userDoc.update(
+                              {'voteID': ''},
+                            );
+
+                            selectedContestantDoc.get().then(
+                              (DocumentSnapshot ds) {
+                                int votes = ds.get(FieldPath(['votes']));
+                                selectedContestantDoc.update(
+                                  {'votes': --votes},
+                                );
+                              },
+                            );
+                          } else {
+                            if (voteID != '') {
+                              //he's changing the vote
+                              //get the old voted contestant
+                              DocumentReference oldVoted = FirebaseFirestore
+                                  .instance
+                                  .collection('contestant')
+                                  .doc(voteID);
+                              //get the old votes and decrement them
+                              oldVoted.get().then(
+                                (DocumentSnapshot ds) {
+                                  int oldVotedVotes =
+                                      ds.get(FieldPath(['votes']));
+                                  oldVoted.update(
+                                    {'votes': --oldVotedVotes},
+                                  );
+                                },
+                              );
+                            }
+                            //increment the new voted
+                            selectedContestantDoc
+                                .get()
+                                .then((DocumentSnapshot ds) {
+                              int votes = ds.get(FieldPath(['votes']));
+                              selectedContestantDoc.update(
+                                {'votes': ++votes},
+                              );
+                            });
+                            //update voteid
+                            userDoc.update(
+                              {'voteID': voteID},
+                            );
+                            userHasVoted = true;
                           }
-                          setState(() {});
                         });
                       } else {
                         print('couldnt vote');
