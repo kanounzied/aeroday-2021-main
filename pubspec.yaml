@@ -30,6 +30,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   google_fonts: ^2.1.0
   cached_network_image: ^3.1.0
+  flutter_safetynet_attestation: ^0.1.0
 
 dev_dependencies:
   flutter_test:

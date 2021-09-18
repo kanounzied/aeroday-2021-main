@@ -2,6 +2,8 @@ import 'package:aeroday_2021/constants/app_constants.dart';
 import 'package:aeroday_2021/widgets/sidebar/sidebar.dart';
 import 'package:flutter/material.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
+
 import '../../widgets/upcomings_cercle/circle.dart';
 
 import '../../config/responsive_size.dart';
@@ -38,6 +40,23 @@ class _HomeState extends State<HomeScreen> {
         backgroundColor: Color(0xFF323A40),
         centerTitle: true,
         title: Text('Timeline'),
+        flexibleSpace: SafeArea(
+          child: Container(
+            alignment: Alignment.centerRight,
+            margin: EdgeInsets.only(right: SizeConfig.screenWidth * .01),
+            child: GestureDetector(
+              onTap: () async {
+                print("tap");
+                await FirebaseAuth.instance.signOut();
+              },
+              child: Icon(
+                Icons.logout,
+                color: Color(0xFFFFFFFF),
+                size: SizeConfig.defaultSize * 3,
+              ),
+            ),
+          ),
+        ),
       ),
       body: SafeArea(
         child: Column(
