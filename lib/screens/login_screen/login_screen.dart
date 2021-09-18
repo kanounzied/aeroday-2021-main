@@ -76,50 +76,16 @@ class _LoginScreen extends State<LoginScreen> {
           print(FirebaseAuth.instance.currentUser);
           // Redirect to home/voting page HERE
           //Navigator.pop(context); // Close signup_screen
-          Navigator.push(
-              // Open HomeScreen
-              context,
-              MaterialPageRoute(builder: (context) => HomeScreen()));
+          // Navigator.push(
+          //     // Open HomeScreen
+          //     context,
+          //     MaterialPageRoute(builder: (context) => HomeScreen()));
+          Navigator.pushReplacementNamed(context, '/home');
           print("login");
         }
       });
 
       print("bla1");
-
-      // if (!userCredential.user!.emailVerified) {
-      //   userCredential.user!.sendEmailVerification();
-      //   showDialog(
-      //       context: context,
-      //       builder: (BuildContext context) {
-      //         return new AlertDialog(
-      //             title: Text("Erreur de verification"),
-      //             content: SizedBox(
-      //               height: SizeConfig.screenHeight * 0.13,
-      //               child: Column(
-      //                 children: <Widget>[
-      //                   Text(
-      //                       "Verifier votre email pour la confirmation de votre inscription."),
-      //                   Row(
-      //                     mainAxisAlignment: MainAxisAlignment.end,
-      //                     children: [
-      //                       Container(
-      //                         margin: EdgeInsets.only(
-      //                             top: SizeConfig.screenHeight * 0.04),
-      //                         child: ElevatedButton(
-      //                           onPressed: () {
-      //                             Navigator.pop(context);
-      //                           },
-      //                           child: Text("Ok"),
-      //                         ),
-      //                       )
-      //                     ],
-      //                   ),
-      //                 ],
-      //               ),
-      //             ));
-      //       });
-      //   await FirebaseAuth.instance.signOut();
-      // }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         toggleSignupButton(true);

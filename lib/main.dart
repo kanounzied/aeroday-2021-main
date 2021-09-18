@@ -60,7 +60,7 @@ class _AppState extends State<MyApp> {
               debugShowCheckedModeBanner: false,
               initialRoute: '/home',
               routes: {
-                '/home': (context) => SignUpScreen(),
+                '/home': (context) => HomeScreen(),
                 '/voteAC': (context) => VoteAC(),
                 '/voteVPD': (context) => VoteVPD(),
               });

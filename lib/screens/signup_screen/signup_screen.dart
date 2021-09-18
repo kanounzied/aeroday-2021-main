@@ -41,7 +41,7 @@ class _SignUpScreen extends State<SignUpScreen> {
     if (FirebaseAuth.instance.currentUser != null) {
       // Already logged in
       Future(() {
-        FirebaseAuth.instance.signOut();
+        //FirebaseAuth.instance.signOut();
         Navigator.pop(context);
         Navigator.push(
             // Open HomeScreen
@@ -250,12 +250,13 @@ class _SignUpScreen extends State<SignUpScreen> {
         return;
       }
 
-      print("error");
-      print(e);
-
+      // TODO : handle firebase error
+      print("firebase error");
+      print(e.code);
       toggleSignupButton(true);
       return;
     } catch (e) {
+      // TODO: handle unknown error
       print("ERROR: ");
       print(e);
 
@@ -544,7 +545,7 @@ class _SignUpScreen extends State<SignUpScreen> {
       );
       print('sent');
 
-      await FirebaseAuth.instance.signOut();
+      //await FirebaseAuth.instance.signOut();
     } on FirebaseAuthException catch (e) {
       print(e);
       toggleSignupButton(true);
