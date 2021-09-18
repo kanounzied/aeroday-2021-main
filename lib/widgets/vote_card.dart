@@ -120,6 +120,7 @@ class _VoteCardState extends State<VoteCard> {
           initPress = sHeight - det.globalPosition.dy;
           bot = false;
           top = false;
+
           if (_height == 140) bot = true;
           if (_height == 256) top = true;
         },
@@ -141,25 +142,38 @@ class _VoteCardState extends State<VoteCard> {
           setState(() {
             if (bot && _height > 148) {
               _height = 256;
+              top = true;
+              bot = false;
             } else if (bot) {
               _height = 140;
+              top = false;
+              bot = true;
             }
             if (top && _height < 248) {
               _height = 140;
+              top = false;
+              bot = true;
             } else if (top) {
               _height = 256;
+              top = true;
+              bot = false;
             }
           });
+          setState(() {});
         },
         onTap: () {
           setState(() {
             if (bot) {
               _height = 256;
-            }
-            if (top) {
+              top = true;
+              bot = false;
+            } else if (top) {
               _height = 140;
+              top = false;
+              bot = true;
             }
           });
+          setState(() {});
         },
         child: Stack(alignment: AlignmentDirectional.center, children: [
           AnimatedPositioned(
@@ -183,15 +197,16 @@ class _VoteCardState extends State<VoteCard> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
+                  AnimatedContainer(
+                      duration: Duration(milliseconds: 100),
                       child: Transform.rotate(
-                    angle: top ? pi : 0,
-                    child: Icon(
-                      Icons.keyboard_arrow_down_rounded,
-                      color: Colors.black26,
-                      size: 35,
-                    ),
-                  )),
+                        angle: top ? pi : 0,
+                        child: Icon(
+                          Icons.keyboard_arrow_up_rounded,
+                          color: Colors.black26,
+                          size: 35,
+                        ),
+                      )),
                   Stack(
                     alignment: AlignmentDirectional.topEnd,
                     children: [

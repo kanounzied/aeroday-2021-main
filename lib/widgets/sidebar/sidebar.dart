@@ -1,4 +1,4 @@
-import 'package:aeroday_2021/screens/home.dart';
+import 'package:aeroday_2021/screens/home_screen/home.dart';
 import 'package:aeroday_2021/screens/vote_ac.dart';
 import 'package:aeroday_2021/screens/vote_vpd.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +23,7 @@ class SideBar extends StatefulWidget {
 }
 
 class _SideBarState extends State<SideBar> {
+  static const IconData air = IconData(0xe064, fontFamily: 'MaterialIcons');
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -50,7 +51,7 @@ class _SideBarState extends State<SideBar> {
                                   Container(
                                     margin: EdgeInsets.symmetric(horizontal: 7),
                                     child: Icon(
-                                      Icons.air,
+                                      air,
                                       color: red,
                                       size: 30,
                                     ),

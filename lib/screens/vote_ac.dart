@@ -221,10 +221,8 @@ class _VoteACState extends State<VoteAC> {
               .toString() +
           contestant.name);
       if (contestant.name.contains(input) ||
-              contestant.lastName.contains(
-                  input) /*||
-          (contestant.name + ' ' + contestant.lastName).contains(input)*/
-          ) {
+          contestant.lastName.contains(input) ||
+          (contestant.name + ' ' + contestant.lastName).contains(input)) {
         drawSearchList = true;
         _searchList.add(contestant);
         print(_searchList);
