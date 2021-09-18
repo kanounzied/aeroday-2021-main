@@ -1,6 +1,7 @@
 import 'package:aeroday_2021/config/responsive_size.dart';
 import 'package:aeroday_2021/widgets/dialog_reset_pwd/cercle_step.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class PwdDialog extends StatefulWidget {
   @override
@@ -8,9 +9,13 @@ class PwdDialog extends StatefulWidget {
 }
 
 class _PwdDialogState extends State<PwdDialog> {
+  String? passErrorMsg, confirmPassErrorMsg, verifCodeError;
+
   int nbStep = 1;
-  String pwd1 = "";
-  String pwd2 = "";
+  TextEditingController pwd1 = new TextEditingController();
+  TextEditingController pwd2 = new TextEditingController();
+  TextEditingController code = new TextEditingController();
+
   Widget contentBox(context) {
     return Container(
       padding: EdgeInsets.all(SizeConfig.defaultSize * 2.5),
@@ -55,91 +60,164 @@ class _PwdDialogState extends State<PwdDialog> {
             nbStep == 1
                 ? "We sent you an SMS with a verification code. \n Please insert that code."
                 : (nbStep == 2
-                ? "Insert your new password"
-                : "All set! Now go enjoy Aeroday 2021!"),
+                    ? "Insert your new password"
+                    : "All set! Now go enjoy Aeroday 2021!"),
             style: TextStyle(fontSize: SizeConfig.defaultSize * 1.4),
             textAlign: TextAlign.center,
           ),
           SizedBox(
             height: SizeConfig.defaultSize * 2.2,
           ),
-
-          nbStep == 1 ? Container(
-            height: SizeConfig.screenHeight * 0.08,
-            width: SizeConfig.screenWidth * 0.75,
-            child: TextFormField(
-              keyboardType: TextInputType.number,
-              cursorColor: Color(0xffd95252),
-              decoration: InputDecoration(
-                hintText: "Verification code",
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(32.0)),
-              ),
-              onChanged: (value) {
-                if (value.length == 6) {
-                  //send to firebase
-                }
-              },
-            ),
-          )
-              : (nbStep == 2 ?
-          Column(
-            children: [
-              Container(
-                height: SizeConfig.screenHeight * 0.08,
-                width: SizeConfig.screenWidth * 0.75,
-                child: TextFormField(
-                  obscureText: true,
-                  keyboardType: TextInputType.number,
-                  cursorColor: Color(0xffd95252),
-                  decoration: InputDecoration(
-                    hintText: "Enter password",
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(32.0)),
+          nbStep == 1
+              ? Container(
+                  height: SizeConfig.screenHeight * 0.08,
+                  width: SizeConfig.screenWidth * 0.75,
+                  child: TextFormField(
+                    keyboardType: TextInputType.number,
+                    cursorColor: Color(0xffd95252),
+                    maxLength: 6,
+                    controller: code,
+                    buildCounter: (
+                      BuildContext context, {
+                      required int currentLength,
+                      int? maxLength,
+                      required bool isFocused,
+                    }) =>
+                        null,
+                    decoration: InputDecoration(
+                      hintText: "Verification code",
+                      errorText: verifCodeError,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(32.0)),
+                    ),
                   ),
-                  onChanged: (value) {
-                    if (value.length == 6) {
-                      //send to firebase
-                    }
-                  },
-                ),
-              ),
-              SizedBox(height: SizeConfig.defaultSize,),
-              Container(
-                height: SizeConfig.screenHeight * 0.08,
-                width: SizeConfig.screenWidth * 0.75,
-                child: TextFormField(
-                  obscureText: true,
-                  cursorColor: Color(0xffd95252),
-                  decoration: InputDecoration(
-                    hintText: "Confirm password",
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(32.0)),
-                  ),
-                  onChanged: (value) {
-                    if (value.length == 6) {
-                      //send to firebase
-                    }
-                  },
-                ),
-              )
-            ],
-          )
-              : Container()
+                )
+              : (nbStep == 2
+                  ? Column(
+                      children: [
+                        Container(
+                          height: SizeConfig.screenHeight * 0.09,
+                          width: SizeConfig.screenWidth * 0.75,
+                          child: TextFormField(
+                            obscureText: true,
+                            controller: pwd1,
+                            onChanged: (text) {
+                              if (text != pwd2.text) {
+                                setState(() {
+                                  confirmPassErrorMsg = 'Password mismatch';
+                                });
+                              } else {
+                                setState(() {
+                                  confirmPassErrorMsg = null;
+                                });
+                              }
+                            },
+                            keyboardType: TextInputType.number,
+                            cursorColor: Color(0xffd95252),
+                            decoration: InputDecoration(
+                              //hintText: "Enter password",
+                              labelText: 'Your password',
+                              errorText: passErrorMsg,
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(32.0)),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: SizeConfig.defaultSize,
+                        ),
+                        Container(
+                          height: SizeConfig.screenHeight * 0.09,
+                          width: SizeConfig.screenWidth * 0.75,
+                          child: TextFormField(
+                            controller: pwd2,
+                            obscureText: true,
+                            cursorColor: Color(0xffd95252),
+                            onChanged: (text) {
+                              if (text != pwd1.text) {
+                                setState(() {
+                                  confirmPassErrorMsg = 'Password mismatch';
+                                });
+                              } else {
+                                setState(() {
+                                  confirmPassErrorMsg = null;
+                                });
+                              }
+                            },
+                            decoration: InputDecoration(
+                              //hintText: 'Confirm password',
+                              labelText: 'Confirm your password',
+                              errorText: confirmPassErrorMsg,
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(32.0)),
+                            ),
+                          ),
+                        )
+                      ],
+                    )
+                  : Container()),
+          SizedBox(
+            height: SizeConfig.defaultSize,
           ),
-
-          SizedBox(height: SizeConfig.defaultSize,),
           Align(
             alignment: Alignment.bottomRight,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 primary: Color(0xffd95252),
               ),
-              onPressed: () {
+              onPressed: () async {
                 if (nbStep < 3) {
-                  if(pwd1 == pwd2 && !pwd1.isEmpty && nbStep == 2){
-                    //Firebase pwd reset
-                    }
+                  switch (nbStep) {
+                    case 1:
+                      {
+                        // await FirebaseAuth.instance.verifyPhoneNumber(
+                        //   phoneNumber: '+216 95262865',
+                        //   codeSent: (String verificationId,
+                        //       int? forceResendingToken) async {
+                        //     print("hi");
+                        //     PhoneAuthCredential credential =
+                        //         PhoneAuthProvider.credential(
+                        //             verificationId: verificationId,
+                        //             smsCode: "123456");
+                        //     try {
+                        //       await FirebaseAuth.instance
+                        //           .signInWithCredential(credential);
+                        //     } on FirebaseAuthException catch (e) {
+                        //       if (e.code == "invalid-verification-code") {
+                        //         // TODO : invalid code handle
+                        //         print("Invalid code");
+                        //         return;
+                        //       }
+                        //     }
+                        //   },
+                        //   verificationCompleted:
+                        //       (PhoneAuthCredential phoneAuthCredential) {},
+                        //   verificationFailed: (FirebaseAuthException error) {},
+                        //   codeAutoRetrievalTimeout: (String verificationId) {},
+                        // );
+                        break;
+                      }
+                    case 2:
+                      {
+                        if (pwd1.text != pwd2.text) {
+                          return;
+                        }
+                        if (!RegExp("(?=.*[0-9a-zA-Z]).{6,}")
+                            .hasMatch(pwd1.text)) {
+                          setState(() {
+                            passErrorMsg =
+                                "Weak password - At least 6 characters";
+                          });
+                          return;
+                        }
+
+                        await FirebaseAuth.instance.currentUser
+                            ?.updatePassword(pwd1.text);
+
+                        break;
+                      }
+                  }
+
                   setState(() {
                     nbStep++;
                   });

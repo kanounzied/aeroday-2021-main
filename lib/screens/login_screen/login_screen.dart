@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 
 import 'package:aeroday_2021/screens/home_screen/home.dart';
+import 'package:aeroday_2021/widgets/dialog_reset_pwd/dialog_reset_pwd.dart';
 
 import '../../config/responsive_size.dart';
 
@@ -349,35 +350,7 @@ class _LoginScreen extends State<LoginScreen> {
                                 // Password lost click
                                 print("pass lost");
 
-                                await FirebaseAuth.instance.verifyPhoneNumber(
-                                  phoneNumber: '+216 95262865',
-                                  codeSent: (String verificationId,
-                                      int? forceResendingToken) async {
-                                    print("hi");
-                                    PhoneAuthCredential credential =
-                                        PhoneAuthProvider.credential(
-                                            verificationId: verificationId,
-                                            smsCode: "123456");
-
-                                    try {
-                                      await FirebaseAuth.instance
-                                          .signInWithCredential(credential);
-                                    } on FirebaseAuthException catch (e) {
-                                      if (e.code ==
-                                          "invalid-verification-code") {
-                                        // TODO : invalid code handle
-                                        print("Invalid code");
-                                        return;
-                                      }
-                                    }
-                                  },
-                                  verificationCompleted: (PhoneAuthCredential
-                                      phoneAuthCredential) {},
-                                  verificationFailed:
-                                      (FirebaseAuthException error) {},
-                                  codeAutoRetrievalTimeout:
-                                      (String verificationId) {},
-                                );
+                                DialogResetPwd(context);
                               },
                               child: Text(
                                 "Mot de passe oublier?",
