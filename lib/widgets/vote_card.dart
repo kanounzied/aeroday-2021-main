@@ -1,92 +1,17 @@
-/*import 'package:aeroday_2021/constants/app_constants.dart';
-import 'package:aeroday_2021/services/contestant_info.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
-
-class VoteCard extends StatefulWidget {
-  const VoteCard({Key? key}) : super(key: key);
-
-  @override
-  _VoteCardState createState() => _VoteCardState();
-}
-
-double height = 256;
-double widthRatio = 0.8;
-
-class _VoteCardState extends State<VoteCard> {
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedContainer(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-        color: red,
-      ),
-      duration: Duration(
-        milliseconds: 200,
-      ),
-      curve: Curves.easeInExpo,
-      margin: EdgeInsets.symmetric(
-          horizontal: MediaQuery.of(context).size.width * (1 - widthRatio) / 2),
-      height: height,
-      width: MediaQuery.of(context).size.width * widthRatio,
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Column(
-                children: [
-                  Text(
-                    "name here",
-                  ),
-                  Text(
-                    "something here",
-                  ),
-                  Text(
-                    "something else here",
-                  ),
-                ],
-              ),
-              Container(
-                width: 100,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                      image: NetworkImage('https://picsum.photos/100'),
-                      fit: BoxFit.fill),
-                ),
-              ),
-              // CachedNetworkImage(
-              //   imageUrl: "http://via.placeholder.acom/200",
-              //   width: 100,
-              //   placeholder: (context, url) => CircularProgressIndicator(),
-              //   errorWidget: (context, url, error) => Icon(Icons.error),
-              // ),
-            ],
-          )
-        ],
-      ),
-    );
-  }
-}
-
-*/
-
 import 'dart:math';
-
+import 'package:aeroday_2021/screens/login_screen/login_screen.dart';
 import 'package:aeroday_2021/services/contestant_info.dart';
 import 'package:flutter/material.dart';
-
-bool isVoted = false;
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class VoteCard extends StatefulWidget {
   @override
   Function onVoted;
-  //Duration timePlaying;
   ContestantInfo contInfo;
   VoteCard({
     required this.onVoted,
     required this.contInfo,
-    /*required this.timePlaying*/
   });
 
   _VoteCardState createState() => _VoteCardState();
@@ -95,25 +20,17 @@ class VoteCard extends StatefulWidget {
 class _VoteCardState extends State<VoteCard> {
   double initPress = 0;
   double _height = 140;
+  bool userHasVoted = false;
 
   bool bot = false, top = false;
+
+  User? user = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
     double sHeight = MediaQuery.of(context).size.height;
     double sWidth = MediaQuery.of(context).size.width;
     double currPos = 0;
-    String status = '';
-    switch (widget.contInfo.status) {
-      case 0:
-        status = 'Haven\'t Played Yet...';
-        break;
-      case 1:
-        status = 'Playing for ';
-        break;
-      case 2:
-        status = 'Finished Playing ';
-        break;
-    }
     return Center(
       child: GestureDetector(
         onPanDown: (det) {
@@ -221,7 +138,9 @@ class _VoteCardState extends State<VoteCard> {
                                 Container(
                                   width: 245,
                                   child: Text(
-                                    '${widget.contInfo.name}',
+                                    '${widget.contInfo.name}' +
+                                        ' ' +
+                                        '${widget.contInfo.lastName}',
                                     style: TextStyle(
                                       fontSize: 25,
                                       fontWeight: FontWeight.bold,
@@ -240,17 +159,7 @@ class _VoteCardState extends State<VoteCard> {
                                   width: 30,
                                 ),
                                 Text(
-                                  '$status',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Color(0xFF323A40),
-                                  ),
-                                ),
-                                Text(
-                                  widget.contInfo.status == 1 ? 'a' : '',
-                                ),
-                                Text(
-                                  widget.contInfo.status == 1 ? ' minutes' : '',
+                                  'Team: ${widget.contInfo.teamName}',
                                   style: TextStyle(
                                     fontSize: 14,
                                     color: Color(0xFF323A40),
@@ -258,25 +167,6 @@ class _VoteCardState extends State<VoteCard> {
                                 ),
                               ],
                             ), //playin for
-                            Container(
-                                margin: EdgeInsets.only(left: 30, top: 7),
-                                child: RichText(
-                                    text: TextSpan(children: [
-                                  TextSpan(
-                                      text: 'Votes : ',
-                                      style: TextStyle(
-                                        color: Color(0x99323A40),
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w300,
-                                      )),
-                                  TextSpan(
-                                      text: '${widget.contInfo.votes}%',
-                                      style: TextStyle(
-                                        color: Color(0xFF323A40),
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400,
-                                      )),
-                                ]))) //vote:%
                           ],
                         ),
                       ), //infoText
@@ -308,6 +198,7 @@ class _VoteCardState extends State<VoteCard> {
                   SizedBox(
                     height: 30,
                   ),
+<<<<<<< HEAD
                   //button
                   GestureDetector(
                     onTap: () {
@@ -357,6 +248,59 @@ class _VoteCardState extends State<VoteCard> {
                         );
                       }
                     },
+=======
+                  /* VoteButton(
+                    isVoted: userHasVoted,
+                    clickButton: (v) {
+                      if (FirebaseAuth.instance.currentUser != null) {
+                        v = !v;
+                        setState(() {});
+                      } else {
+                        AlertDialog(
+                          content: Text('You must be logged in to vote!'),
+                        );
+                      }
+                    },
+                  ),*/
+                  //button
+                  GestureDetector(
+                    onTap: () {
+                      if (FirebaseAuth.instance.currentUser != null) {
+                        userHasVoted = !userHasVoted;
+                        setState(() {});
+                      } else {
+                        print('couldnt vote');
+                        showDialog(
+                          context: context,
+                          builder: (c) {
+                            return AlertDialog(
+                              title: Text('Verification error:'),
+                              content: Text('You must be signed in to vote!'),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.of(c).pop();
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  LoginScreen()));
+                                    },
+                                    child: const Text('Sign in')),
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(c, 'Dismiss');
+                                    },
+                                    child: const Text('Dismiss')),
+                              ],
+                              elevation: 21,
+                            );
+                          },
+                          barrierDismissible: true,
+                        );
+                      }
+                    },
+>>>>>>> a249433e687c237bffc278e19cb2f338b4662511
                     child: AnimatedContainer(
                       width: MediaQuery.of(context).size.width * 0.65,
                       height: 70,
@@ -389,5 +333,9 @@ class _VoteCardState extends State<VoteCard> {
         ]),
       ),
     );
+  }
+
+  Future<void> _updateVoteforUser() async {
+    print('todo update vote status for user and contestant');
   }
 }

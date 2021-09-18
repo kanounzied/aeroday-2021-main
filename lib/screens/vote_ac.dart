@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:aeroday_2021/services/contestant_info.dart';
 import 'package:aeroday_2021/widgets/vote_card.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:aeroday_2021/constants/app_constants.dart';
 import 'package:aeroday_2021/widgets/search_bar.dart';
@@ -22,56 +23,56 @@ class _VoteACState extends State<VoteAC> {
       name: 'abc',
       lastName: 'devf',
       imageUrl: "https://picsum.photos/200",
-      status: 1,
-      votes: 5,
+      teamName: 'Dream Team 54',
     ),
     ContestantInfo(
       name: 'kiki',
       lastName: 'vwby',
       imageUrl: 'https://picsum.photos/200',
-      status: 0,
-      votes: 5,
+      teamName: 'Dream Team 54',
     ),
     ContestantInfo(
       name: 'bezera',
       lastName: 'zerqa',
       imageUrl: 'https://picsum.photos/200',
-      status: 0,
-      votes: 5,
+      teamName: 'Dream Team 54',
     ),
     ContestantInfo(
       name: 'kamki',
       lastName: 'hkh',
       imageUrl: 'https://picsum.photos/200',
-      status: 0,
-      votes: 5,
+      teamName: 'Dream Team 54',
     ),
     ContestantInfo(
       name: 'bmmma',
       lastName: 'eqsdfzqa',
       imageUrl: 'https://picsum.photos/200',
-      status: 0,
-      votes: 5,
+      teamName: 'Dream Team 54',
     ),
     ContestantInfo(
       name: 'iyzzki',
       lastName: 'zhjky',
       imageUrl: 'https://picsum.photos/200',
-      status: 0,
-      votes: 5,
+      teamName: 'Dream Team 54',
     ),
     ContestantInfo(
       name: 'gfra',
       lastName: 'egkjhqa',
       imageUrl: 'https://picsum.photos/200',
-      status: 0,
-      votes: 5,
+      teamName: 'Dream Team 54',
     ),
   ]; //hardcoded list for testing (will be replaced with getContestantDetails() functionnality, eventually, maybe, one day..)
   List<ContestantInfo> _searchList = [];
 
   Future<Null> getContestantDetails() async {
-    final response; //TODO:Get the list of contestants and store it in responce
+    dynamic collectionStream = FirebaseFirestore.instance
+        .collection('contestant')
+        .get()
+        .then((QuerySnapshot querySnapshot) => {
+              querySnapshot.docs.forEach((doc) {
+                print(doc.data());
+              })
+            }); //TODO:Get the list of contestants and store it in responce
     setState(() {
       /* for (Map user in response) {
         _contestantsList.add(ContestantInfo.fromMap(user));
