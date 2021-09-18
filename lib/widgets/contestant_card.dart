@@ -108,10 +108,14 @@ class _ContestantCardState extends State<ContestantCard> {
                         margin: EdgeInsets.only(top: 5, left: 4),
                         child: Text(
 <<<<<<< HEAD
+<<<<<<< HEAD
                           'Team: ' + widget.contestantInfo.teamName,
 =======
                           'Team Name: ' + widget.contestantInfo.teamName,
 >>>>>>> a249433e687c237bffc278e19cb2f338b4662511
+=======
+                          'Team: ' + widget.contestantInfo.teamName,
+>>>>>>> 5e3fece (ceci est une situation critique)
                           style: TextStyle(
                             color: light,
                             fontSize: 14,

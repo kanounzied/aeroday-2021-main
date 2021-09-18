@@ -199,6 +199,9 @@ class _VoteCardState extends State<VoteCard> {
                     height: 30,
                   ),
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 5e3fece (ceci est une situation critique)
                   //button
                   GestureDetector(
                     onTap: () {
@@ -247,6 +250,7 @@ class _VoteCardState extends State<VoteCard> {
                           barrierDismissible: true,
                         );
                       }
+<<<<<<< HEAD
                     },
 =======
                   /* VoteButton(
@@ -301,6 +305,9 @@ class _VoteCardState extends State<VoteCard> {
                       }
                     },
 >>>>>>> a249433e687c237bffc278e19cb2f338b4662511
+=======
+                    },
+>>>>>>> 5e3fece (ceci est une situation critique)
                     child: AnimatedContainer(
                       width: MediaQuery.of(context).size.width * 0.65,
                       height: 70,
