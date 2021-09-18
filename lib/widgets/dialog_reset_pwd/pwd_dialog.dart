@@ -137,8 +137,9 @@ class _PwdDialogState extends State<PwdDialog> {
               ),
               onPressed: () {
                 if (nbStep < 3) {
-                  if(pwd1 == pwd2 && !pwd1.isEmpty && nbStep == 2)
+                  if(pwd1 == pwd2 && !pwd1.isEmpty && nbStep == 2){
                     //Firebase pwd reset
+                    }
                   setState(() {
                     nbStep++;
                   });

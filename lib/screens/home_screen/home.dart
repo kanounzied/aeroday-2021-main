@@ -43,7 +43,7 @@ class _HomeState extends State<HomeScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            //DialogResetPwd(), THIS CALLS THE DIALOG
+            //DialogResetPwd(), //THIS CALLS THE DIALOG
             // Line seperator
             Center(
               child: Container(
