@@ -8,6 +8,8 @@ import 'package:firebase_core/firebase_core.dart';
 
 import 'package:aeroday_2021/screens/signup_screen/signup_screen.dart';
 
+// import 'package:flutter_safetynet_attestation/flutter_safetynet_attestation.dart';
+
 void main() {
   runApp(Home());
 }
@@ -58,7 +60,7 @@ class _AppState extends State<MyApp> {
               debugShowCheckedModeBanner: false,
               initialRoute: '/home',
               routes: {
-                '/home': (context) => HomeScreen(),
+                '/home': (context) => SignUpScreen(),
                 '/voteAC': (context) => VoteAC(),
                 '/voteVPD': (context) => VoteVPD(),
               });
