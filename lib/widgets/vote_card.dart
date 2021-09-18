@@ -22,7 +22,7 @@ class VoteCard extends StatefulWidget {
 class _VoteCardState extends State<VoteCard> {
   double initPress = 0;
   double _height = 140;
-  bool userHasVoted = false;
+  String userHasVoted = '';
 
   bool bot = false, top = false;
 
@@ -205,7 +205,7 @@ class _VoteCardState extends State<VoteCard> {
                   ),
                   //button
                   GestureDetector(
-                    onTap: () {
+                    onTap: () async {
                       if (user != null) {
                         DocumentReference selectedContestantDoc =
                             FirebaseFirestore.instance
@@ -213,16 +213,19 @@ class _VoteCardState extends State<VoteCard> {
                                 .doc(widget.contInfo.id);
 
                         DocumentReference userDoc = FirebaseFirestore.instance
-                            .collection('user')
+                            .collection('users')
                             .doc(user?.uid);
 
-                        userDoc.get().then((DocumentSnapshot ds) {
+                        userDoc.get().then((DocumentSnapshot ds) async {
                           String voteID = ds.get(
                             FieldPath(['voteID']),
                           );
 
+                          print("ID: " + widget.contInfo.id.toString());
+
                           if (voteID == widget.contInfo.id) {
-                            userHasVoted = !userHasVoted;
+                            userHasVoted = '';
+                            setState(() {});
                             //change user field voteid and decrement votes for contestant
                             userDoc.update(
                               {'voteID': ''},
@@ -265,10 +268,11 @@ class _VoteCardState extends State<VoteCard> {
                               );
                             });
                             //update voteid
-                            userDoc.update(
-                              {'voteID': voteID},
+                            await userDoc.update(
+                              {'voteID': widget.contInfo.id},
                             );
-                            userHasVoted = true;
+                            userHasVoted = widget.contInfo.id;
+                            setState(() {});
                           }
                         });
                       } else {
@@ -314,11 +318,13 @@ class _VoteCardState extends State<VoteCard> {
                           width: 4,
                         ),
                         borderRadius: BorderRadius.all(Radius.circular(7)),
-                        color: Color(userHasVoted ? 0xFF323A40 : 0xFFFFFFFF),
+                        color: Color(userHasVoted == widget.contInfo.id
+                            ? 0xFF323A40
+                            : 0xFFFFFFFF),
                       ),
                       child: Center(
                         child: Text(
-                          'VOTE${userHasVoted ? 'D' : ''}',
+                          'VOTE${userHasVoted == widget.contInfo.id ? 'D' : ''}',
                           style: TextStyle(
                             color: Color(0xFF51A678),
                             fontSize: 26,
