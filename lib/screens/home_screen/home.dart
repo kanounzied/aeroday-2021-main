@@ -1,4 +1,5 @@
 import 'package:aeroday_2021/constants/app_constants.dart';
+import 'file:///C:/Users/Asus%20TUF/Desktop/aeroday-2021-main/lib/widgets/dialog_reset_pwd/dialog_reset_pwd.dart';
 import 'package:aeroday_2021/widgets/sidebar/sidebar.dart';
 import 'package:flutter/material.dart';
 
@@ -42,6 +43,7 @@ class _HomeState extends State<HomeScreen> {
       body: SafeArea(
         child: Column(
           children: [
+            DialogResetPwd(),
             // Line seperator
             Center(
               child: Container(
