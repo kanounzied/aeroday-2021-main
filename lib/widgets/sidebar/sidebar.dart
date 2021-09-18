@@ -51,8 +51,8 @@ class _SideBarState extends State<SideBar> {
                                   Container(
                                     margin: EdgeInsets.symmetric(horizontal: 7),
                                     child: Icon(
-                                      air,
-                                      color: red,
+                                      Icons.airplanemode_active_rounded, // TODO: change the icon, fdha7tna
+                                      color: Colors.red, //TODO: Change the color, fdha7tna
                                       size: 30,
                                     ),
                                   ),
