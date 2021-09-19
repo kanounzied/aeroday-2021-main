@@ -11,7 +11,7 @@ class PwdDialog extends StatefulWidget {
 class _PwdDialogState extends State<PwdDialog> {
   String? passErrorMsg, confirmPassErrorMsg, verifCodeError;
 
-  int nbStep = 1;
+  int nbStep = 0;
   TextEditingController pwd1 = new TextEditingController();
   TextEditingController pwd2 = new TextEditingController();
   TextEditingController code = new TextEditingController();
@@ -34,7 +34,11 @@ class _PwdDialogState extends State<PwdDialog> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            CercleStep(1, true),
+            CercleStep(0, true),
+            SizedBox(
+              width: SizeConfig.defaultSize * 2.5,
+            ),
+            CercleStep(1, nbStep > 0),
             SizedBox(
               width: SizeConfig.defaultSize * 2.5,
             ),
@@ -57,8 +61,8 @@ class _PwdDialogState extends State<PwdDialog> {
             height: SizeConfig.defaultSize * 1.5,
           ),
           Text(
-            nbStep == 1
-                ? "We sent you an SMS with a verification code. \n Please insert that code."
+            nbStep == 1 || nbStep == 0
+                ? (nbStep == 1 ? "We sent you an SMS with a verification code. \n Please insert that code." : "Please insert your phone number.")
                 : (nbStep == 2
                     ? "Insert your new password"
                     : "All set! Now go enjoy Aeroday 2021!"),
@@ -68,7 +72,7 @@ class _PwdDialogState extends State<PwdDialog> {
           SizedBox(
             height: SizeConfig.defaultSize * 2.2,
           ),
-          nbStep == 1
+          nbStep == 1 || nbStep == 0
               ? Container(
                   height: SizeConfig.screenHeight * 0.08,
                   width: SizeConfig.screenWidth * 0.75,
@@ -85,7 +89,7 @@ class _PwdDialogState extends State<PwdDialog> {
                     }) =>
                         null,
                     decoration: InputDecoration(
-                      hintText: "Verification code",
+                      hintText: nbStep == 1 ? "Verification code" : "Your phone number",
                       errorText: verifCodeError,
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(32.0)),

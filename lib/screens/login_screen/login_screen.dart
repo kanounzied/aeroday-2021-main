@@ -353,7 +353,7 @@ class _LoginScreen extends State<LoginScreen> {
                                 DialogResetPwd(context);
                               },
                               child: Text(
-                                "Mot de passe oublier?",
+                                "Mot de passe oublié?",
                                 style: TextStyle(
                                   color: Color(0xFF519DA6),
                                   decoration: TextDecoration.underline,
