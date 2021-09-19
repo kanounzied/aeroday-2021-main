@@ -274,7 +274,7 @@ class _SignUpScreen extends State<SignUpScreen> {
             return new AlertDialog(
                 title: Text("Erreur d'inscription"),
                 content: SizedBox(
-                  height: SizeConfig.screenHeight * 0.13,
+                  height: SizeConfig.screenHeight * 0.15,
                   child: Column(
                     children: <Widget>[
                       Text("Votre mot de passe est faible."),
@@ -377,7 +377,8 @@ class _SignUpScreen extends State<SignUpScreen> {
                     height: SizeConfig.screenHeight * 0.17,
                     child: Column(
                       children: <Widget>[
-                        Text("Erreur inconnue au cour d'inscription!"),
+                        Text(
+                            "Erreur inconnue au cour d'inscription! " + e.code),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
