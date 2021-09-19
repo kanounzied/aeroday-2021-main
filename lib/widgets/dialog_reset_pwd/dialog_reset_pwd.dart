@@ -1,11 +1,11 @@
 import 'package:aeroday_2021/widgets/dialog_reset_pwd/pwd_dialog.dart';
 import 'package:flutter/material.dart';
 
-void DialogResetPwd(context) {
-  showDialog(
+Future<void> dialogResetPwd(context, String loginNumber) async {
+  await showDialog(
     context: context,
     builder: (BuildContext context) {
-      return PwdDialog();
+      return PwdDialog(loginNumber);
     },
   );
 }

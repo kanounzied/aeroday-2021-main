@@ -4,17 +4,31 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class PwdDialog extends StatefulWidget {
+  String loginNumber = '';
+  PwdDialog(this.loginNumber);
+
   @override
-  _PwdDialogState createState() => _PwdDialogState();
+  _PwdDialogState createState() => _PwdDialogState(this.loginNumber);
 }
 
 class _PwdDialogState extends State<PwdDialog> {
   String? passErrorMsg, confirmPassErrorMsg, verifCodeError;
 
+  String verifId = '';
+  bool codeInputEnabled = false;
+
   int nbStep = 0;
+
   TextEditingController pwd1 = new TextEditingController();
   TextEditingController pwd2 = new TextEditingController();
-  TextEditingController code = new TextEditingController();
+  TextEditingController codeController = new TextEditingController();
+
+  int attempts = 0;
+  static const int MAX_ATTEMPTS = 4;
+
+  _PwdDialogState(loginNumber) {
+    codeController.text = loginNumber;
+  }
 
   Widget contentBox(context) {
     return Container(
@@ -62,7 +76,9 @@ class _PwdDialogState extends State<PwdDialog> {
           ),
           Text(
             nbStep == 1 || nbStep == 0
-                ? (nbStep == 1 ? "We sent you an SMS with a verification code. \n Please insert that code." : "Please insert your phone number.")
+                ? (nbStep == 1
+                    ? "We sent you an SMS with a verification code. \n Please insert that code."
+                    : "Please insert your phone number.")
                 : (nbStep == 2
                     ? "Insert your new password"
                     : "All set! Now go enjoy Aeroday 2021!"),
@@ -74,13 +90,32 @@ class _PwdDialogState extends State<PwdDialog> {
           ),
           nbStep == 1 || nbStep == 0
               ? Container(
-                  height: SizeConfig.screenHeight * 0.08,
+                  height: SizeConfig.screenHeight * 0.09,
                   width: SizeConfig.screenWidth * 0.75,
                   child: TextFormField(
                     keyboardType: TextInputType.number,
                     cursorColor: Color(0xffd95252),
-                    maxLength: 6,
-                    controller: code,
+                    maxLength: nbStep == 0 ? 8 : 6,
+                    controller: codeController,
+                    onChanged: (value) async {
+                      if (nbStep == 0) {
+                        setState(() {
+                          verifCodeError = null;
+                        });
+                      } else if (nbStep == 1 &&
+                          value.length <= 5 &&
+                          verifCodeError != null) {
+                        setState(() {
+                          verifCodeError = null;
+                        });
+                      } else if (nbStep == 1 &&
+                          value.length == 6 &&
+                          verifCodeError ==
+                              null) if (await handleCodeVerificationAndSignin())
+                        setState(() {
+                          nbStep = 2;
+                        });
+                    },
                     buildCounter: (
                       BuildContext context, {
                       required int currentLength,
@@ -89,7 +124,10 @@ class _PwdDialogState extends State<PwdDialog> {
                     }) =>
                         null,
                     decoration: InputDecoration(
-                      hintText: nbStep == 1 ? "Verification code" : "Your phone number",
+                      labelText: nbStep == 1
+                          ? "Verification code"
+                          : "Your phone number",
+                      enabled: nbStep == 1 ? codeInputEnabled : true,
                       errorText: verifCodeError,
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(32.0)),
@@ -166,69 +204,107 @@ class _PwdDialogState extends State<PwdDialog> {
           Align(
             alignment: Alignment.bottomRight,
             child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Color(0xffd95252),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.resolveWith(
+                  (states) {
+                    if (states.contains(MaterialState.disabled)) {
+                      return Colors.grey;
+                    } else {
+                      return Color(0xffd95252);
+                    }
+                  },
+                ),
               ),
-              onPressed: () async {
-                if (nbStep < 3) {
-                  switch (nbStep) {
-                    case 1:
-                      {
-                        // await FirebaseAuth.instance.verifyPhoneNumber(
-                        //   phoneNumber: '+216 95262865',
-                        //   codeSent: (String verificationId,
-                        //       int? forceResendingToken) async {
-                        //     print("hi");
-                        //     PhoneAuthCredential credential =
-                        //         PhoneAuthProvider.credential(
-                        //             verificationId: verificationId,
-                        //             smsCode: "123456");
-                        //     try {
-                        //       await FirebaseAuth.instance
-                        //           .signInWithCredential(credential);
-                        //     } on FirebaseAuthException catch (e) {
-                        //       if (e.code == "invalid-verification-code") {
-                        //         // TODO : invalid code handle
-                        //         print("Invalid code");
-                        //         return;
-                        //       }
-                        //     }
-                        //   },
-                        //   verificationCompleted:
-                        //       (PhoneAuthCredential phoneAuthCredential) {},
-                        //   verificationFailed: (FirebaseAuthException error) {},
-                        //   codeAutoRetrievalTimeout: (String verificationId) {},
-                        // );
-                        break;
-                      }
-                    case 2:
-                      {
-                        if (pwd1.text != pwd2.text) {
-                          return;
+              onPressed: nbStep == 1 && verifId == ''
+                  ? null
+                  : () async {
+                      if (nbStep < 3) {
+                        switch (nbStep) {
+                          case 0:
+                            {
+                              if (!validateNumber(codeController.text)) {
+                                setState(() {
+                                  verifCodeError = "Invalid phone number";
+                                });
+                                return;
+                              }
+
+                              List<String> l = await FirebaseAuth.instance
+                                  .fetchSignInMethodsForEmail(
+                                      codeController.text + "@gmail.com");
+                              if (l.length == 0) {
+                                setState(() {
+                                  verifCodeError = "Phone number isn't used";
+                                });
+                                return;
+                              }
+                              await FirebaseAuth.instance.verifyPhoneNumber(
+                                phoneNumber: '+216' + codeController.text,
+                                codeSent: (String verificationId,
+                                    int? resendingToken) {
+                                  setState(() {
+                                    verifId = verificationId;
+                                    codeInputEnabled = true;
+                                  });
+                                },
+                                verificationCompleted: (PhoneAuthCredential
+                                    phoneAuthCredential) async {
+                                  setState(() {
+                                    nbStep = 2;
+                                  });
+                                  await FirebaseAuth.instance
+                                      .signInWithCredential(
+                                    phoneAuthCredential,
+                                  );
+                                },
+                                verificationFailed:
+                                    (FirebaseAuthException error) {},
+                                codeAutoRetrievalTimeout:
+                                    (String verificationId) {},
+                              );
+                              codeController.clear();
+                              setState(() {
+                                nbStep = 1;
+                              });
+                              break;
+                            }
+                          case 1:
+                            {
+                              if (await handleCodeVerificationAndSignin())
+                                setState(() {
+                                  nbStep = 2;
+                                });
+                              break;
+                            }
+                          case 2:
+                            {
+                              if (pwd1.text != pwd2.text) {
+                                return;
+                              }
+                              if (!RegExp("(?=.*[0-9a-zA-Z]).{6,}")
+                                  .hasMatch(pwd1.text)) {
+                                setState(() {
+                                  passErrorMsg =
+                                      "Weak password - At least 6 characters";
+                                });
+                                return;
+                              }
+
+                              await FirebaseAuth.instance.currentUser
+                                  ?.updatePassword(pwd1.text);
+
+                              setState(() {
+                                nbStep = 3;
+                              });
+
+                              break;
+                            }
                         }
-                        if (!RegExp("(?=.*[0-9a-zA-Z]).{6,}")
-                            .hasMatch(pwd1.text)) {
-                          setState(() {
-                            passErrorMsg =
-                                "Weak password - At least 6 characters";
-                          });
-                          return;
-                        }
-
-                        await FirebaseAuth.instance.currentUser
-                            ?.updatePassword(pwd1.text);
-
-                        break;
+                      } else {
+                        Navigator.pop(context);
+                        setState(() {});
                       }
-                  }
-
-                  setState(() {
-                    nbStep++;
-                  });
-                } else {
-                  Navigator.pop(context);
-                }
-              },
+                    },
               child: Text(
                 nbStep == 3 ? "Let's go!" : "Next",
                 style: TextStyle(fontSize: SizeConfig.defaultSize * 1.8),
@@ -250,5 +326,53 @@ class _PwdDialogState extends State<PwdDialog> {
       backgroundColor: Colors.transparent,
       child: contentBox(context),
     );
+  }
+
+  bool validateNumber(String number) {
+    number = number.replaceAll(' ', '');
+    return RegExp("[0-9]").hasMatch(number) && number.length == 8;
+  }
+
+  Future<bool> handleCodeVerificationAndSignin() async {
+    // Disable input field while verifying
+    setState(() {
+      codeInputEnabled = false;
+    });
+
+    attempts++;
+    if (attempts > MAX_ATTEMPTS) {
+      setState(() {
+        verifCodeError = "Max attempts exceeded!";
+      });
+      // Keep input field disabled
+      return false;
+    }
+
+    PhoneAuthCredential credential = PhoneAuthProvider.credential(
+      verificationId: verifId,
+      smsCode: codeController.text,
+    );
+
+    try {
+      await FirebaseAuth.instance.signInWithCredential(credential);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "invalid-verification-code") {
+        setState(() {
+          verifCodeError = "Invalid code - Attempt " +
+              attempts.toString() +
+              "/" +
+              MAX_ATTEMPTS.toString();
+        });
+        print("Invalid code");
+        setState(() {
+          codeInputEnabled = true;
+        });
+        return false;
+      }
+    }
+    setState(() {
+      codeInputEnabled = true;
+    });
+    return true;
   }
 }

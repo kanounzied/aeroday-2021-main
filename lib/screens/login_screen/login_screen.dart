@@ -350,7 +350,21 @@ class _LoginScreen extends State<LoginScreen> {
                                 // Password lost click
                                 print("pass lost");
 
-                                DialogResetPwd(context);
+                                await dialogResetPwd(
+                                    context, emailController.text);
+                                print("back");
+
+                                if (FirebaseAuth.instance.currentUser != null) {
+                                  // Already logged in
+                                  Future(() {
+                                    Navigator.pop(context);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                HomeScreen()));
+                                  });
+                                }
                               },
                               child: Text(
                                 "Mot de passe oublié?",
