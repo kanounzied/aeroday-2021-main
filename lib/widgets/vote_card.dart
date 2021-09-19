@@ -30,6 +30,18 @@ class _VoteCardState extends State<VoteCard> {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(user?.uid)
+        .get()
+        .then((DocumentSnapshot ds) {
+      setState(() {
+        userHasVoted = ds.get(
+          FieldPath(['voteID']),
+        );
+      });
+    });
+
     double sHeight = MediaQuery.of(context).size.height;
     double sWidth = MediaQuery.of(context).size.width;
     double currPos = 0;
