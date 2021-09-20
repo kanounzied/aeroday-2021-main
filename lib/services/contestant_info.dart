@@ -6,12 +6,14 @@ class ContestantInfo {
   String lastName;
   String teamName;
   String id;
+  int votes;
   ContestantInfo({
     required this.name,
     required this.lastName,
     required this.teamName,
     required this.imageUrl,
     required this.id,
+    required this.votes,
   });
 
   //returns a ContestantInfo() object filled with data from the map r
@@ -23,6 +25,7 @@ class ContestantInfo {
       imageUrl: r['imageUrl'],
       teamName: r['teamName'],
       id: id,
+      votes: r['votes'],
     );
   }
 }

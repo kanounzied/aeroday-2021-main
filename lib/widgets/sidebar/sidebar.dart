@@ -10,9 +10,10 @@ String runningEvent = 'Aerochallenge';
 int userId = 45416;
 const List<String> pageNames = [
   'Home',
-  'Aerochallenge',
-  'Videographie par drone'
-];
+  'Aérochallenge',
+  'Videographie par drone',
+  'Leaderboard'
+]; //add pagename here to add a button
 
 int pageNumbers = 3;
 int selectedIndex = 0;
@@ -51,8 +52,10 @@ class _SideBarState extends State<SideBar> {
                                   Container(
                                     margin: EdgeInsets.symmetric(horizontal: 7),
                                     child: Icon(
-                                      Icons.airplanemode_active_rounded, // TODO: change the icon, fdha7tna
-                                      color: Colors.red, //TODO: Change the color, fdha7tna
+                                      Icons
+                                          .airplanemode_active_rounded, // TODO: change the icon, fdha7tna
+                                      color: Colors
+                                          .red, //TODO: Change the color, fdha7tna
                                       size: 30,
                                     ),
                                   ),
@@ -137,6 +140,8 @@ class _SideBarState extends State<SideBar> {
         case 2:
           route = '/voteVPD';
           break;
+        case 3:
+          route = '/leaderboard';
       }
       return route;
     }

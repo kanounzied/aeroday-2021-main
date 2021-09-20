@@ -52,8 +52,10 @@ class _ButtonState extends State<Button> {
       case 'Home':
         return Icons.home_rounded;
       case 'Videographie par drone':
-      case 'Aerochallenge':
+      case 'Aérochallenge':
         return Icons.how_to_vote_rounded;
+      case 'Leaderboard':
+        return Icons.leaderboard_rounded;
       default:
         return Icons.error_outline;
     }

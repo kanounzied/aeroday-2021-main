@@ -14,20 +14,37 @@ class _VoteVPDState extends State<VoteVPD> {
       backgroundColor: dark,
       body: Builder(
         builder: (BuildContext c) => SafeArea(
-          child: IconButton(
-            onPressed: () {
-              setState(() {
-                Scaffold.of(c).openDrawer();
-              });
-            },
-            icon: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Icon(
-                Icons.menu_rounded,
-                size: 40,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              IconButton(
+                padding: const EdgeInsets.all(12.0),
+                onPressed: () {
+                  setState(() {
+                    Scaffold.of(c).openDrawer();
+                  });
+                },
                 color: Colors.white,
+                iconSize: 40,
+                icon: Icon(
+                  Icons.menu_rounded,
+                ),
               ),
-            ),
+              Container(
+                child: Text(
+                  'VIDEOGRAPHIE PAR DRONE',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 1,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              SizedBox(
+                width: 64, //iconsize + horizontal padding (to center the title)
+              )
+            ],
           ),
         ),
       ),

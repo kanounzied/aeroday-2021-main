@@ -118,9 +118,7 @@ class _VoteCardState extends State<VoteCard> {
               width: sWidth * 0.9,
               height: 256,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(19),
-                    topLeft: Radius.circular(19)),
+                borderRadius: BorderRadius.vertical(top: Radius.circular(19)),
                 color: Colors.white,
                 boxShadow: [
                   BoxShadow(
