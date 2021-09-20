@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import '../login_screen/login_screen.dart';
 
 import '../../config/responsive_size.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -273,7 +274,7 @@ class _SignUpScreen extends State<SignUpScreen> {
             return new AlertDialog(
                 title: Text("Erreur d'inscription"),
                 content: SizedBox(
-                  height: SizeConfig.screenHeight * 0.13,
+                  height: SizeConfig.screenHeight * 0.15,
                   child: Column(
                     children: <Widget>[
                       Text("Votre mot de passe est faible."),
@@ -376,7 +377,8 @@ class _SignUpScreen extends State<SignUpScreen> {
                     height: SizeConfig.screenHeight * 0.17,
                     child: Column(
                       children: <Widget>[
-                        Text("Erreur inconnue au cour d'inscription!"),
+                        Text(
+                            "Erreur inconnue au cour d'inscription! " + e.code),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -517,6 +519,16 @@ class _SignUpScreen extends State<SignUpScreen> {
                                       return;
                                     }
                                   }
+
+                                  // Store user in db
+                                  FirebaseFirestore.instance
+                                      .collection("users")
+                                      .doc(FirebaseAuth
+                                          .instance.currentUser?.uid)
+                                      .set({
+                                    'hasVoted': false,
+                                    'voteID': '',
+                                  });
 
                                   toggleSignupButton(true);
 

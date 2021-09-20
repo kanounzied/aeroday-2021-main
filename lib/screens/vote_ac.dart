@@ -30,8 +30,6 @@ class _VoteACState extends State<VoteAC> {
         response = doc.data() as Map<String, dynamic>;
 
         _contestantsList.add(ContestantInfo.fromMap(response, doc.id));
-        _contestantsList.add(ContestantInfo.fromMap(response, doc.id));
-        _contestantsList.add(ContestantInfo.fromMap(response, doc.id));
       });
       setState(() {});
     }); //TODO:Get the list of contestants and store it in responce
