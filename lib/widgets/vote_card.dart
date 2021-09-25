@@ -295,13 +295,17 @@ class _VoteCardState extends State<VoteCard> {
                               content: Text('You must be signed in to vote!'),
                               actions: [
                                 TextButton(
-                                    onPressed: () {
+                                    onPressed: () async {
                                       Navigator.of(c).pop();
-                                      Navigator.push(
+                                      await Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) => LoginScreen(
                                                   noRedirect: true)));
+                                      setState(() {
+                                        user =
+                                            FirebaseAuth.instance.currentUser;
+                                      });
                                     },
                                     child: const Text('Sign in')),
                                 TextButton(
