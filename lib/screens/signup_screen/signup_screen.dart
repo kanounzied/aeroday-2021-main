@@ -16,7 +16,7 @@ class SignUpScreen extends StatefulWidget {
   SignUpScreen({this.noRedirect = false});
 
   @override
-  _SignUpScreen createState() => _SignUpScreen();
+  _SignUpScreen createState() => _SignUpScreen(noRedirect: this.noRedirect);
 }
 
 class _SignUpScreen extends State<SignUpScreen> {
@@ -328,6 +328,8 @@ class _SignUpScreen extends State<SignUpScreen> {
           // Redirect to home
           Navigator.of(context).pop(); // Close signup_screen
           Navigator.pop(context);
+
+          print(this.noRedirect);
           if (!this.noRedirect)
             Navigator.push(
                 // Open HomeScreen
@@ -539,7 +541,7 @@ class _SignUpScreen extends State<SignUpScreen> {
 
                                   // Redirect to login
                                   Navigator.pop(contextDia); // Close dialog
-
+                                  print(this.noRedirect);
                                   Navigator.pop(context); // Close signup_screen
                                   if (!this.noRedirect)
                                     Navigator.push(
