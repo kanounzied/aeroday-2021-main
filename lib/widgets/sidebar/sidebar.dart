@@ -6,11 +6,11 @@ import 'package:aeroday_2021/constants/app_constants.dart';
 import 'package:aeroday_2021/widgets/sidebar/button.dart';
 import 'package:aeroday_2021/widgets/sidebar/bottom_part.dart';
 
-String runningEvent = 'Aerochallenge';
+String runningEvent = 'Airshow';
 int userId = 45416;
 const List<String> pageNames = [
   'Home',
-  'Aérochallenge',
+  'Airshow',
   'Videographie par drone',
   'Leaderboard'
 ]; //add pagename here to add a button
