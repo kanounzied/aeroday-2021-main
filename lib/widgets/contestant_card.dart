@@ -4,6 +4,7 @@ import 'package:aeroday_2021/services/contestant_info.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:aeroday_2021/constants/colors_hex.dart';
 
 class ContestantCard extends StatefulWidget {
   ContestantInfo contestantInfo;
@@ -79,7 +80,9 @@ class _ContestantCardState extends State<ContestantCard> {
                     color: dark,
                     image: DecorationImage(
                       image: NetworkImage(
-                        "https://ui-avatars.com/api/?length=" +
+                        "https://ui-avatars.com/api/?rounded=true&background=" +
+                            ColorList.colorList[widget.index % 3] +
+                            "&length=" +
                             (widget.contestantInfo.teamName.contains(' ')
                                     ? 2
                                     : 1)

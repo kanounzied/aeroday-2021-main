@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:aeroday_2021/constants/colors_hex.dart';
 import 'package:aeroday_2021/screens/login_screen/login_screen.dart';
 import 'package:aeroday_2021/services/contestant_info.dart';
 import 'package:flutter/material.dart';
@@ -10,10 +11,13 @@ class VoteCard extends StatefulWidget {
   Function onVoted;
   Function onVoteCardExtended;
   ContestantInfo contInfo;
+  int index;
+
   VoteCard({
     required this.onVoted,
     required this.contInfo,
     required this.onVoteCardExtended,
+    required this.index,
   });
 
   _VoteCardState createState() => _VoteCardState();
@@ -202,7 +206,9 @@ class _VoteCardState extends State<VoteCard> {
                               Border.all(color: Color(0xFF323A40), width: 3),
                           image: DecorationImage(
                             image: NetworkImage(
-                              "https://ui-avatars.com/api/?length=" +
+                              "https://ui-avatars.com/api/?rounded=true&background=" +
+                                  ColorList.colorList[(widget.index + 1) % 3] +
+                                  "&length=" +
                                   (widget.contInfo.teamName.contains(' ')
                                           ? 2
                                           : 1)

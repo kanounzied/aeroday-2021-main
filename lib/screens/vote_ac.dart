@@ -124,6 +124,7 @@ class _VoteACState extends State<VoteAC> {
                       },
                       onVoted: () {},
                       contInfo: _contestantsList[selectedNum],
+                      index: selectedNum,
                     )
                   : Stack(children: [
                       Positioned(
