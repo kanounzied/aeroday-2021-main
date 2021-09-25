@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:aeroday_2021/constants/functions.dart';
 import 'package:aeroday_2021/screens/loading_screen/loading_screen.dart';
 import 'package:aeroday_2021/screens/signup_screen/signup_screen.dart';
 import 'package:flutter/material.dart';
@@ -97,102 +98,32 @@ class _LoginScreen extends State<LoginScreen> {
       if (e.code == 'user-not-found') {
         toggleSignupButton(true);
 
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return new AlertDialog(
-                  title: Text("Erreur d'inscription"),
-                  content: SizedBox(
-                    height: SizeConfig.screenHeight * 0.15,
-                    child: Column(
-                      children: <Widget>[
-                        Text("Votre numéro du téléphone n'exist pas."),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(
-                                  top: SizeConfig.screenHeight * 0.03),
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text("Ok"),
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  ));
-            });
+        UsualFunctions.showErrorDialog(
+          context: context,
+          height: SizeConfig.screenHeight * 0.15,
+          title: "Erreur de connexion",
+          error: "Votre numéro du téléphone n'exist pas.",
+        );
+
         print('No user found for that email.');
       } else if (e.code == 'wrong-password') {
         toggleSignupButton(true);
 
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return new AlertDialog(
-                  title: Text("Mot de passe invalid"),
-                  content: SizedBox(
-                    height: SizeConfig.screenHeight * 0.13,
-                    child: Column(
-                      children: <Widget>[
-                        Text("Votre mot de passe est incorrect."),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(
-                                  top: SizeConfig.screenHeight * 0.04),
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text("Ok"),
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  ));
-            });
+        UsualFunctions.showErrorDialog(
+          context: context,
+          height: SizeConfig.screenHeight * 0.13,
+          title: "Erreur de connexion",
+          error: "Votre mot de passe est incorrect.",
+        );
 
         print('Wrong password provided for that user.');
       } else if (e.code == 'network-request-failed') {
         print("network error");
-        showDialog(
+        UsualFunctions.showErrorDialog(
           context: context,
-          builder: (BuildContext context) {
-            return new AlertDialog(
-              title: Text("Erreur d'inscription"),
-              content: SizedBox(
-                height: SizeConfig.screenHeight * 0.13,
-                child: Column(
-                  children: <Widget>[
-                    Text("Pas d'accés à l'internet!"),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(
-                              top: SizeConfig.screenHeight * 0.04),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: Text("Ok"),
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
+          height: SizeConfig.screenHeight * 0.13,
+          title: "Erreur de connexion",
+          error: "Verifier votre accés à l'internet.",
         );
 
         toggleSignupButton(true);
@@ -200,7 +131,13 @@ class _LoginScreen extends State<LoginScreen> {
       } else {
         print("error:");
         print(e.code);
-        // TODO : handle unknown error
+
+        UsualFunctions.showErrorDialog(
+          context: context,
+          height: SizeConfig.screenHeight * 0.13,
+          title: "Erreur de connexion",
+          error: "UNKNOWN: " + e.code,
+        );
 
         toggleSignupButton(true);
         return;

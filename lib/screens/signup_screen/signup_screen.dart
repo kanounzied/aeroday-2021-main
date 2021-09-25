@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:aeroday_2021/constants/functions.dart';
 import 'package:aeroday_2021/screens/home_screen/home.dart';
 import 'package:aeroday_2021/screens/loading_screen/loading_screen.dart';
 import 'package:flutter/material.dart';
@@ -81,36 +82,11 @@ class _SignUpScreen extends State<SignUpScreen> {
     bool check = await hasNetwork();
     if (!check) {
       print("net");
-      showDialog(
+      UsualFunctions.showErrorDialog(
         context: context,
-        builder: (BuildContext context) {
-          return new AlertDialog(
-            title: Text("Erreur d'inscription"),
-            content: SizedBox(
-              height: SizeConfig.screenHeight * 0.13,
-              child: Column(
-                children: <Widget>[
-                  Text("Pas d'accés à l'internet!"),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(
-                            top: SizeConfig.screenHeight * 0.04),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text("Ok"),
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
+        height: SizeConfig.screenHeight * 0.13,
+        title: "Erreur d'inscription",
+        error: "Verifier votre accés à l'internet.",
       );
 
       toggleSignupButton(true);
@@ -118,35 +94,12 @@ class _SignUpScreen extends State<SignUpScreen> {
     }
 
     if (!validateNumber(emailController.text)) {
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return new AlertDialog(
-                title: Text("Erreur d'inscription"),
-                content: SizedBox(
-                  height: SizeConfig.screenHeight * 0.16,
-                  child: Column(
-                    children: <Widget>[
-                      Text("Votre numéro du téléphone est invalid."),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(
-                                top: SizeConfig.screenHeight * 0.04),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: Text("Ok"),
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                ));
-          });
+      UsualFunctions.showErrorDialog(
+        context: context,
+        height: SizeConfig.screenHeight * 0.16,
+        title: "Erreur d'inscription",
+        error: "Votre numéro du téléphone est invalid.",
+      );
       print("num invalid");
 
       toggleSignupButton(true);
@@ -160,55 +113,13 @@ class _SignUpScreen extends State<SignUpScreen> {
           .fetchSignInMethodsForEmail(emailController.text + "@gmail.com");
       print("hell");
       if (l.length != 0) {
-        // Redirect to login_screen
-        showDialog(
-            context: context,
-            builder: (BuildContext contextDia) {
-              return new AlertDialog(
-                  title: Text("Erreur d'inscription"),
-                  content: SizedBox(
-                    height: SizeConfig.screenHeight * 0.13,
-                    child: Column(
-                      children: <Widget>[
-                        Text("Numéro du telephone est deja utilisé."),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(
-                                  top: SizeConfig.screenHeight * 0.04),
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  // Redirect to login
-                                  Navigator.pop(contextDia);
-                                  //Navigator.pop(context);
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => LoginScreen()));
-                                },
-                                child: Text("Connecter"),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(
-                                  top: SizeConfig.screenHeight * 0.04),
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  Navigator.pop(contextDia);
-                                },
-                                child: Text("OK"),
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  ));
-            });
+        UsualFunctions.showErrorDialog(
+          context: context,
+          height: SizeConfig.screenHeight * 0.13,
+          title: "Erreur d'inscription",
+          error: "Numéro du telephone est deja utilisé.",
+        );
+        // TODO : Redirect to login_screen
 
         print("Exists");
         toggleSignupButton(true);
@@ -217,49 +128,35 @@ class _SignUpScreen extends State<SignUpScreen> {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'network-request-failed') {
         print("network error");
-        showDialog(
+        UsualFunctions.showErrorDialog(
           context: context,
-          builder: (BuildContext context) {
-            return new AlertDialog(
-              title: Text("Erreur d'inscription"),
-              content: SizedBox(
-                height: SizeConfig.screenHeight * 0.13,
-                child: Column(
-                  children: <Widget>[
-                    Text("Pas d'accés à l'internet!"),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(
-                              top: SizeConfig.screenHeight * 0.04),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: Text("Ok"),
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
+          height: SizeConfig.screenHeight * 0.13,
+          title: "Erreur d'inscription",
+          error: "Verifier votre accés à l'internet.",
         );
 
         toggleSignupButton(true);
         return;
       }
 
-      // TODO : handle firebase error
+      UsualFunctions.showErrorDialog(
+        context: context,
+        height: SizeConfig.screenHeight * 0.15,
+        title: "Erreur d'inscription",
+        error: "UNKNOWN: " + e.code,
+      );
+
       print("firebase error");
       print(e.code);
       toggleSignupButton(true);
       return;
     } catch (e) {
-      // TODO: handle unknown error
+      UsualFunctions.showErrorDialog(
+        context: context,
+        height: SizeConfig.screenHeight * 0.15,
+        title: "Erreur d'inscription",
+        error: "UNKNOWN: " + e.toString(),
+      );
       print("ERROR: ");
       print(e);
 
@@ -270,35 +167,12 @@ class _SignUpScreen extends State<SignUpScreen> {
     print("hi");
 
     if (!RegExp("(?=.*[0-9a-zA-Z]).{6,}").hasMatch(passController.text)) {
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return new AlertDialog(
-                title: Text("Erreur d'inscription"),
-                content: SizedBox(
-                  height: SizeConfig.screenHeight * 0.15,
-                  child: Column(
-                    children: <Widget>[
-                      Text("Votre mot de passe est faible."),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(
-                                top: SizeConfig.screenHeight * 0.04),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: Text("Ok"),
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                ));
-          });
+      UsualFunctions.showErrorDialog(
+        context: context,
+        height: SizeConfig.screenHeight * 0.15,
+        title: "Erreur d'inscription",
+        error: "Votre mot de passe est faible.",
+      );
 
       print('The password provided is too weak.');
       toggleSignupButton(true);
@@ -329,7 +203,6 @@ class _SignUpScreen extends State<SignUpScreen> {
           Navigator.of(context).pop(); // Close signup_screen
           Navigator.pop(context);
 
-          print(this.noRedirect);
           if (!this.noRedirect)
             Navigator.push(
                 // Open HomeScreen
@@ -343,68 +216,21 @@ class _SignUpScreen extends State<SignUpScreen> {
 
           if (e.code == 'invalid-phone-number') {
             print('The provided phone number is not valid.');
-            showDialog(
+            UsualFunctions.showErrorDialog(
               context: context,
-              builder: (BuildContext context) {
-                return new AlertDialog(
-                    title: Text("Erreur d'inscription"),
-                    content: SizedBox(
-                      height: SizeConfig.screenHeight * 0.17,
-                      child: Column(
-                        children: <Widget>[
-                          Text("Votre numéro du téléphone est invalid."),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(
-                                    top: SizeConfig.screenHeight * 0.04),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Text("Ok"),
-                                ),
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                    ));
-              },
+              height: SizeConfig.screenHeight * 0.17,
+              title: "Erreur d'inscription",
+              error: "Votre numéro du téléphone est invalid.",
             );
           } else {
-            showDialog(
+            print("error");
+            print(e.code);
+
+            UsualFunctions.showErrorDialog(
               context: context,
-              builder: (BuildContext context) {
-                return new AlertDialog(
-                  title: Text("Erreur d'inscription"),
-                  content: SizedBox(
-                    height: SizeConfig.screenHeight * 0.17,
-                    child: Column(
-                      children: <Widget>[
-                        Text(
-                            "Erreur inconnue au cour d'inscription! " + e.code),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(
-                                  top: SizeConfig.screenHeight * 0.04),
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text("Ok"),
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
+              height: SizeConfig.screenHeight * 0.17,
+              title: "Erreur d'inscription",
+              error: "UNKNOWN: " + e.code,
             );
           }
         },
@@ -477,49 +303,18 @@ class _SignUpScreen extends State<SignUpScreen> {
                                           ?.delete();
 
                                       // TODO : invalid code handle
+
                                       print("Invalid code");
                                       return;
                                     } else {
                                       print("unknown err");
                                       print(e);
 
-                                      showDialog(
+                                      UsualFunctions.showErrorDialog(
                                         context: context,
-                                        builder: (BuildContext context) {
-                                          return new AlertDialog(
-                                            title: Text("Erreur d'inscription"),
-                                            content: SizedBox(
-                                              height: SizeConfig.screenHeight *
-                                                  0.17,
-                                              child: Column(
-                                                children: <Widget>[
-                                                  Text(
-                                                      "Erreur inconnue au cour d'inscription!" +
-                                                          e.toString()),
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.end,
-                                                    children: [
-                                                      Container(
-                                                        margin: EdgeInsets.only(
-                                                            top: SizeConfig
-                                                                    .screenHeight *
-                                                                0.04),
-                                                        child: ElevatedButton(
-                                                          onPressed: () {
-                                                            Navigator.pop(
-                                                                context);
-                                                          },
-                                                          child: Text("Ok"),
-                                                        ),
-                                                      )
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          );
-                                        },
+                                        height: SizeConfig.screenHeight * 0.17,
+                                        title: "Erreur d'inscription",
+                                        error: "UNKNOWN: " + e.toString(),
                                       );
 
                                       toggleSignupButton(true);
@@ -568,6 +363,12 @@ class _SignUpScreen extends State<SignUpScreen> {
 
       //await FirebaseAuth.instance.signOut();
     } on FirebaseAuthException catch (e) {
+      UsualFunctions.showErrorDialog(
+        context: context,
+        height: SizeConfig.screenHeight * 0.13,
+        title: "Erreur d'inscription",
+        error: "UNKNOWN: " + e.code,
+      );
       print(e);
       toggleSignupButton(true);
     }
@@ -579,12 +380,6 @@ class _SignUpScreen extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xFF323A40), // Gray
