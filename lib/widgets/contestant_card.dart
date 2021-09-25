@@ -79,7 +79,14 @@ class _ContestantCardState extends State<ContestantCard> {
                     color: dark,
                     image: DecorationImage(
                       image: NetworkImage(
-                          widget.contestantInfo.imageUrl), //TODO: loading image
+                        "https://ui-avatars.com/api/?length=" +
+                            (widget.contestantInfo.teamName.contains(' ')
+                                    ? 2
+                                    : 1)
+                                .toString() +
+                            "&name=" +
+                            widget.contestantInfo.teamName,
+                      ), //TODO: Image font change
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -93,9 +100,7 @@ class _ContestantCardState extends State<ContestantCard> {
                         children: [
                           Container(
                             child: Text(
-                              widget.contestantInfo.name +
-                                  ' ' +
-                                  widget.contestantInfo.lastName,
+                              widget.contestantInfo.teamName,
                               style: TextStyle(
                                 color: dark,
                                 fontSize: 15,
@@ -108,7 +113,7 @@ class _ContestantCardState extends State<ContestantCard> {
                       Container(
                         margin: EdgeInsets.only(top: 5, left: 4),
                         child: Text(
-                          'Team: ' + widget.contestantInfo.teamName,
+                          'Etablissement: ' + widget.contestantInfo.etab,
                           style: TextStyle(
                             color: light,
                             fontSize: 14,

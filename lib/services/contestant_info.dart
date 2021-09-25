@@ -2,16 +2,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ContestantInfo {
   String imageUrl = 'https://picsum.photos/200';
-  String name;
-  String lastName;
+  String name = '';
+  String lastName = '';
+
   String teamName;
   String id;
+  String membres;
+  String chef;
+  String etab;
+
   int votes;
   ContestantInfo({
-    required this.name,
-    required this.lastName,
+    required this.chef,
+    required this.etab,
     required this.teamName,
-    required this.imageUrl,
+    required this.membres,
     required this.id,
     required this.votes,
   });
@@ -20,10 +25,10 @@ class ContestantInfo {
 
   factory ContestantInfo.fromMap(Map r, String id) {
     return new ContestantInfo(
-      name: r['name'],
-      lastName: r['lastName'],
-      imageUrl: r['imageUrl'],
-      teamName: r['teamName'],
+      etab: r['etab'],
+      chef: r['chef'],
+      membres: r['membres'],
+      teamName: r['equipe'],
       id: id,
       votes: r['votes'],
     );

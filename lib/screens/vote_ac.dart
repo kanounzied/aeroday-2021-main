@@ -71,7 +71,7 @@ class _VoteACState extends State<VoteAC> {
                       ),
                       Container(
                         child: Text(
-                          'AEROCHALLENGE',
+                          'AIRSHOW',
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
@@ -220,12 +220,13 @@ class _VoteACState extends State<VoteAC> {
 
     drawSearchList = true;
     _contestantsList.forEach((contestant) {
-      if (contestant.name.toLowerCase().contains(input.toLowerCase()) ||
-          contestant.lastName.toLowerCase().contains(input.toLowerCase()) ||
-          (contestant.name.toLowerCase() +
-                  ' ' +
-                  contestant.lastName.toLowerCase())
-              .contains(input.toLowerCase())) {
+      // if (contestant.name.toLowerCase().contains(input.toLowerCase()) ||
+      //     contestant.lastName.toLowerCase().contains(input.toLowerCase()) ||
+      //     (contestant.name.toLowerCase() +
+      //             ' ' +
+      //             contestant.lastName.toLowerCase())
+      //         .contains(input.toLowerCase())) {
+      if (contestant.teamName.toLowerCase().contains(input.toLowerCase())) {
         drawSearchList = true;
         _searchList.add(contestant);
       }

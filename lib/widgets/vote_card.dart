@@ -153,9 +153,7 @@ class _VoteCardState extends State<VoteCard> {
                                 Container(
                                   width: 245,
                                   child: Text(
-                                    '${widget.contInfo.name}' +
-                                        ' ' +
-                                        '${widget.contInfo.lastName}',
+                                    '${widget.contInfo.teamName}',
                                     style: TextStyle(
                                       fontSize: 25,
                                       fontWeight: FontWeight.bold,
@@ -174,7 +172,7 @@ class _VoteCardState extends State<VoteCard> {
                                   width: 30,
                                 ),
                                 Text(
-                                  'Team: ${widget.contInfo.teamName}',
+                                  'Etablissement: ${widget.contInfo.etab}',
                                   style: TextStyle(
                                     fontSize: 14,
                                     color: Color(0xFF323A40),
@@ -203,7 +201,15 @@ class _VoteCardState extends State<VoteCard> {
                           border:
                               Border.all(color: Color(0xFF323A40), width: 3),
                           image: DecorationImage(
-                            image: NetworkImage('${widget.contInfo.imageUrl}'),
+                            image: NetworkImage(
+                              "https://ui-avatars.com/api/?length=" +
+                                  (widget.contInfo.teamName.contains(' ')
+                                          ? 2
+                                          : 1)
+                                      .toString() +
+                                  "&name=" +
+                                  widget.contInfo.teamName,
+                            ), //TODO: Image font change
                             fit: BoxFit.fill,
                           ),
                         ),
