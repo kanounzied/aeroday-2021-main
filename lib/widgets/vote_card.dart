@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:aeroday_2021/config/responsive_size.dart';
+import 'package:aeroday_2021/constants/colors_hex.dart';
 import 'package:aeroday_2021/constants/functions.dart';
 import 'package:aeroday_2021/screens/login_screen/login_screen.dart';
 import 'package:aeroday_2021/services/contestant_info.dart';
@@ -185,7 +186,7 @@ class _VoteCardState extends State<VoteCard> {
                                   width: 30,
                                 ),
                                 Text(
-                                  'Etablissement: ${widget.contInfo.etab}',
+                                  '${widget.contInfo.etab}',
                                   style: TextStyle(
                                     fontSize: 14,
                                     color: Color(0xFF323A40),
@@ -212,7 +213,7 @@ class _VoteCardState extends State<VoteCard> {
                         ),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.red,
+                          color: ColorList.colorList[(widget.index + 1) % 3],
                           boxShadow: [
                             BoxShadow(
                               color: Colors.black26,
