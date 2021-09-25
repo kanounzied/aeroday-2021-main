@@ -300,8 +300,8 @@ class _VoteCardState extends State<VoteCard> {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) =>
-                                                  LoginScreen()));
+                                              builder: (context) => LoginScreen(
+                                                  noRedirect: true)));
                                     },
                                     child: const Text('Sign in')),
                                 TextButton(

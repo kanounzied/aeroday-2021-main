@@ -12,6 +12,9 @@ import '../../config/responsive_size.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SignUpScreen extends StatefulWidget {
+  final bool noRedirect;
+  SignUpScreen({this.noRedirect = false});
+
   @override
   _SignUpScreen createState() => _SignUpScreen();
 }
@@ -22,6 +25,9 @@ class _SignUpScreen extends State<SignUpScreen> {
   final passController = TextEditingController();
   final codeController = TextEditingController();
   bool signupDisabled = false;
+
+  final bool noRedirect;
+  _SignUpScreen({this.noRedirect = false});
 
   Future<bool> hasNetwork() async {
     try {
@@ -72,11 +78,7 @@ class _SignUpScreen extends State<SignUpScreen> {
   void signupButtonCalled() async {
     toggleSignupButton(false);
 
-    bool check = await hasNetwork().whenComplete(
-      () {
-        print("ready");
-      },
-    );
+    bool check = await hasNetwork();
     if (!check) {
       print("net");
       showDialog(
@@ -325,10 +327,12 @@ class _SignUpScreen extends State<SignUpScreen> {
 
           // Redirect to home
           Navigator.of(context).pop(); // Close signup_screen
-          Navigator.push(
-              // Open HomeScreen
-              context,
-              MaterialPageRoute(builder: (context) => HomeScreen()));
+          Navigator.pop(context);
+          if (!this.noRedirect)
+            Navigator.push(
+                // Open HomeScreen
+                context,
+                MaterialPageRoute(builder: (context) => HomeScreen()));
         },
         verificationFailed: (FirebaseAuthException e) {
           toggleSignupButton(true);
@@ -488,7 +492,8 @@ class _SignUpScreen extends State<SignUpScreen> {
                                               child: Column(
                                                 children: <Widget>[
                                                   Text(
-                                                      "Erreur inconnue au cour d'inscription!"),
+                                                      "Erreur inconnue au cour d'inscription!" +
+                                                          e.toString()),
                                                   Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment.end,
@@ -535,12 +540,14 @@ class _SignUpScreen extends State<SignUpScreen> {
                                   // Redirect to login
                                   Navigator.pop(contextDia); // Close dialog
 
-                                  //Navigator.pop(context); // Close signup_screen
-                                  Navigator.push(
-                                      // Open HomeScreen
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => HomeScreen()));
+                                  Navigator.pop(context); // Close signup_screen
+                                  if (!this.noRedirect)
+                                    Navigator.push(
+                                        // Open HomeScreen
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                HomeScreen()));
                                 },
                                 child: Text("Ok"),
                               ),

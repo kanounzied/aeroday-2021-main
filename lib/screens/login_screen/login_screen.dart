@@ -12,14 +12,20 @@ import 'package:aeroday_2021/widgets/dialog_reset_pwd/dialog_reset_pwd.dart';
 import '../../config/responsive_size.dart';
 
 class LoginScreen extends StatefulWidget {
+  final bool noRedirect;
+  LoginScreen({this.noRedirect = false});
+
   @override
-  _LoginScreen createState() => _LoginScreen();
+  _LoginScreen createState() => _LoginScreen(noRedirect: this.noRedirect);
 }
 
 class _LoginScreen extends State<LoginScreen> {
   final emailController = TextEditingController();
   final passController = TextEditingController();
   bool signinDisabled = false;
+
+  final bool noRedirect;
+  _LoginScreen({this.noRedirect = false});
 
   Future<bool> hasNetwork() async {
     try {
@@ -76,12 +82,12 @@ class _LoginScreen extends State<LoginScreen> {
         } else {
           print(FirebaseAuth.instance.currentUser);
           // Redirect to home/voting page HERE
-          //Navigator.pop(context); // Close signup_screen
-          // Navigator.push(
-          //     // Open HomeScreen
-          //     context,
-          //     MaterialPageRoute(builder: (context) => HomeScreen()));
-          Navigator.pushReplacementNamed(context, '/home');
+          Navigator.pop(context); // Close signup_screen
+          if (!this.noRedirect)
+            Navigator.push(
+                // Open HomeScreen
+                context,
+                MaterialPageRoute(builder: (context) => HomeScreen()));
           print("login");
         }
       });
@@ -358,11 +364,12 @@ class _LoginScreen extends State<LoginScreen> {
                                   // Already logged in
                                   Future(() {
                                     Navigator.pop(context);
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                HomeScreen()));
+                                    if (!this.noRedirect)
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  HomeScreen()));
                                   });
                                 }
                               },
@@ -389,9 +396,13 @@ class _LoginScreen extends State<LoginScreen> {
                                 print("inscription");
                                 //Navigator.pop(context);
                                 Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => SignUpScreen()));
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => SignUpScreen(
+                                      noRedirect: this.noRedirect,
+                                    ),
+                                  ),
+                                );
                               },
                               child: Text(
                                 "Inscrivez-vous",
