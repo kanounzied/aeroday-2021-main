@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'package:aeroday_2021/config/responsive_size.dart';
-import 'package:aeroday_2021/constants/colors_hex.dart';
 import 'package:aeroday_2021/constants/functions.dart';
 import 'package:aeroday_2021/screens/login_screen/login_screen.dart';
 import 'package:aeroday_2021/services/contestant_info.dart';
@@ -34,20 +33,28 @@ class _VoteCardState extends State<VoteCard> {
 
   User? user = FirebaseAuth.instance.currentUser;
 
-  @override
-  Widget build(BuildContext context) {
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc(user?.uid)
-        .get()
-        .then((DocumentSnapshot ds) {
+  _VoteCardState() {
+    // Update user state
+    FirebaseAuth.instance.authStateChanges().listen((User? u) {
       setState(() {
-        userHasVoted = ds.get(
-          FieldPath(['voteID']),
-        );
+        user = FirebaseAuth.instance.currentUser;
+      });
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(user?.uid)
+          .get()
+          .then((DocumentSnapshot ds) {
+        setState(() {
+          userHasVoted = ds.get(
+            FieldPath(['voteID']),
+          );
+        });
       });
     });
+  }
 
+  @override
+  Widget build(BuildContext context) {
     double sHeight = MediaQuery.of(context).size.height;
     double sWidth = MediaQuery.of(context).size.width;
     double currPos = 0;
