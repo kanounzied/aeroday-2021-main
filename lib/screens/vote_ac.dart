@@ -1,5 +1,6 @@
 import 'package:aeroday_2021/config/responsive_size.dart';
 import 'package:aeroday_2021/services/contestant_info.dart';
+import 'package:aeroday_2021/widgets/appBar/appbar.dart';
 import 'package:aeroday_2021/widgets/vote_card.dart';
 import 'package:flutter/material.dart';
 import 'package:aeroday_2021/constants/app_constants.dart';
@@ -55,55 +56,9 @@ class _VoteACState extends State<VoteAC> {
             children: [
               Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        padding: const EdgeInsets.all(12.0),
-                        onPressed: () {
-                          setState(() {
-                            Scaffold.of(c).openDrawer();
-                          });
-                        },
-                        color: Colors.white,
-                        iconSize: SizeConfig.defaultSize * 4.2,
-                        icon: Icon(
-                          Icons.menu_rounded,
-                        ),
-                      ),
-                      Container(
-                        child: Text(
-                          'AIRSHOW',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: 1,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      Container(
-                        alignment: Alignment.centerRight,
-                        margin: EdgeInsets.only(
-                            right: SizeConfig.screenWidth * .03),
-                        child: GestureDetector(
-                          onTap: () async {
-                            if (FirebaseAuth.instance.currentUser == null)
-                              return;
-                            print("logout tap");
-                            await FirebaseAuth.instance.signOut();
-                            setState(() {});
-                          },
-                          child: Icon(
-                            Icons.logout,
-                            color: FirebaseAuth.instance.currentUser == null
-                                ? Color(0x00FFFFFF)
-                                : Color(0xFFFFFFFF),
-                            size: SizeConfig.defaultSize * 3,
-                          ),
-                        ),
-                      ),
-                    ],
+                  AppBarCustom(
+                    title: 'AIRSHOW',
+                    c: c,
                   ),
                   SearchBar(
                     onSearchTextChanged: _onSearchTextChanged,

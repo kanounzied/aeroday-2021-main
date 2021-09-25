@@ -304,6 +304,7 @@ class _PwdDialogState extends State<PwdDialog> {
                         Navigator.pop(context);
                         setState(() {});
                       }
+                      Focus.of(context).unfocus();
                     },
               child: Text(
                 nbStep == 3 ? "Let's go!" : "Next",

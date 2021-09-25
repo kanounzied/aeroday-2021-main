@@ -1,4 +1,5 @@
 import 'package:aeroday_2021/constants/app_constants.dart';
+import 'package:aeroday_2021/widgets/appBar/appbar.dart';
 import 'package:aeroday_2021/widgets/sidebar/sidebar.dart';
 import 'package:flutter/material.dart';
 
@@ -39,54 +40,9 @@ class _HomeState extends State<HomeScreen> {
         builder: (BuildContext c) => SafeArea(
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    padding: const EdgeInsets.all(12.0),
-                    onPressed: () {
-                      setState(() {
-                        Scaffold.of(c).openDrawer();
-                      });
-                    },
-                    color: Colors.white,
-                    iconSize: SizeConfig.defaultSize * 4.2,
-                    icon: Icon(
-                      Icons.menu_rounded,
-                    ),
-                  ),
-                  Container(
-                    child: Text(
-                      'TIMELINE',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 1,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  Container(
-                    alignment: Alignment.centerRight,
-                    margin:
-                        EdgeInsets.only(right: SizeConfig.screenWidth * .03),
-                    child: GestureDetector(
-                      onTap: () async {
-                        if (FirebaseAuth.instance.currentUser == null) return;
-                        print("logout tap");
-                        await FirebaseAuth.instance.signOut();
-                        setState(() {});
-                      },
-                      child: Icon(
-                        Icons.logout,
-                        color: FirebaseAuth.instance.currentUser == null
-                            ? Color(0x00FFFFFF)
-                            : Color(0xFFFFFFFF),
-                        size: SizeConfig.defaultSize * 3,
-                      ),
-                    ),
-                  ),
-                ],
+              AppBarCustom(
+                title: 'TIMELINE',
+                c: c,
               ),
               // White box for timeline
               Expanded(

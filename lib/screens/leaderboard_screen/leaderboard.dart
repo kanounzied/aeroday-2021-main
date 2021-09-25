@@ -1,4 +1,5 @@
 import 'package:aeroday_2021/services/contestant_info.dart';
+import 'package:aeroday_2021/widgets/appBar/appbar.dart';
 import 'package:aeroday_2021/widgets/contestantlb_card.dart';
 import 'package:flutter/material.dart';
 import 'package:aeroday_2021/constants/app_constants.dart';
@@ -44,38 +45,9 @@ class _LeaderBoardState extends State<LeaderBoard> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    padding: const EdgeInsets.all(12.0),
-                    onPressed: () {
-                      setState(() {
-                        Scaffold.of(c).openDrawer();
-                      });
-                    },
-                    color: Colors.white,
-                    iconSize: 40,
-                    icon: Icon(
-                      Icons.menu_rounded,
-                    ),
-                  ),
-                  Container(
-                    child: Text(
-                      'LEADERBOARD',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 1,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  SizedBox(
-                    width:
-                        64, //iconsize + horizontal padding (to center the title)
-                  ),
-                ],
+              AppBarCustom(
+                title: 'LEADERBOARD',
+                c: c,
               ),
               SizedBox(height: 10),
               _contestantsList.isEmpty ? Container() : buildTopThree(),
