@@ -1,4 +1,5 @@
 import 'package:aeroday_2021/constants/app_constants.dart';
+import 'package:aeroday_2021/constants/functions.dart';
 import 'package:aeroday_2021/screens/vote_ac.dart';
 import 'package:aeroday_2021/services/contestant_info.dart';
 import 'package:flutter/material.dart';
@@ -67,6 +68,16 @@ class _ContestantCardState extends State<ContestantCard> {
                 ), //number
                 Container(
                   width: 47,
+                  height: 47,
+                  child: Center(
+                    child: Text(
+                      UsualFunctions.getInitials(widget.contestantInfo.teamName)
+                          .toUpperCase(),
+                      style: TextStyle(
+                        color: Color(0xFFFFFFFF),
+                      ),
+                    ),
+                  ),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     boxShadow: [
@@ -77,21 +88,7 @@ class _ContestantCardState extends State<ContestantCard> {
                         spreadRadius: 1,
                       ),
                     ],
-                    color: dark,
-                    image: DecorationImage(
-                      image: NetworkImage(
-                        "https://ui-avatars.com/api/?rounded=true&background=" +
-                            ColorList.colorList[widget.index % 3] +
-                            "&length=" +
-                            (widget.contestantInfo.teamName.contains(' ')
-                                    ? 2
-                                    : 1)
-                                .toString() +
-                            "&name=" +
-                            widget.contestantInfo.teamName,
-                      ), //TODO: Image font change
-                      fit: BoxFit.fill,
-                    ),
+                    color: ColorList.colorList[widget.index % 3],
                   ),
                 ), //photo
                 Container(

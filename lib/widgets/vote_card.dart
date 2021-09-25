@@ -1,5 +1,7 @@
 import 'dart:math';
+import 'package:aeroday_2021/config/responsive_size.dart';
 import 'package:aeroday_2021/constants/colors_hex.dart';
+import 'package:aeroday_2021/constants/functions.dart';
 import 'package:aeroday_2021/screens/login_screen/login_screen.dart';
 import 'package:aeroday_2021/services/contestant_info.dart';
 import 'package:flutter/material.dart';
@@ -191,6 +193,16 @@ class _VoteCardState extends State<VoteCard> {
                         margin: EdgeInsets.only(right: 25),
                         width: 88,
                         height: 88,
+                        child: Center(
+                          child: Text(
+                            UsualFunctions.getInitials(widget.contInfo.teamName)
+                                .toUpperCase(),
+                            style: TextStyle(
+                              fontSize: SizeConfig.defaultSize * 3.5,
+                              color: Color(0xFFFFFFFF),
+                            ),
+                          ),
+                        ),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: Colors.red,
@@ -204,20 +216,6 @@ class _VoteCardState extends State<VoteCard> {
                           ],
                           border:
                               Border.all(color: Color(0xFF323A40), width: 3),
-                          image: DecorationImage(
-                            image: NetworkImage(
-                              "https://ui-avatars.com/api/?rounded=true&background=" +
-                                  ColorList.colorList[(widget.index + 1) % 3] +
-                                  "&length=" +
-                                  (widget.contInfo.teamName.contains(' ')
-                                          ? 2
-                                          : 1)
-                                      .toString() +
-                                  "&name=" +
-                                  widget.contInfo.teamName,
-                            ), //TODO: Image font change
-                            fit: BoxFit.fill,
-                          ),
                         ),
                       ), //image
                     ],

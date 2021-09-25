@@ -50,7 +50,7 @@ class _HomeState extends State<HomeScreen> {
                       });
                     },
                     color: Colors.white,
-                    iconSize: 40,
+                    iconSize: SizeConfig.defaultSize * 4.2,
                     icon: Icon(
                       Icons.menu_rounded,
                     ),
@@ -66,28 +66,26 @@ class _HomeState extends State<HomeScreen> {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  FirebaseAuth.instance.currentUser == null
-                      ? SizedBox(
-                          width:
-                              52, //iconsize + horizontal padding (to center the title)
-                        ) // Not logged in
-                      : Container(
-                          alignment: Alignment.centerRight,
-                          margin: EdgeInsets.only(
-                              right: SizeConfig.screenWidth * .03),
-                          child: GestureDetector(
-                            onTap: () async {
-                              print("tap");
-                              await FirebaseAuth.instance.signOut();
-                              setState(() {});
-                            },
-                            child: Icon(
-                              Icons.logout,
-                              color: Color(0xFFFFFFFF),
-                              size: SizeConfig.defaultSize * 3,
-                            ),
-                          ),
-                        ),
+                  Container(
+                    alignment: Alignment.centerRight,
+                    margin:
+                        EdgeInsets.only(right: SizeConfig.screenWidth * .03),
+                    child: GestureDetector(
+                      onTap: () async {
+                        if (FirebaseAuth.instance.currentUser == null) return;
+                        print("logout tap");
+                        await FirebaseAuth.instance.signOut();
+                        setState(() {});
+                      },
+                      child: Icon(
+                        Icons.logout,
+                        color: FirebaseAuth.instance.currentUser == null
+                            ? Color(0x00FFFFFF)
+                            : Color(0xFFFFFFFF),
+                        size: SizeConfig.defaultSize * 3,
+                      ),
+                    ),
+                  ),
                 ],
               ),
               // White box for timeline
