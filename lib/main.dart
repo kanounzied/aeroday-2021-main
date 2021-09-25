@@ -1,4 +1,5 @@
 import 'package:aeroday_2021/screens/home_screen/home.dart';
+import 'package:aeroday_2021/screens/leaderboard_screen/leaderboard.dart';
 import 'package:aeroday_2021/screens/vote_ac.dart';
 import 'package:aeroday_2021/screens/vote_vpd.dart';
 import 'package:flutter/services.dart';
@@ -63,6 +64,7 @@ class _AppState extends State<MyApp> {
                 '/home': (context) => HomeScreen(),
                 '/voteAC': (context) => VoteAC(),
                 '/voteVPD': (context) => VoteVPD(),
+                '/leaderboard': (context) => LeaderBoard(),
               });
         }
 

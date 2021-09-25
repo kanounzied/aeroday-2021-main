@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:aeroday_2021/services/contestant_info.dart';
 import 'package:aeroday_2021/widgets/vote_card.dart';
 import 'package:flutter/material.dart';
@@ -97,17 +96,20 @@ class _VoteACState extends State<VoteAC> {
                         dynamicHeight, //height of list(maybe dynamic)
                     margin: EdgeInsets.only(top: 50),
                     child: Center(
-                      child: drawSearchList || _searchList.isNotEmpty
-                          ? _searchList.isNotEmpty
-                              ? buildSearchList()
-                              : Padding(
-                                  padding: const EdgeInsets.only(bottom: 70),
-                                  child: Text(
-                                    "no search results!",
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                )
-                          : buildContestantList(),
+                      child: _contestantsList.isEmpty
+                          ? buildListLoader()
+                          : drawSearchList || _searchList.isNotEmpty
+                              ? _searchList.isNotEmpty
+                                  ? buildSearchList()
+                                  : Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 70),
+                                      child: Text(
+                                        "no search results!",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    )
+                              : buildContestantList(),
                     ),
                   ),
                 ],
@@ -123,7 +125,22 @@ class _VoteACState extends State<VoteAC> {
                       onVoted: () {},
                       contInfo: _contestantsList[selectedNum],
                     )
-                  : Container(), //TODO: fix loader for bad net
+                  : Stack(children: [
+                      Positioned(
+                        bottom: 0,
+                        child: Container(
+                          height: 140,
+                          margin: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0.05),
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[350],
+                            borderRadius:
+                                BorderRadius.vertical(top: Radius.circular(19)),
+                          ),
+                        ),
+                      ),
+                    ]), //TODO: fix loader for bad net
             ],
           ),
         ),
@@ -168,6 +185,30 @@ class _VoteACState extends State<VoteAC> {
   }
 
   //function to update the list according to search input
+  Widget buildListLoader() {
+    return new ListView.builder(
+      itemCount: 5,
+      itemBuilder: (context, index) {
+        return Container(
+          width: MediaQuery.of(context).size.width * 0.85,
+          height: 62,
+          margin: EdgeInsets.only(bottom: 16),
+          decoration: BoxDecoration(
+            color: Colors.grey[350],
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                offset: Offset.zero,
+                blurRadius: 4,
+                spreadRadius: 0,
+              ),
+            ],
+            borderRadius: BorderRadius.all(Radius.circular(9.0)),
+          ),
+        );
+      },
+    );
+  }
 
   _onSearchTextChanged(String input) async {
     _searchList.clear();
