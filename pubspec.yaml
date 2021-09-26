@@ -18,23 +18,27 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
+  url_launcher: ^6.0.9
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
+  # google_fonts: ^2.1.0
+  cached_network_image: ^3.1.0
+  cloud_firestore: ^2.5.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   
-  firebase_core: "0.7.0"
-  firebase_auth: "^0.20.1"
+  firebase_core: "^1.6.0"
+  firebase_auth: "^3.1.0"
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -76,3 +80,29 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  fonts:
+    - family: Assistant
+      fonts:
+        - asset: assets/fonts/Assistant/Assistant-Regular.ttf
+        
+        - asset: assets/fonts/Assistant/Assistant-SemiBold.ttf
+          weight: 100
+        - asset: assets/fonts/Assistant/Assistant-Bold.ttf
+          weight: 200
+        - asset: assets/fonts/Assistant/Assistant-ExtraBold.ttf
+          weight: 300
+        
+        - asset: assets/fonts/Assistant/Assistant-Light.ttf
+          weight: 400
+        - asset: assets/fonts/Assistant/Assistant-ExtraLight.ttf
+          weight: 500
+
+    - family: JusticeLeague
+      fonts:
+        - asset: assets/fonts/JusticeLeague/JUSTICE LEAGUE.ttf
+
+    - family: Nexa
+      fonts:
+        - asset: assets/fonts/Nexa/Nexa Light.otf
+        - asset: assets/fonts/Nexa/Nexa Bold.otf
+          weight: 700

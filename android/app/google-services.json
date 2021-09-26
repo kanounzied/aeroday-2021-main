@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "875669636989",
+    "firebase_url": "https://aeroday-2021-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "aeroday-2021",
     "storage_bucket": "aeroday-2021.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "875669636989-o4u5ajmrotru4avea7ooifrka4gkmmbv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.aeroday_2021",
+            "certificate_hash": "4abd9cdf907a202679aafa1e26786ea8d845b0cb"
+          }
+        },
         {
           "client_id": "875669636989-g24gkoeq9jfborpm25i7tpj861gchbvs.apps.googleusercontent.com",
           "client_type": 3
