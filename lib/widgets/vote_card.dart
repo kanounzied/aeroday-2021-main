@@ -186,7 +186,7 @@ class _VoteCardState extends State<VoteCard> {
                                   width: 30,
                                 ),
                                 Text(
-                                  '${widget.contInfo.etab}',
+                                  'Etablissement: ${widget.contInfo.etab}',
                                   style: TextStyle(
                                     fontSize: 14,
                                     color: Color(0xFF323A40),
