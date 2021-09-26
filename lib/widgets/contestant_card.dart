@@ -113,7 +113,7 @@ class _ContestantCardState extends State<ContestantCard> {
                       Container(
                         margin: EdgeInsets.only(top: 5, left: 4),
                         child: Text(
-                          'Etablissement: ' + widget.contestantInfo.etab,
+                          widget.contestantInfo.etab,
                           style: TextStyle(
                             color: light,
                             fontSize: 14,
