@@ -178,7 +178,7 @@ class _LoginScreen extends State<LoginScreen> {
                         margin: EdgeInsets.only(top: 40),
                         child: ElevatedButton(
                           style: ButtonStyle(
-                            fixedSize:
+                            minimumSize:
                                 MaterialStateProperty.all<Size>(Size(150, 40)),
                             shape: MaterialStateProperty.all<
                                 RoundedRectangleBorder>(RoundedRectangleBorder(

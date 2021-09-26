@@ -242,8 +242,9 @@ class _SignUpScreen extends State<SignUpScreen> {
                       Container(
                         margin: EdgeInsets.only(top: 40),
                         child: ElevatedButton(
-                          style: ButtonStyle(
-                            fixedSize:
+                          style: 
+                          ButtonStyle(
+                            minimumSize:
                                 MaterialStateProperty.all<Size>(Size(150, 40)),
                             shape: MaterialStateProperty.all<
                                 RoundedRectangleBorder>(RoundedRectangleBorder(
