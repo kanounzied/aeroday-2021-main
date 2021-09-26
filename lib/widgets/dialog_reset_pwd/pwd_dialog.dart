@@ -154,7 +154,6 @@ class _PwdDialogState extends State<PwdDialog> {
                                 });
                               }
                             },
-                            keyboardType: TextInputType.number,
                             cursorColor: Color(0xffd95252),
                             decoration: InputDecoration(
                               //hintText: "Enter password",
