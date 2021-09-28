@@ -1,3 +1,4 @@
+import 'package:aeroday_2021/constants/eventInfo.dart';
 import 'package:aeroday_2021/screens/home_screen/home.dart';
 import 'package:aeroday_2021/screens/vote_ac.dart';
 import 'package:aeroday_2021/screens/vote_vpd.dart';
@@ -6,14 +7,7 @@ import 'package:aeroday_2021/constants/app_constants.dart';
 import 'package:aeroday_2021/widgets/sidebar/button.dart';
 import 'package:aeroday_2021/widgets/sidebar/bottom_part.dart';
 
-String runningEvent = 'Airshow';
 int userId = 45416;
-List<String> pageNames = [
-  'Home',
-  runningEvent,
-  //'Videographie par drone',
-  'Leaderboard'
-]; //add pagename here to add a button
 
 int pageNumbers = 3;
 int selectedIndex = 0;
@@ -24,9 +18,23 @@ class SideBar extends StatefulWidget {
 }
 
 class _SideBarState extends State<SideBar> {
+  List<String> pageNames = [
+    'Home',
+    EventStats.currentEvent,
+    //'Videographie par drone',
+    'Leaderboard'
+  ]; //add pagename here to add a button
+
   static const IconData air = IconData(0xe064, fontFamily: 'MaterialIcons');
   @override
   Widget build(BuildContext context) {
+    pageNames = [
+      'Home',
+      EventStats.currentEvent,
+      //'Videographie par drone',
+      'Leaderboard'
+    ];
+
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return SafeArea(
@@ -92,33 +100,30 @@ class _SideBarState extends State<SideBar> {
                           color: Colors.black26,
                         ), //spacer
                       ] +
-                      pageNames
-                          .map(
-                            (e) => Container(
-                              child: Button(
-                                label: pageNames[pageNames.indexOf(e)],
-                                isSelected:
-                                    pageNames.indexOf(e) == selectedIndex,
-                                onTap: () {
-                                  setState(
-                                    () {
-                                      if (selectedIndex !=
-                                          pageNames.indexOf(e)) {
-                                        selectedIndex = pageNames.indexOf(e);
-                                        _navigate(selectedIndex);
-                                      } else {
-                                        Navigator.pop(context);
-                                      }
-                                    },
-                                  );
+                      pageNames.map((e) {
+                        setState(() {});
+                        return Container(
+                          child: Button(
+                            label: pageNames[pageNames.indexOf(e)],
+                            isSelected: pageNames.indexOf(e) == selectedIndex,
+                            onTap: () {
+                              setState(
+                                () {
+                                  if (selectedIndex != pageNames.indexOf(e)) {
+                                    selectedIndex = pageNames.indexOf(e);
+                                    _navigate(selectedIndex);
+                                  } else {
+                                    Navigator.pop(context);
+                                  }
                                 },
-                              ),
-                            ),
-                          )
-                          .toList(), //buttons
+                              );
+                            },
+                          ),
+                        );
+                      }).toList(), //buttons
                 ),
                 SizedBox(height: 20),
-                BottomPart(eventName: runningEvent, id: userId),
+                BottomPart(eventName: EventStats.currentEvent, id: userId),
               ],
             ),
           ),

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class UsualFunctions {
   static String getInitials(name) {
     List<String> names = name.split(" ");
-    print(names);
+    //print(names);
     String initials = "";
     int numWords = 2;
     if (numWords > names.length) {

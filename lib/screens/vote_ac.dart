@@ -1,4 +1,5 @@
 import 'package:aeroday_2021/config/responsive_size.dart';
+import 'package:aeroday_2021/constants/eventInfo.dart';
 import 'package:aeroday_2021/services/contestant_info.dart';
 import 'package:aeroday_2021/widgets/appBar/appbar.dart';
 import 'package:aeroday_2021/widgets/vote_card.dart';
@@ -25,7 +26,7 @@ class _VoteACState extends State<VoteAC> {
   Future<Null> getContestantDetails() async {
     Map<String, dynamic> response;
     dynamic collection = await FirebaseFirestore.instance
-        .collection('contestant')
+        .collection('contestant_' + EventStats.currentEvent)
         .get()
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
