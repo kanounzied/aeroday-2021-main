@@ -8,10 +8,10 @@ import 'package:aeroday_2021/widgets/sidebar/bottom_part.dart';
 
 String runningEvent = 'Airshow';
 int userId = 45416;
-const List<String> pageNames = [
+List<String> pageNames = [
   'Home',
-  'Airshow',
-  'Videographie par drone',
+  runningEvent,
+  //'Videographie par drone',
   'Leaderboard'
 ]; //add pagename here to add a button
 
@@ -137,10 +137,10 @@ class _SideBarState extends State<SideBar> {
         case 1:
           route = '/voteAC';
           break;
+        // case 2:
+        //   route = '/voteVPD';
+        //   break;
         case 2:
-          route = '/voteVPD';
-          break;
-        case 3:
           route = '/leaderboard';
       }
       return route;
