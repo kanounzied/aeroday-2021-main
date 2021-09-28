@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:aeroday_2021/config/responsive_size.dart';
 import 'package:aeroday_2021/constants/colors_hex.dart';
+import 'package:aeroday_2021/constants/eventInfo.dart';
 import 'package:aeroday_2021/constants/functions.dart';
 import 'package:aeroday_2021/screens/login_screen/login_screen.dart';
 import 'package:aeroday_2021/services/contestant_info.dart';
@@ -47,7 +48,7 @@ class _VoteCardState extends State<VoteCard> {
           .then((DocumentSnapshot ds) {
         setState(() {
           userHasVoted = ds.get(
-            FieldPath(['voteID']),
+            FieldPath(['voteID_' + EventStats.currentEvent]),
           );
         });
       });
@@ -237,7 +238,8 @@ class _VoteCardState extends State<VoteCard> {
                       if (user != null) {
                         DocumentReference selectedContestantDoc =
                             FirebaseFirestore.instance
-                                .collection('contestant')
+                                .collection(
+                                    'contestant_' + EventStats.currentEvent)
                                 .doc(widget.contInfo.id);
 
                         DocumentReference userDoc = FirebaseFirestore.instance
@@ -246,7 +248,7 @@ class _VoteCardState extends State<VoteCard> {
 
                         userDoc.get().then((DocumentSnapshot ds) async {
                           String voteID = ds.get(
-                            FieldPath(['voteID']),
+                            FieldPath(['voteID_' + EventStats.currentEvent]),
                           );
 
                           print("ID: " + widget.contInfo.id.toString());
@@ -256,7 +258,7 @@ class _VoteCardState extends State<VoteCard> {
                             setState(() {});
                             //change user field voteid and decrement votes for contestant
                             userDoc.update(
-                              {'voteID': ''},
+                              {'voteID_' + EventStats.currentEvent: ''},
                             );
 
                             selectedContestantDoc.get().then(
@@ -273,7 +275,8 @@ class _VoteCardState extends State<VoteCard> {
                               //get the old voted contestant
                               DocumentReference oldVoted = FirebaseFirestore
                                   .instance
-                                  .collection('contestant')
+                                  .collection(
+                                      'contestant_' + EventStats.currentEvent)
                                   .doc(voteID);
                               //get the old votes and decrement them
                               oldVoted.get().then(
@@ -297,7 +300,10 @@ class _VoteCardState extends State<VoteCard> {
                             });
                             //update voteid
                             await userDoc.update(
-                              {'voteID': widget.contInfo.id},
+                              {
+                                'voteID_' + EventStats.currentEvent:
+                                    widget.contInfo.id
+                              },
                             );
                             userHasVoted = widget.contInfo.id;
                             setState(() {});

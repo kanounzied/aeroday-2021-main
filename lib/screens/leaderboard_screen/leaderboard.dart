@@ -1,3 +1,4 @@
+import 'package:aeroday_2021/constants/eventInfo.dart';
 import 'package:aeroday_2021/services/contestant_info.dart';
 import 'package:aeroday_2021/widgets/appBar/appbar.dart';
 import 'package:aeroday_2021/widgets/contestantlb_card.dart';
@@ -16,7 +17,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
   num totalVotes = 0;
   Future<Null> getLeaderboardDetails() async {
     await FirebaseFirestore.instance
-        .collection('contestant')
+        .collection('contestant_' + EventStats.currentEvent)
         .orderBy('votes', descending: true)
         .get()
         .then((QuerySnapshot qs) {

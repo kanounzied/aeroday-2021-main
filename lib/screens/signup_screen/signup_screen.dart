@@ -329,7 +329,8 @@ class _SignUpScreen extends State<SignUpScreen> {
                                           .instance.currentUser?.uid)
                                       .set({
                                     'hasVoted': false,
-                                    'voteID': '',
+                                    'voteID_Airshow': '',
+                                    'voteID_Videographie par drone': '',
                                   });
 
                                   toggleSignupButton(true);
