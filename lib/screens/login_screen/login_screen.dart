@@ -342,6 +342,13 @@ class _LoginScreen extends State<LoginScreen> {
                                 );
                                 if (FirebaseAuth.instance.currentUser != null) {
                                   Navigator.pop(context);
+                                  if (!this.noRedirect)
+                                    Navigator.push(
+                                        // Open HomeScreen
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                HomeScreen()));
                                 }
                               },
                               child: Text(
