@@ -328,11 +328,11 @@ class _LoginScreen extends State<LoginScreen> {
                             margin: EdgeInsets.only(
                                 top: SizeConfig.screenHeight * 0.007),
                             child: GestureDetector(
-                              onTap: () {
+                              onTap: () async {
                                 // Signup click
                                 print("inscription");
                                 //Navigator.pop(context);
-                                Navigator.push(
+                                await Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => SignUpScreen(
@@ -340,6 +340,9 @@ class _LoginScreen extends State<LoginScreen> {
                                     ),
                                   ),
                                 );
+                                if (FirebaseAuth.instance.currentUser != null) {
+                                  Navigator.pop(context);
+                                }
                               },
                               child: Text(
                                 "Inscrivez-vous",
