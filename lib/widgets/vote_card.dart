@@ -356,13 +356,14 @@ class _VoteCardState extends State<VoteCard> {
                           width: 4,
                         ),
                         borderRadius: BorderRadius.all(Radius.circular(7)),
-                        color: Color(userHasVoted == widget.contInfo.id
+                        color: Color(userHasVoted == widget.contInfo.id &&
+                                FirebaseAuth.instance.currentUser != null
                             ? 0xFF323A40
                             : 0xFFFFFFFF),
                       ),
                       child: Center(
                         child: Text(
-                          'VOTE${userHasVoted == widget.contInfo.id ? 'D' : ''}',
+                          'VOTE${userHasVoted == widget.contInfo.id && FirebaseAuth.instance.currentUser != null ? 'D' : ''}',
                           style: TextStyle(
                             color: Color(0xFF51A678),
                             fontSize: 26,
