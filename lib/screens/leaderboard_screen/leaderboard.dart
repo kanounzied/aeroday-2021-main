@@ -1,3 +1,4 @@
+import 'package:aeroday_2021/config/responsive_size.dart';
 import 'package:aeroday_2021/constants/eventInfo.dart';
 import 'package:aeroday_2021/services/contestant_info.dart';
 import 'package:aeroday_2021/widgets/appBar/appbar.dart';
@@ -15,19 +16,34 @@ class LeaderBoard extends StatefulWidget {
 class _LeaderBoardState extends State<LeaderBoard> {
   List<ContestantInfo> _contestantsList = [];
   num totalVotes = 0;
+  int selectedEvent = 0;
+
+  bool disableEventNav = false;
+
   Future<Null> getLeaderboardDetails() async {
+    print("disable");
+    disableEventNav = true;
+    _contestantsList.clear();
+    print(_contestantsList.length);
+
     await FirebaseFirestore.instance
-        .collection('contestant_' + EventStats.currentEvent)
+        .collection('contestant_' + EventStats.EventList[selectedEvent])
         .orderBy('votes', descending: true)
         .get()
-        .then((QuerySnapshot qs) {
+        .catchError(
+      (err) {
+        print(err);
+      },
+    ).then((QuerySnapshot qs) {
       qs.docs.forEach((doc) {
         _contestantsList.add(
             ContestantInfo.fromMap(doc.data() as Map<String, dynamic>, doc.id));
         totalVotes += (doc.data() as Map<String, dynamic>)['votes'];
       });
     });
-    setState(() {});
+    //setState(() {});
+    print("reenable");
+    disableEventNav = false;
   }
 
   @override
@@ -49,6 +65,48 @@ class _LeaderBoardState extends State<LeaderBoard> {
               AppBarCustom(
                 title: 'LEADERBOARD',
                 c: c,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    child: GestureDetector(
+                      onTap: () {
+                        if (disableEventNav) return;
+                        setState(() {
+                          selectedEvent = (selectedEvent - 1) % 2;
+                          getLeaderboardDetails();
+                        });
+                      },
+                      child: Icon(Icons.arrow_left),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                      left: SizeConfig.screenWidth *
+                          (selectedEvent == 0 ? .21 : .09),
+                    ),
+                    child: Text(
+                        EventStats.EventList[selectedEvent]), // TODO : design
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                      left: SizeConfig.screenWidth *
+                          (selectedEvent == 0 ? .21 : .09),
+                    ),
+                    child: GestureDetector(
+                      onTap: () {
+                        if (disableEventNav) return;
+
+                        setState(() {
+                          selectedEvent = (selectedEvent + 1) % 2;
+                          getLeaderboardDetails();
+                        });
+                      },
+                      child: Icon(Icons.arrow_right),
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: 10),
               _contestantsList.isEmpty ? Container() : buildTopThree(),
@@ -126,6 +184,8 @@ class _LeaderBoardState extends State<LeaderBoard> {
     if (totalVotes == 0) {
       totalVotes++;
     }
+    print("LEN: " + _contestantsList.length.toString());
+
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
