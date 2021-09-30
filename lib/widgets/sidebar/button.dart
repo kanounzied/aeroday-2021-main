@@ -1,3 +1,4 @@
+import 'package:aeroday_2021/constants/eventInfo.dart';
 import 'package:flutter/material.dart';
 import 'package:aeroday_2021/constants/app_constants.dart';
 
@@ -48,14 +49,27 @@ class _ButtonState extends State<Button> {
   }
 
   IconData getIcon(String s) {
+    IconData getIconFromFunc(String stats) {
+      switch (stats) {
+        case 'leaderboard':
+          return Icons.leaderboard_rounded;
+        case 'wait':
+        case 'vote':
+          return Icons.how_to_vote;
+      }
+      return Icons.lock; // locked
+    }
+
     switch (s) {
       case 'Home':
         return Icons.home_rounded;
       case 'Videographie par drone':
+        return getIconFromFunc(EventStats.vpdStats);
       case 'Airshow':
-        return Icons.how_to_vote_rounded;
-      case 'Leaderboard':
-        return Icons.leaderboard_rounded;
+        return getIconFromFunc(EventStats.airshowStats);
+
+      // case 'Leaderboard':
+      //   return Icons.leaderboard_rounded;
       default:
         return Icons.error_outline;
     }

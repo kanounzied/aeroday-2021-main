@@ -2,6 +2,7 @@ import 'package:aeroday_2021/constants/eventInfo.dart';
 import 'package:aeroday_2021/screens/home_screen/home.dart';
 import 'package:aeroday_2021/screens/vote_ac.dart';
 import 'package:aeroday_2021/screens/vote_vpd.dart';
+import 'package:aeroday_2021/services/showLockedMessage.dart';
 import 'package:flutter/material.dart';
 import 'package:aeroday_2021/constants/app_constants.dart';
 import 'package:aeroday_2021/widgets/sidebar/button.dart';
@@ -20,21 +21,14 @@ class SideBar extends StatefulWidget {
 class _SideBarState extends State<SideBar> {
   List<String> pageNames = [
     'Home',
-    EventStats.currentEvent,
-    //'Videographie par drone',
-    'Leaderboard'
+    'Airshow',
+    'Videographie par drone',
+    //'Leaderboard'
   ]; //add pagename here to add a button
 
   static const IconData air = IconData(0xe064, fontFamily: 'MaterialIcons');
   @override
   Widget build(BuildContext context) {
-    pageNames = [
-      'Home',
-      EventStats.currentEvent,
-      //'Videographie par drone',
-      'Leaderboard'
-    ];
-
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return SafeArea(
@@ -110,8 +104,7 @@ class _SideBarState extends State<SideBar> {
                               setState(
                                 () {
                                   if (selectedIndex != pageNames.indexOf(e)) {
-                                    selectedIndex = pageNames.indexOf(e);
-                                    _navigate(selectedIndex);
+                                    _navigate(pageNames.indexOf(e));
                                   } else {
                                     Navigator.pop(context);
                                   }
@@ -133,25 +126,34 @@ class _SideBarState extends State<SideBar> {
   }
 
   void _navigate(index) {
-    String checkRoute(index) {
-      String route = '/home';
-      switch (index) {
-        case 0:
-          route = '/home';
-          break;
-        case 1:
-          route = '/voteAC';
-          break;
-        // case 2:
-        //   route = '/voteVPD';
-        //   break;
-        case 2:
-          route = '/leaderboard';
-      }
-      return route;
+    String route = '/home';
+    switch (index) {
+      case 1:
+        if (EventStats.airshowStats == "locked") {
+          showLockedMessage(context, "Airshow");
+          return;
+        } else if (EventStats.airshowStats == "wait") {
+          showLockedMessage(context, "Airshow");
+          return;
+        }
+        route = '/voteAC';
+        break;
+      case 2:
+        if (EventStats.vpdStats == "locked") {
+          showLockedMessage(context, "Videographie par drone");
+          return;
+        } else if (EventStats.vpdStats == "wait") {
+          showLockedMessage(context, "Airshow");
+          return;
+        }
+        route = '/voteVPD';
+        break;
+      // case 2:
+      //   route = '/leaderboard';
     }
 
+    selectedIndex = index;
     Navigator.pop(context);
-    Navigator.pushReplacementNamed(context, checkRoute(index));
+    Navigator.pushReplacementNamed(context, route);
   }
 }

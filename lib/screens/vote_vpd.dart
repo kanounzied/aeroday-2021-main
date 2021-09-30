@@ -26,7 +26,7 @@ class _VoteVPDState extends State<VoteVPD> {
   Future<Null> getContestantDetails() async {
     Map<String, dynamic> response;
     dynamic collection = await FirebaseFirestore.instance
-        .collection('contestant_' + EventStats.currentEvent)
+        .collection('contestant_' + EventStats.EventList[1])
         .get()
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {

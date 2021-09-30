@@ -1,3 +1,4 @@
+import 'package:aeroday_2021/config/responsive_size.dart';
 import 'package:aeroday_2021/constants/app_constants.dart';
 import 'package:aeroday_2021/screens/vote_ac.dart';
 import 'package:aeroday_2021/services/contestant_info.dart';
@@ -26,7 +27,8 @@ class _ContestantLbCardState extends State<ContestantLbCard> {
       margin: EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-            colors: [getColorByRank(widget.index), Colors.white]),
+            //end: Alignment(99, 1), // TODO : probably change the design
+            colors: [Colors.white, getColorByRank(widget.index)]),
         boxShadow: [
           BoxShadow(
             color: Colors.black26,
@@ -107,9 +109,7 @@ class _ContestantLbCardState extends State<ContestantLbCard> {
                       children: [
                         Container(
                           child: Text(
-                            widget.contestantInfo.name +
-                                ' ' +
-                                widget.contestantInfo.lastName,
+                            widget.contestantInfo.teamName,
                             style: TextStyle(
                               color: dark,
                               fontSize: 15,
@@ -124,7 +124,7 @@ class _ContestantLbCardState extends State<ContestantLbCard> {
                       child: Text(
                         'Votes: ' + widget.contestantInfo.votes.toString(),
                         style: TextStyle(
-                          color: widget.index > 3 ? light : Colors.white,
+                          color: light,
                           fontSize: 14,
                         ),
                       ),

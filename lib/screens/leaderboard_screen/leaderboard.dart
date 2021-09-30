@@ -9,8 +9,11 @@ import 'package:aeroday_2021/widgets/sidebar/sidebar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LeaderBoard extends StatefulWidget {
+  String eventKey;
+  LeaderBoard({required this.eventKey});
+
   @override
-  _LeaderBoardState createState() => _LeaderBoardState();
+  _LeaderBoardState createState() => _LeaderBoardState(eventKey: this.eventKey);
 }
 
 class _LeaderBoardState extends State<LeaderBoard> {
@@ -20,14 +23,17 @@ class _LeaderBoardState extends State<LeaderBoard> {
 
   bool disableEventNav = false;
 
+  String eventKey;
+
+  _LeaderBoardState({required this.eventKey});
+
   Future<Null> getLeaderboardDetails() async {
-    print("disable");
     disableEventNav = true;
     _contestantsList.clear();
     print(_contestantsList.length);
 
     await FirebaseFirestore.instance
-        .collection('contestant_' + EventStats.EventList[selectedEvent])
+        .collection('contestant_' + this.eventKey)
         .orderBy('votes', descending: true)
         .get()
         .catchError(
@@ -42,7 +48,6 @@ class _LeaderBoardState extends State<LeaderBoard> {
       });
     });
     //setState(() {});
-    print("reenable");
     disableEventNav = false;
   }
 
@@ -66,50 +71,12 @@ class _LeaderBoardState extends State<LeaderBoard> {
                 title: 'LEADERBOARD',
                 c: c,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    child: GestureDetector(
-                      onTap: () {
-                        if (disableEventNav) return;
-                        setState(() {
-                          selectedEvent = (selectedEvent - 1) % 2;
-                          getLeaderboardDetails();
-                        });
-                      },
-                      child: Icon(Icons.arrow_left),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(
-                      left: SizeConfig.screenWidth *
-                          (selectedEvent == 0 ? .21 : .09),
-                    ),
-                    child: Text(
-                        EventStats.EventList[selectedEvent]), // TODO : design
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(
-                      left: SizeConfig.screenWidth *
-                          (selectedEvent == 0 ? .21 : .09),
-                    ),
-                    child: GestureDetector(
-                      onTap: () {
-                        if (disableEventNav) return;
-
-                        setState(() {
-                          selectedEvent = (selectedEvent + 1) % 2;
-                          getLeaderboardDetails();
-                        });
-                      },
-                      child: Icon(Icons.arrow_right),
-                    ),
-                  ),
-                ],
-              ),
               SizedBox(height: 10),
-              _contestantsList.isEmpty ? Container() : buildTopThree(),
+              _contestantsList.isEmpty
+                  ? Container(
+                      height: 165,
+                    )
+                  : buildTopThree(),
               SizedBox(height: 10),
               Stack(
                 children: [

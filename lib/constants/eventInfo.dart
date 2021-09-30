@@ -5,5 +5,18 @@ class EventStats {
     Videographie par drone
   */
   static String currentEvent = '';
-  static List<String> EventList = ['Airshow', 'Videographie par drone'];
+  static const List<String> EventList = [
+    'Airshow',
+    'Videographie par drone'
+  ]; // Linked to DB! Don't change
+
+  /*
+  Values:
+    vote
+    leaderboard
+    locked
+    wait
+  */
+  static String airshowStats = '';
+  static String vpdStats = '';
 }

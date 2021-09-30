@@ -1,5 +1,6 @@
 import 'package:aeroday_2021/screens/home_screen/home.dart';
 import 'package:aeroday_2021/screens/leaderboard_screen/leaderboard.dart';
+import 'package:aeroday_2021/screens/loading_screen/loading_screen.dart';
 import 'package:aeroday_2021/screens/vote_ac.dart';
 import 'package:aeroday_2021/screens/vote_vpd.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,11 +9,7 @@ import 'package:flutter/material.dart';
 import 'config/responsive_size.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-import 'package:aeroday_2021/screens/signup_screen/signup_screen.dart';
-
 import 'constants/eventInfo.dart';
-
-// import 'package:flutter_safetynet_attestation/flutter_safetynet_attestation.dart';
 
 void main() {
   runApp(Home());
@@ -66,8 +63,12 @@ class _AppState extends State<MyApp> {
               .doc('EventInfo')
               .get()
               .then((DocumentSnapshot ds) {
+            EventStats.airshowStats = ds.get(FieldPath(['airshowStats']));
+            EventStats.vpdStats = ds.get(FieldPath(['vdpStats']));
+
             EventStats.currentEvent = ds.get(FieldPath(['currentEvent']));
-            print(EventStats.currentEvent);
+
+            print(EventStats.airshowStats);
             setState(() {});
           });
 
@@ -76,19 +77,27 @@ class _AppState extends State<MyApp> {
               initialRoute: '/home',
               routes: {
                 '/home': (context) => HomeScreen(),
-                '/voteAC': (context) => (EventStats.currentEvent == 'Airshow'
+                '/voteAC': (context) => (EventStats.airshowStats == 'vote'
                     ? VoteAC()
-                    : VoteVPD()),
-                //'/voteVPD': (context) => VoteVPD(),
-                '/leaderboard': (context) => LeaderBoard(),
+                    : (EventStats.airshowStats == 'leaderboard'
+                        ? LeaderBoard(
+                            eventKey: EventStats.EventList[0],
+                          )
+                        : Home())),
+                '/voteVPD': (context) => (EventStats.vpdStats == 'vote'
+                    ? VoteVPD()
+                    : (EventStats.vpdStats == 'leaderboard'
+                        ? LeaderBoard(
+                            eventKey: EventStats.EventList[1],
+                          )
+                        : Home())),
+                // '/leaderboard': (context) => LeaderBoard(),
               });
         } else {
           // Otherwise, show something whilst waiting for initialization to complete
           return Scaffold(
             backgroundColor: Color(0xFF323A40),
-            body: SafeArea(
-              child: Text("loadingfff"),
-            ),
+            body: LoadingScreen(),
           );
         }
       },
