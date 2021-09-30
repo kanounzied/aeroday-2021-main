@@ -16,11 +16,14 @@ class VoteCard extends StatefulWidget {
   ContestantInfo contInfo;
   int index;
 
+  bool openUp;
+
   VoteCard({
     required this.onVoted,
     required this.contInfo,
     required this.onVoteCardExtended,
     required this.index,
+    this.openUp = false,
   });
 
   _VoteCardState createState() => _VoteCardState();
@@ -57,6 +60,14 @@ class _VoteCardState extends State<VoteCard> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.openUp) {
+      // Open the card when user clicks on a contestant
+      _height = 256;
+      top = true;
+      bot = false;
+      widget.openUp = false;
+    }
+
     double sHeight = MediaQuery.of(context).size.height;
     double sWidth = MediaQuery.of(context).size.width;
     double currPos = 0;

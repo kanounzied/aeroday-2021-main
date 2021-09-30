@@ -23,6 +23,8 @@ class _VoteACState extends State<VoteAC> {
   List<ContestantInfo> _contestantsList = [];
   List<ContestantInfo> _searchList = [];
 
+  late VoteCard vCard;
+
   Future<Null> getContestantDetails() async {
     Map<String, dynamic> response;
     dynamic collection = await FirebaseFirestore.instance
@@ -36,6 +38,18 @@ class _VoteACState extends State<VoteAC> {
       });
       setState(() {});
     }); //TODO:Get the list of contestants and store it in responce
+
+    vCard = VoteCard(
+      onVoteCardExtended: (h) {
+        setState(() {
+          dynamicHeight = h;
+          print(dynamicHeight);
+        });
+      },
+      onVoted: () {},
+      contInfo: _contestantsList[selectedNum],
+      index: selectedNum,
+    );
   }
 
   @override
@@ -90,17 +104,7 @@ class _VoteACState extends State<VoteAC> {
                 ],
               ),
               _contestantsList.isNotEmpty
-                  ? VoteCard(
-                      onVoteCardExtended: (h) {
-                        setState(() {
-                          dynamicHeight = h;
-                          print(dynamicHeight);
-                        });
-                      },
-                      onVoted: () {},
-                      contInfo: _contestantsList[selectedNum],
-                      index: selectedNum,
-                    )
+                  ? vCard
                   : Stack(children: [
                       Positioned(
                         bottom: 0,
@@ -135,6 +139,18 @@ class _VoteACState extends State<VoteAC> {
           onPressed: (e) {
             setState(() {
               selectedNum = _contestantsList.indexOf(e);
+              vCard = VoteCard(
+                onVoteCardExtended: (h) {
+                  setState(() {
+                    dynamicHeight = h;
+                    print(dynamicHeight);
+                  });
+                },
+                onVoted: () {},
+                contInfo: _contestantsList[selectedNum],
+                index: selectedNum,
+                openUp: true,
+              );
             });
           },
         );
