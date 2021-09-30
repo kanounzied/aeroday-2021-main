@@ -23,7 +23,7 @@ class _VoteACState extends State<VoteAC> {
   List<ContestantInfo> _contestantsList = [];
   List<ContestantInfo> _searchList = [];
 
-  late VoteCard vCard;
+  bool openCard = false;
 
   Future<Null> getContestantDetails() async {
     Map<String, dynamic> response;
@@ -38,18 +38,6 @@ class _VoteACState extends State<VoteAC> {
       });
       setState(() {});
     }); //TODO:Get the list of contestants and store it in responce
-
-    vCard = VoteCard(
-      onVoteCardExtended: (h) {
-        setState(() {
-          dynamicHeight = h;
-          print(dynamicHeight);
-        });
-      },
-      onVoted: () {},
-      contInfo: _contestantsList[selectedNum],
-      index: selectedNum,
-    );
   }
 
   @override
@@ -104,7 +92,23 @@ class _VoteACState extends State<VoteAC> {
                 ],
               ),
               _contestantsList.isNotEmpty
-                  ? vCard
+                  ? VoteCard(
+                      onVoteCardExtended: (h) {
+                        setState(() {
+                          dynamicHeight = h;
+                          print(dynamicHeight);
+                        });
+                      },
+                      onVoted: () {},
+                      contInfo: _contestantsList[selectedNum],
+                      index: selectedNum,
+                      openUp: openCard
+                          ? () {
+                              openCard = false;
+                              return true;
+                            }()
+                          : false,
+                    )
                   : Stack(children: [
                       Positioned(
                         bottom: 0,
@@ -139,18 +143,7 @@ class _VoteACState extends State<VoteAC> {
           onPressed: (e) {
             setState(() {
               selectedNum = _contestantsList.indexOf(e);
-              vCard = VoteCard(
-                onVoteCardExtended: (h) {
-                  setState(() {
-                    dynamicHeight = h;
-                    print(dynamicHeight);
-                  });
-                },
-                onVoted: () {},
-                contInfo: _contestantsList[selectedNum],
-                index: selectedNum,
-                openUp: true,
-              );
+              openCard = true;
             });
           },
         );

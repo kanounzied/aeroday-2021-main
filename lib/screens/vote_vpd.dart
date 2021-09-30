@@ -22,6 +22,7 @@ class _VoteVPDState extends State<VoteVPD> {
   int selectedNum = 0;
   List<ContestantInfo> _contestantsList = [];
   List<ContestantInfo> _searchList = [];
+  bool openCard = false;
 
   Future<Null> getContestantDetails() async {
     Map<String, dynamic> response;
@@ -101,6 +102,12 @@ class _VoteVPDState extends State<VoteVPD> {
                       onVoted: () {},
                       contInfo: _contestantsList[selectedNum],
                       index: selectedNum,
+                      openUp: openCard
+                          ? () {
+                              openCard = false;
+                              return true;
+                            }()
+                          : false,
                     )
                   : Stack(children: [
                       Positioned(
@@ -136,6 +143,7 @@ class _VoteVPDState extends State<VoteVPD> {
           onPressed: (e) {
             setState(() {
               selectedNum = _contestantsList.indexOf(e);
+              openCard = true;
             });
           },
         );

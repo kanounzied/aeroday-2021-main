@@ -1,3 +1,4 @@
+import 'package:aeroday_2021/config/responsive_size.dart';
 import 'package:aeroday_2021/constants/eventInfo.dart';
 import 'package:aeroday_2021/screens/home_screen/home.dart';
 import 'package:aeroday_2021/screens/vote_ac.dart';
@@ -130,20 +131,40 @@ class _SideBarState extends State<SideBar> {
     switch (index) {
       case 1:
         if (EventStats.airshowStats == "locked") {
-          showLockedMessage(context, "Airshow");
+          showLockedMessage(
+            context: context,
+            title: "Airshow",
+            height: SizeConfig.screenHeight * .1,
+            content: "Wait till", // TODO : fix this msg
+          );
           return;
         } else if (EventStats.airshowStats == "wait") {
-          showLockedMessage(context, "Airshow");
+          showLockedMessage(
+            context: context,
+            title: "Airshow",
+            height: SizeConfig.screenHeight * .1,
+            content: "Wait till", // TODO : fix this msg
+          );
           return;
         }
         route = '/voteAC';
         break;
       case 2:
         if (EventStats.vpdStats == "locked") {
-          showLockedMessage(context, "Videographie par drone");
+          showLockedMessage(
+            context: context,
+            title: "Videographie par drone",
+            height: SizeConfig.screenHeight * .1,
+            content: "Wait till", // TODO : fix this msg
+          );
           return;
         } else if (EventStats.vpdStats == "wait") {
-          showLockedMessage(context, "Airshow");
+          showLockedMessage(
+            context: context,
+            title: "Videographie par drone",
+            height: SizeConfig.screenHeight * .1,
+            content: "Wait till", // TODO : fix this msg
+          );
           return;
         }
         route = '/voteVPD';
