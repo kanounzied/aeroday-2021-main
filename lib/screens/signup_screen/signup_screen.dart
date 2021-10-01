@@ -449,8 +449,8 @@ class _SignUpScreen extends State<SignUpScreen> {
                               }) =>
                                   null,
                               decoration: InputDecoration(
-                                hintText: 'Numéro du téléphone',
-                                labelText: 'Votre numéro du téléphone',
+                                hintText: 'Phone number',
+                                labelText: 'Your phone number',
                                 contentPadding: new EdgeInsets.symmetric(
                                     vertical: 25.0, horizontal: 15.0),
                                 border: OutlineInputBorder(
@@ -469,8 +469,8 @@ class _SignUpScreen extends State<SignUpScreen> {
                               autocorrect: false,
                               enableSuggestions: false,
                               decoration: InputDecoration(
-                                hintText: 'Mot de passe',
-                                labelText: 'Votre mot de passe',
+                                hintText: 'Password',
+                                labelText: 'Your passord',
                                 contentPadding: new EdgeInsets.symmetric(
                                     vertical: 25.0, horizontal: 15.0),
                                 border: OutlineInputBorder(
@@ -523,7 +523,7 @@ class _SignUpScreen extends State<SignUpScreen> {
                           Container(
                             margin: EdgeInsets.only(
                                 top: SizeConfig.screenHeight * 0.08),
-                            child: Text("Vous avez déjà un compte?"),
+                            child: Text("You already have an account?"),
                           ),
                           Container(
                             margin: EdgeInsets.only(
@@ -533,13 +533,20 @@ class _SignUpScreen extends State<SignUpScreen> {
                                 // Redirect login_screen
                                 print("redirect login");
                                 //Navigator.pop(context);
-                                Navigator.push(
+                                if (!this.noRedirect)
+                                  Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => LoginScreen()));
+                                      builder: (context) => LoginScreen(
+                                        noRedirect: this.noRedirect,
+                                      ),
+                                    ),
+                                  );
+                                else
+                                  Navigator.pop(context);
                               },
                               child: Text(
-                                "Connectez-vous",
+                                "Signin",
                                 style: TextStyle(
                                   color: Color(0xFF519DA6),
                                   decoration: TextDecoration.underline,
