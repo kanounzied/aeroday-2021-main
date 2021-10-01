@@ -102,6 +102,7 @@ class _VoteACState extends State<VoteAC> {
                       onVoted: () {},
                       contInfo: _contestantsList[selectedNum],
                       index: selectedNum,
+                      vCardEvent: EventStats.EventList[0],
                       openUp: openCard
                           ? () {
                               openCard = false;

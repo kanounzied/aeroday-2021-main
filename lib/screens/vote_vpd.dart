@@ -102,6 +102,7 @@ class _VoteVPDState extends State<VoteVPD> {
                       onVoted: () {},
                       contInfo: _contestantsList[selectedNum],
                       index: selectedNum,
+                      vCardEvent: EventStats.EventList[1],
                       openUp: openCard
                           ? () {
                               openCard = false;
