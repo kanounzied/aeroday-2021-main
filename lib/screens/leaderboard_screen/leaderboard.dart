@@ -1,5 +1,4 @@
 import 'package:aeroday_2021/config/responsive_size.dart';
-import 'package:aeroday_2021/constants/eventInfo.dart';
 import 'package:aeroday_2021/services/contestant_info.dart';
 import 'package:aeroday_2021/widgets/appBar/appbar.dart';
 import 'package:aeroday_2021/widgets/contestantlb_card.dart';
@@ -72,11 +71,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
                 c: c,
               ),
               SizedBox(height: 10),
-              _contestantsList.isEmpty
-                  ? Container(
-                      height: 165,
-                    )
-                  : buildTopThree(),
+              _contestantsList.isEmpty ? buildTopThreeGray() : buildTopThree(),
               SizedBox(height: 10),
               Stack(
                 children: [
@@ -128,7 +123,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
       itemBuilder: (context, index) {
         return Container(
           width: MediaQuery.of(context).size.width * 0.85,
-          height: 62,
+          height: 6.2 * SizeConfig.defaultSize,
           margin: EdgeInsets.only(bottom: 16),
           decoration: BoxDecoration(
             color: Colors.grey[350],
@@ -151,7 +146,6 @@ class _LeaderBoardState extends State<LeaderBoard> {
     if (totalVotes == 0) {
       totalVotes++;
     }
-    print("LEN: " + _contestantsList.length.toString());
 
     return Container(
       child: Row(
@@ -316,6 +310,150 @@ class _LeaderBoardState extends State<LeaderBoard> {
                   fontWeight: FontWeight.w200,
                 ),
               )
+            ],
+          )),
+        ],
+      ),
+    );
+  }
+
+  Widget buildTopThreeGray() {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+              child: Column(
+            children: [
+              Stack(
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Colors.grey[350],
+                    radius: 40,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(500),
+                          border:
+                              Border.all(color: Color(0xFFAAAAAA), width: 3)),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
+              Container(
+                width: 67,
+                height: 14,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(3),
+                  color: Color(0x66ffffff),
+                ),
+              ),
+              SizedBox(height: 5),
+              Container(
+                width: 50,
+                height: 12,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(3),
+                  color: Color(0x66ffffff),
+                ),
+              ),
+              SizedBox(height: 4),
+              Text(
+                '',
+                style: TextStyle(
+                  fontSize: 12,
+                ),
+              ),
+            ],
+          )),
+          SizedBox(width: 35),
+          Container(
+              child: Column(
+            children: [
+              Stack(
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Colors.grey[350],
+                    radius: 50,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(500),
+                          border:
+                              Border.all(color: Color(0xFFAAAAAA), width: 3)),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
+              Container(
+                width: 67,
+                height: 14,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(3),
+                  color: Color(0x66ffffff),
+                ),
+              ),
+              SizedBox(height: 5),
+              Container(
+                width: 50,
+                height: 12,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(3),
+                  color: Color(0x66ffffff),
+                ),
+              ),
+              SizedBox(height: 4),
+              Text(
+                '',
+                style: TextStyle(
+                  fontSize: 12,
+                ),
+              ),
+            ],
+          )),
+          SizedBox(width: 35),
+          Container(
+              child: Column(
+            children: [
+              Stack(
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Colors.grey[350],
+                    radius: 40,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(500),
+                          border:
+                              Border.all(color: Color(0xFFAAAAAA), width: 3)),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
+              Container(
+                width: 67,
+                height: 14,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(3),
+                  color: Color(0x66ffffff),
+                ),
+              ),
+              SizedBox(height: 5),
+              Container(
+                width: 50,
+                height: 12,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(3),
+                  color: Color(0x66ffffff),
+                ),
+              ),
+              SizedBox(height: 4),
+              Text(
+                '',
+                style: TextStyle(
+                  fontSize: 12,
+                ),
+              ),
             ],
           )),
         ],
