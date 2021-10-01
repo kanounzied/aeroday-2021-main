@@ -19,8 +19,8 @@ class ContestantLbCard extends StatefulWidget {
 class _ContestantLbCardState extends State<ContestantLbCard> {
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = SizeConfig.screenWidth;
+    double screenHeight = SizeConfig.screenHeight;
     return Container(
       width: screenWidth * 0.85,
       height: 62,

@@ -1,3 +1,4 @@
+import 'package:aeroday_2021/config/responsive_size.dart';
 import 'package:aeroday_2021/constants/app_constants.dart';
 import 'package:aeroday_2021/constants/functions.dart';
 import 'package:aeroday_2021/screens/vote_ac.dart';
@@ -24,8 +25,8 @@ class ContestantCard extends StatefulWidget {
 class _ContestantCardState extends State<ContestantCard> {
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = SizeConfig.screenWidth;
+    double screenHeight = SizeConfig.screenHeight;
     return GestureDetector(
       onTap: () {
         setState(() {

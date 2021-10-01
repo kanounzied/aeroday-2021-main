@@ -40,6 +40,7 @@ class _AppBar extends State<AppBarCustom> {
           child: Text(
             this.title,
             style: TextStyle(
+              fontSize: SizeConfig.defaultSize * 2,
               color: Colors.white,
               fontWeight: FontWeight.w600,
               letterSpacing: 1,

@@ -10,7 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:aeroday_2021/screens/home_screen/home.dart';
 import 'package:aeroday_2021/widgets/dialog_reset_pwd/dialog_reset_pwd.dart';
 
-import '../../config/responsive_size.dart';
+import 'package:aeroday_2021/config/responsive_size.dart';
 
 class LoginScreen extends StatefulWidget {
   final bool noRedirect;
@@ -67,6 +67,29 @@ class _LoginScreen extends State<LoginScreen> {
 
   void signupButtonCalled() async {
     toggleSignupButton(false);
+
+    if (emailController.text.isEmpty || emailController.text.length < 8) {
+      toggleSignupButton(true);
+
+      UsualFunctions.showErrorDialog(
+        context: context,
+        height: SizeConfig.screenHeight * 0.13,
+        title: "Sign in error",
+        error: "Invalid phone number.",
+      );
+      return;
+    }
+    if (passController.text.isEmpty) {
+      toggleSignupButton(true);
+
+      UsualFunctions.showErrorDialog(
+        context: context,
+        height: SizeConfig.screenHeight * 0.13,
+        title: "Sign in error",
+        error: "Invalid password.",
+      );
+      return;
+    }
 
     try {
       await FirebaseAuth.instance
@@ -200,7 +223,7 @@ class _LoginScreen extends State<LoginScreen> {
                           topRight: Radius.circular(50),
                         ),
                       ),
-                      width: MediaQuery.of(context).size.width,
+                      width: SizeConfig.screenWidth,
                       child: Column(
                         children: <Widget>[
                           Container(

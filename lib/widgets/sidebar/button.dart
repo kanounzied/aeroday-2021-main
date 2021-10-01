@@ -1,6 +1,7 @@
 import 'package:aeroday_2021/constants/eventInfo.dart';
 import 'package:flutter/material.dart';
 import 'package:aeroday_2021/constants/app_constants.dart';
+import 'package:aeroday_2021/config/responsive_size.dart';
 
 class Button extends StatefulWidget {
   final String label;
@@ -37,7 +38,7 @@ class _ButtonState extends State<Button> {
             ),
             Expanded(
               child: Text(
-                widget.label,
+                widget.label, // TODO : responsive
                 style:
                     TextStyle(color: widget.isSelected ? Colors.white : dark),
               ),
