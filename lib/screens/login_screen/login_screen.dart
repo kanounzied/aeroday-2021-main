@@ -101,8 +101,8 @@ class _LoginScreen extends State<LoginScreen> {
         UsualFunctions.showErrorDialog(
           context: context,
           height: SizeConfig.screenHeight * 0.15,
-          title: "Erreur de connexion",
-          error: "Votre numéro du téléphone n'exist pas.",
+          title: "Sign in error",
+          error: "Your phone number doesn't exist.",
         );
 
         print('No user found for that email.');
@@ -112,8 +112,8 @@ class _LoginScreen extends State<LoginScreen> {
         UsualFunctions.showErrorDialog(
           context: context,
           height: SizeConfig.screenHeight * 0.13,
-          title: "Erreur de connexion",
-          error: "Votre mot de passe est incorrect.",
+          title: "Sign in error",
+          error: "Invalid password.",
         );
 
         print('Wrong password provided for that user.');
@@ -122,8 +122,19 @@ class _LoginScreen extends State<LoginScreen> {
         UsualFunctions.showErrorDialog(
           context: context,
           height: SizeConfig.screenHeight * 0.13,
-          title: "Erreur de connexion",
-          error: "Verifier votre accés à l'internet.",
+          title: "Sign in error",
+          error: "Verify your network access.",
+        );
+
+        toggleSignupButton(true);
+        return;
+      } else if (e.code == 'too-many-requests') {
+        print("network error");
+        UsualFunctions.showErrorDialog(
+          context: context,
+          height: SizeConfig.screenHeight * 0.13,
+          title: "Sign in error",
+          error: "Too many invalid signin attemps, try again in few minutes.",
         );
 
         toggleSignupButton(true);
@@ -135,7 +146,7 @@ class _LoginScreen extends State<LoginScreen> {
         UsualFunctions.showErrorDialog(
           context: context,
           height: SizeConfig.screenHeight * 0.13,
-          title: "Erreur de connexion",
+          title: "Sign in error",
           error: "UNKNOWN: " + e.code,
         );
 
