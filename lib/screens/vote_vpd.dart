@@ -36,8 +36,8 @@ class _VoteVPDState extends State<VoteVPD> {
 
         _contestantsList.add(ContestantInfo.fromMap(response, doc.id));
       });
-      setState(() {});
     }); //TODO:Get the list of contestants and store it in responce
+    setState(() {});
   }
 
   @override
