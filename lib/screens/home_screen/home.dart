@@ -3,8 +3,6 @@ import 'package:aeroday_2021/widgets/appBar/appbar.dart';
 import 'package:aeroday_2021/widgets/sidebar/sidebar.dart';
 import 'package:flutter/material.dart';
 
-import 'package:firebase_auth/firebase_auth.dart';
-
 import '../../widgets/upcomings_cercle/circle.dart';
 
 import '../../config/responsive_size.dart';

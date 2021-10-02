@@ -115,5 +115,3 @@ class _AppState extends State<MyApp> {
     );
   }
 }
-
-class pageChanger {}

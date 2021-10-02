@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:aeroday_2021/config/responsive_size.dart';
 import 'package:aeroday_2021/constants/colors_hex.dart';
-import 'package:aeroday_2021/constants/eventInfo.dart';
 import 'package:aeroday_2021/constants/functions.dart';
 import 'package:aeroday_2021/screens/login_screen/login_screen.dart';
 import 'package:aeroday_2021/services/contestant_info.dart';
@@ -423,9 +422,5 @@ class _VoteCardState extends State<VoteCard> {
         ]),
       ),
     );
-  }
-
-  Future<void> _updateVoteforUser() async {
-    print('todo update vote status for user and contestant');
   }
 }

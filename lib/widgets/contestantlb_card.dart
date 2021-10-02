@@ -2,7 +2,6 @@ import 'package:aeroday_2021/config/responsive_size.dart';
 import 'package:aeroday_2021/constants/app_constants.dart';
 import 'package:aeroday_2021/constants/colors_hex.dart';
 import 'package:aeroday_2021/constants/functions.dart';
-import 'package:aeroday_2021/screens/vote_ac.dart';
 import 'package:aeroday_2021/services/contestant_info.dart';
 import 'package:flutter/material.dart';
 

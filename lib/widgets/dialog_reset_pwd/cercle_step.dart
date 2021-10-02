@@ -2,10 +2,10 @@ import 'package:aeroday_2021/config/responsive_size.dart';
 import 'package:flutter/material.dart';
 
 class CercleStep extends StatelessWidget {
-  int nbStep;
-  bool finished;
+  final int nbStep;
+  final bool finished;
 
-  CercleStep(int this.nbStep, bool this.finished);
+  CercleStep(this.nbStep, this.finished);
 
   @override
   Widget build(BuildContext context) {

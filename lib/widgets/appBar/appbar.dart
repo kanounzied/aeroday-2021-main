@@ -1,6 +1,6 @@
 import 'package:aeroday_2021/config/responsive_size.dart';
 import 'package:aeroday_2021/constants/app_constants.dart';
-import 'package:aeroday_2021/widgets/sidebar/button.dart';
+import 'package:aeroday_2021/screens/signup_screen/signup_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -57,7 +57,17 @@ class _AppBar extends State<AppBarCustom> {
             margin: EdgeInsets.only(right: SizeConfig.screenWidth * .03),
             child: GestureDetector(
               onTap: () async {
-                if (FirebaseAuth.instance.currentUser == null) return;
+                if (FirebaseAuth.instance.currentUser == null) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SignUpScreen(
+                        noRedirect: false,
+                      ),
+                    ),
+                  );
+                  return;
+                }
                 print("logout tap");
                 await FirebaseAuth.instance.signOut();
                 showDialog(
@@ -88,12 +98,14 @@ class _AppBar extends State<AppBarCustom> {
               child: Column(
                 children: [
                   Icon(
-                    Icons.logout,
+                    FirebaseAuth.instance.currentUser == null
+                        ? Icons.login
+                        : Icons.logout,
                     color: FirebaseAuth.instance.currentUser == null
-                        ? Color(0x00FFFFFF)
+                        ? Color(0xFFFFFFFF)
                         : Color(0xFFFFFFFF),
                     size: SizeConfig.defaultSize * 3,
-                  ),
+                  )
                 ],
               ),
             ),

@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class ContestantInfo {
   String imageUrl = 'https://picsum.photos/200';
   //String name = '';

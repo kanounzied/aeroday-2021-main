@@ -121,7 +121,6 @@ class _SignUpScreen extends State<SignUpScreen> {
           title: "Sign up error",
           error: "Phone number is already registered.",
         );
-        // TODO : Redirect to login_screen
 
         print("Exists");
         toggleSignupButton(true);
@@ -324,8 +323,6 @@ class _SignUpScreen extends State<SignUpScreen> {
                                     await FirebaseAuth.instance.currentUser
                                         ?.delete();
                                     if (e.code == "invalid-verification-code") {
-                                      // TODO : invalid code handle
-
                                       UsualFunctions.showErrorDialog(
                                         context: context,
                                         height: SizeConfig.screenHeight * 0.17,

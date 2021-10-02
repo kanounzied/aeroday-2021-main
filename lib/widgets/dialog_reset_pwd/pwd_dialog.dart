@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 
+// ignore: must_be_immutable
 class PwdDialog extends StatefulWidget {
   String loginNumber = '';
   PwdDialog(this.loginNumber);

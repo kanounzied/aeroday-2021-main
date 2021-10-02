@@ -1,8 +1,5 @@
 import 'package:aeroday_2021/config/responsive_size.dart';
 import 'package:aeroday_2021/constants/eventInfo.dart';
-import 'package:aeroday_2021/screens/home_screen/home.dart';
-import 'package:aeroday_2021/screens/vote_ac.dart';
-import 'package:aeroday_2021/screens/vote_vpd.dart';
 import 'package:aeroday_2021/services/showLockedMessage.dart';
 import 'package:flutter/material.dart';
 import 'package:aeroday_2021/constants/app_constants.dart';
@@ -27,7 +24,7 @@ class _SideBarState extends State<SideBar> {
     //'Leaderboard'
   ]; //add pagename here to add a button
 
-  static const IconData air = IconData(0xe064, fontFamily: 'MaterialIcons');
+  //static const IconData air = IconData(0xe064, fontFamily: 'MaterialIcons');
   @override
   Widget build(BuildContext context) {
     double screenWidth = SizeConfig.screenWidth;

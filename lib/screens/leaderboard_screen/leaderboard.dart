@@ -10,7 +10,7 @@ import 'package:aeroday_2021/widgets/sidebar/sidebar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LeaderBoard extends StatefulWidget {
-  String eventKey;
+  final String eventKey;
   LeaderBoard({required this.eventKey});
 
   @override
