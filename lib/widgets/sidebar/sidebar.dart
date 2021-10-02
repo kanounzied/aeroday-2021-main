@@ -46,20 +46,22 @@ class _SideBarState extends State<SideBar> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                         Container(
-                          height: 70,
+                          height: 7 * SizeConfig.defaultSize,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Row(
                                 children: [
                                   Container(
-                                    margin: EdgeInsets.symmetric(horizontal: 7),
+                                    margin: EdgeInsets.symmetric(
+                                        horizontal:
+                                            .7 * SizeConfig.defaultSize),
                                     child: Icon(
                                       Icons
                                           .airplanemode_active_rounded, // TODO: change the icon, fdha7tna
                                       color: Colors
                                           .red, //TODO: Change the color, fdha7tna
-                                      size: 30,
+                                      size: 3 * SizeConfig.defaultSize,
                                     ),
                                   ),
                                   Container(
@@ -69,13 +71,15 @@ class _SideBarState extends State<SideBar> {
                                       style: TextStyle(
                                         color: dark,
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 19,
+                                        fontSize: 1.9 * SizeConfig.defaultSize,
                                       ),
                                     ),
                                   ),
                                 ],
                               ),
                               IconButton(
+                                padding: EdgeInsets.only(
+                                    right: SizeConfig.screenWidth * .005),
                                 onPressed: () {
                                   setState(() {
                                     Navigator.pop(context);
@@ -83,6 +87,7 @@ class _SideBarState extends State<SideBar> {
                                 },
                                 icon: Icon(
                                   Icons.close_rounded,
+                                  size: 2 * SizeConfig.defaultSize,
                                 ),
                               ),
                             ],
@@ -90,8 +95,10 @@ class _SideBarState extends State<SideBar> {
                         ), // selected page name
                         Container(
                           height: 1,
-                          margin:
-                              EdgeInsets.only(right: 9, left: 9, bottom: 15),
+                          margin: EdgeInsets.only(
+                              right: 9,
+                              left: 9,
+                              bottom: 1.5 * SizeConfig.defaultSize),
                           color: Colors.black26,
                         ), //spacer
                       ] +

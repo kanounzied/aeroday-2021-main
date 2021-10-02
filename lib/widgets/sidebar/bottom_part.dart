@@ -1,3 +1,4 @@
+import 'package:aeroday_2021/config/responsive_size.dart';
 import 'package:aeroday_2021/constants/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -9,7 +10,7 @@ class BottomPart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 18),
+      padding: EdgeInsets.symmetric(horizontal: 1.8 * SizeConfig.defaultSize),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -22,15 +23,16 @@ class BottomPart extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.event,
-                      size: 22,
+                      size: 2.2 * SizeConfig.defaultSize,
                     ),
                     SizedBox(
-                      width: 12,
+                      width: 1.2 * SizeConfig.defaultSize,
                     ),
                     Text(
                       eventName,
                       style: TextStyle(
                         color: Color(0xFF323A40),
+                        fontSize: 1.75 * SizeConfig.defaultSize,
                       ),
                     ),
                   ],
@@ -62,22 +64,23 @@ class BottomPart extends StatelessWidget {
                     ),
                   ],
                 ),*/
-                SizedBox(height: 10),
+                SizedBox(height: 1.0 * SizeConfig.defaultSize),
                 Row(
                   children: [
                     Icon(
                       Icons.link_rounded,
                       color: Color(0xFF323A40),
-                      size: 22,
+                      size: 2.2 * SizeConfig.defaultSize,
                     ),
                     SizedBox(
-                      width: 12,
+                      width: 1.2 * SizeConfig.defaultSize,
                     ),
                     InkWell(
                       onTap: () => launch('http://aeroday.tn/'),
                       child: Text(
                         'Website',
                         style: TextStyle(
+                          fontSize: 1.75 * SizeConfig.defaultSize,
                           color: Color(0xFF0092a6),
                           decoration: TextDecoration.underline,
                         ),
@@ -85,16 +88,17 @@ class BottomPart extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 50),
+                SizedBox(height: 5.0 * SizeConfig.defaultSize),
                 Center(
                   child: Text(
                     '© Aeroday 2021',
                     style: TextStyle(
+                      fontSize: 1.75 * SizeConfig.defaultSize,
                       color: Color(0xFF323A40),
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 1.0 * SizeConfig.defaultSize),
               ],
             ),
           ),

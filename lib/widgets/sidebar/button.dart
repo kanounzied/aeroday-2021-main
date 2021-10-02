@@ -23,7 +23,8 @@ class _ButtonState extends State<Button> {
       },
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 7, horizontal: 10),
-        margin: EdgeInsets.only(left: 10, right: 10, bottom: 15),
+        margin: EdgeInsets.only(
+            left: 10, right: 10, bottom: 1.5 * SizeConfig.defaultSize),
         decoration: BoxDecoration(
             color: widget.isSelected ? red : Colors.transparent,
             borderRadius: BorderRadius.all(Radius.circular(8))),
@@ -32,6 +33,7 @@ class _ButtonState extends State<Button> {
             Icon(
               getIcon(widget.label),
               color: widget.isSelected ? Colors.white : dark,
+              size: SizeConfig.defaultSize * 3,
             ),
             SizedBox(
               width: 10,
@@ -39,8 +41,10 @@ class _ButtonState extends State<Button> {
             Expanded(
               child: Text(
                 widget.label, // TODO : responsive
-                style:
-                    TextStyle(color: widget.isSelected ? Colors.white : dark),
+                style: TextStyle(
+                  color: widget.isSelected ? Colors.white : dark,
+                  fontSize: 1.5 * SizeConfig.defaultSize,
+                ),
               ),
             ),
           ],
