@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:aeroday_2021/constants/functions.dart';
+import 'package:aeroday_2021/constants/sign_up_icon_icons.dart';
 import 'package:aeroday_2021/screens/home_screen/home.dart';
 import 'package:aeroday_2021/screens/loading_screen/loading_screen.dart';
 import 'package:flutter/material.dart';
@@ -437,8 +438,9 @@ class _SignUpScreen extends State<SignUpScreen> {
                       width: SizeConfig.screenWidth,
                       child: Column(
                         children: <Widget>[
-                          Text(
-                            "Signup icon",
+                          Icon(
+                            SignUpIcon.male_add,
+                            size: SizeConfig.defaultSize,
                           ),
                           Container(
                             margin: EdgeInsets.only(
