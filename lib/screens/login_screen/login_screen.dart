@@ -101,8 +101,8 @@ class _LoginScreen extends State<LoginScreen> {
         UsualFunctions.showErrorDialog(
           context: context,
           height: SizeConfig.screenHeight * 0.15,
-          title: "Erreur de connexion",
-          error: "Votre numéro du téléphone n'exist pas.",
+          title: "Sign in error",
+          error: "Your phone number doesn't exist.",
         );
 
         print('No user found for that email.');
@@ -112,8 +112,8 @@ class _LoginScreen extends State<LoginScreen> {
         UsualFunctions.showErrorDialog(
           context: context,
           height: SizeConfig.screenHeight * 0.13,
-          title: "Erreur de connexion",
-          error: "Votre mot de passe est incorrect.",
+          title: "Sign in error",
+          error: "Invalid password.",
         );
 
         print('Wrong password provided for that user.');
@@ -122,8 +122,19 @@ class _LoginScreen extends State<LoginScreen> {
         UsualFunctions.showErrorDialog(
           context: context,
           height: SizeConfig.screenHeight * 0.13,
-          title: "Erreur de connexion",
-          error: "Verifier votre accés à l'internet.",
+          title: "Sign in error",
+          error: "Verify your network access.",
+        );
+
+        toggleSignupButton(true);
+        return;
+      } else if (e.code == 'too-many-requests') {
+        print("network error");
+        UsualFunctions.showErrorDialog(
+          context: context,
+          height: SizeConfig.screenHeight * 0.13,
+          title: "Sign in error",
+          error: "Too many invalid signin attemps, try again in few minutes.",
         );
 
         toggleSignupButton(true);
@@ -135,7 +146,7 @@ class _LoginScreen extends State<LoginScreen> {
         UsualFunctions.showErrorDialog(
           context: context,
           height: SizeConfig.screenHeight * 0.13,
-          title: "Erreur de connexion",
+          title: "Sign in error",
           error: "UNKNOWN: " + e.code,
         );
 
@@ -221,8 +232,8 @@ class _LoginScreen extends State<LoginScreen> {
                               }) =>
                                   null,
                               decoration: InputDecoration(
-                                hintText: 'Numéro du téléphone',
-                                labelText: 'Votre numéro du téléphone',
+                                hintText: 'Phone number',
+                                labelText: 'Your phone number',
                                 contentPadding: new EdgeInsets.symmetric(
                                     vertical: 25.0, horizontal: 15.0),
                                 border: OutlineInputBorder(
@@ -241,8 +252,8 @@ class _LoginScreen extends State<LoginScreen> {
                               autocorrect: false,
                               enableSuggestions: false,
                               decoration: InputDecoration(
-                                hintText: 'Mot de passe',
-                                labelText: 'Votre mot de passe',
+                                hintText: 'Password',
+                                labelText: 'Your password',
                                 contentPadding: new EdgeInsets.symmetric(
                                     vertical: 25.0, horizontal: 15.0),
                                 border: OutlineInputBorder(
@@ -276,7 +287,7 @@ class _LoginScreen extends State<LoginScreen> {
                                 ),
                               ),
                               child: Text(
-                                "Se connecter",
+                                "Sign in",
                                 style: TextStyle(
                                   fontSize: SizeConfig.defaultSize * 1.8,
                                 ),
@@ -311,7 +322,7 @@ class _LoginScreen extends State<LoginScreen> {
                                 }
                               },
                               child: Text(
-                                "Mot de passe oublié?",
+                                "Forgot password?",
                                 style: TextStyle(
                                   color: Color(0xFF519DA6),
                                   decoration: TextDecoration.underline,
@@ -322,7 +333,7 @@ class _LoginScreen extends State<LoginScreen> {
                           Container(
                             margin: EdgeInsets.only(
                                 top: SizeConfig.screenHeight * 0.13),
-                            child: Text("Vous n'avez pas de compte ?"),
+                            child: Text("Didn't signup yet?"),
                           ),
                           Container(
                             margin: EdgeInsets.only(
@@ -352,7 +363,7 @@ class _LoginScreen extends State<LoginScreen> {
                                 }
                               },
                               child: Text(
-                                "Inscrivez-vous",
+                                "Create your account →",
                                 style: TextStyle(
                                   color: Color(0xFF519DA6),
                                   decoration: TextDecoration.underline,

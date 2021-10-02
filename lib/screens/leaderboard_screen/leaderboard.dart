@@ -183,17 +183,17 @@ class _LeaderBoardState extends State<LeaderBoard> {
                   ),
                 ],
               ),
-              SizedBox(height: 5),
+              SizedBox(height: 10),
+              // Text(
+              //   _contestantsList[1].lastName,
+              //   style: TextStyle(
+              //       color: Colors.white,
+              //       fontSize: 14,
+              //       fontWeight: FontWeight.w500),
+              // ),
+              // SizedBox(height: 3),
               Text(
-                _contestantsList[1].lastName,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500),
-              ),
-              SizedBox(height: 3),
-              Text(
-                _contestantsList[1].name,
+                _contestantsList[1].teamName,
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 14,
@@ -237,17 +237,17 @@ class _LeaderBoardState extends State<LeaderBoard> {
                   ),
                 ],
               ),
-              SizedBox(height: 5),
+              SizedBox(height: 10),
+              // Text(
+              //   _contestantsList[0].lastName,
+              //   style: TextStyle(
+              //       color: Colors.white,
+              //       fontSize: 14,
+              //       fontWeight: FontWeight.w500),
+              // ),
+              // SizedBox(height: 3),
               Text(
-                _contestantsList[0].lastName,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500),
-              ),
-              SizedBox(height: 3),
-              Text(
-                _contestantsList[0].name,
+                _contestantsList[0].teamName,
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 14,
@@ -291,17 +291,17 @@ class _LeaderBoardState extends State<LeaderBoard> {
                   ),
                 ],
               ),
-              SizedBox(height: 5),
+              SizedBox(height: 10),
+              // Text(
+              //   _contestantsList[2].lastName,
+              //   style: TextStyle(
+              //       color: Colors.white,
+              //       fontSize: 14,
+              //       fontWeight: FontWeight.w500),
+              // ),
+              // SizedBox(height: 3),
               Text(
-                _contestantsList[2].lastName,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500),
-              ),
-              SizedBox(height: 3),
-              Text(
-                _contestantsList[2].name,
+                _contestantsList[2].teamName,
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 14,
