@@ -22,81 +22,84 @@ class _AppBar extends State<AppBarCustom> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        IconButton(
-          padding: const EdgeInsets.all(12.0),
-          onPressed: () {
-            setState(() {
-              Scaffold.of(c).openDrawer();
-            });
-          },
-          color: Colors.white,
-          iconSize: SizeConfig.defaultSize * 4.2,
-          icon: Icon(
-            Icons.menu_rounded,
-          ),
-        ),
-        Container(
-          child: Text(
-            this.title,
-            style: TextStyle(
-              fontSize: SizeConfig.defaultSize * 2,
-              color: Colors.white,
-              fontWeight: FontWeight.w600,
-              letterSpacing: 1,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ),
-        Container(
-          alignment: Alignment.centerRight,
-          margin: EdgeInsets.only(right: SizeConfig.screenWidth * .03),
-          child: GestureDetector(
-            onTap: () async {
-              if (FirebaseAuth.instance.currentUser == null) return;
-              print("logout tap");
-              await FirebaseAuth.instance.signOut();
-              showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      title: Text('Done!'),
-                      content: Text('You are now logged out.'),
-                      actions: [
-                        Container(
-                          margin: const EdgeInsets.only(right: 14.0),
-                          child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.resolveWith(
-                                        (states) => red),
-                              ),
-                              child: Text('Dismiss')),
-                        ),
-                      ],
-                    );
-                  });
-              setState(() {});
+    return Container(
+      // height: ,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IconButton(
+            padding: EdgeInsets.all(SizeConfig.defaultSize * 1.2),
+            onPressed: () {
+              setState(() {
+                Scaffold.of(c).openDrawer();
+              });
             },
-            child: Column(
-              children: [
-                Icon(
-                  Icons.logout,
-                  color: FirebaseAuth.instance.currentUser == null
-                      ? Color(0x00FFFFFF)
-                      : Color(0xFFFFFFFF),
-                  size: SizeConfig.defaultSize * 3,
-                ),
-              ],
+            color: Colors.white,
+            iconSize: SizeConfig.defaultSize * 4.2,
+            icon: Icon(
+              Icons.menu_rounded,
             ),
           ),
-        ),
-      ],
+          Container(
+            child: Text(
+              this.title,
+              style: TextStyle(
+                fontSize: SizeConfig.defaultSize * 2,
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 1,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          Container(
+            alignment: Alignment.centerRight,
+            margin: EdgeInsets.only(right: SizeConfig.screenWidth * .03),
+            child: GestureDetector(
+              onTap: () async {
+                if (FirebaseAuth.instance.currentUser == null) return;
+                print("logout tap");
+                await FirebaseAuth.instance.signOut();
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text('Done!'),
+                        content: Text('You are now logged out.'),
+                        actions: [
+                          Container(
+                            margin: const EdgeInsets.only(right: 14.0),
+                            child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.resolveWith(
+                                          (states) => red),
+                                ),
+                                child: Text('Dismiss')),
+                          ),
+                        ],
+                      );
+                    });
+                setState(() {});
+              },
+              child: Column(
+                children: [
+                  Icon(
+                    Icons.logout,
+                    color: FirebaseAuth.instance.currentUser == null
+                        ? Color(0x00FFFFFF)
+                        : Color(0xFFFFFFFF),
+                    size: SizeConfig.defaultSize * 3,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
