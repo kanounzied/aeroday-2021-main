@@ -59,6 +59,7 @@ class _VoteACState extends State<VoteAC> {
           child: Stack(
             children: [
               Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   AppBarCustom(
                     title: 'AIRSHOW',
@@ -69,10 +70,26 @@ class _VoteACState extends State<VoteAC> {
                   ),
                   AnimatedContainer(
                     duration: Duration(milliseconds: 150),
-                    width: SizeConfig.screenWidth * 0.84,
-                    height: SizeConfig.screenHeight * 0.54 -
-                        dynamicHeight, //height of list(maybe dynamic)
-                    margin: EdgeInsets.only(top: 50),
+                    width: SizeConfig.screenWidth * 0.9,
+                    height:
+                        /* SizeConfig.defaultSize * SizeConfig.screenHeight -
+                        (3.9 * SizeConfig.defaultSize +
+                            14 * SizeConfig.defaultSize +
+                            SizeConfig.defaultSize * 4.2)*/
+                        SizeConfig.screenWidth / SizeConfig.screenHeight < 0.75
+                            ? SizeConfig.screenHeight -
+                                (120 * 0.1 * SizeConfig.defaultSize +
+                                    5.0 * SizeConfig.defaultSize +
+                                    19.9 * SizeConfig.defaultSize +
+                                    SizeConfig.defaultSize * 4.2) -
+                                dynamicHeight
+                            : SizeConfig.screenHeight -
+                                (55 * 0.1 * SizeConfig.defaultSize +
+                                    5.0 * SizeConfig.defaultSize +
+                                    19.9 * SizeConfig.defaultSize +
+                                    SizeConfig.defaultSize * 4.2) -
+                                dynamicHeight, //height of list(dynamic)
+                    margin: EdgeInsets.only(top: 5 * SizeConfig.defaultSize),
                     child: Center(
                       child: _contestantsList.isEmpty
                           ? buildListLoader()
@@ -80,11 +97,14 @@ class _VoteACState extends State<VoteAC> {
                               ? _searchList.isNotEmpty
                                   ? buildSearchList()
                                   : Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 70),
+                                      padding: EdgeInsets.only(
+                                          bottom: 7 * SizeConfig.defaultSize),
                                       child: Text(
                                         "no search results!",
-                                        style: TextStyle(color: Colors.white),
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize:
+                                                1.2 * SizeConfig.defaultSize),
                                       ),
                                     )
                               : buildContestantList(),
@@ -97,7 +117,6 @@ class _VoteACState extends State<VoteAC> {
                       onVoteCardExtended: (h) {
                         setState(() {
                           dynamicHeight = h;
-                          print(dynamicHeight);
                         });
                       },
                       onVoted: () {},

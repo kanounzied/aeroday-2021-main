@@ -34,7 +34,7 @@ class VoteCard extends StatefulWidget {
 
 class _VoteCardState extends State<VoteCard> {
   double initPress = 0;
-  double _height = 140;
+  double _height = 140 * 0.1 * SizeConfig.defaultSize;
   String userHasVoted = '';
 
   bool bot = false, top = false;
@@ -65,7 +65,7 @@ class _VoteCardState extends State<VoteCard> {
   Widget build(BuildContext context) {
     if (widget.openUp) {
       // Open the card when user clicks on a contestant
-      _height = 256;
+      _height = 256 * 0.1 * SizeConfig.defaultSize;
       top = true;
       bot = false;
       widget.openUp = false;
@@ -81,8 +81,8 @@ class _VoteCardState extends State<VoteCard> {
           bot = false;
           top = false;
 
-          if (_height == 140) bot = true;
-          if (_height == 256) top = true;
+          if (_height == 140 * 0.1 * SizeConfig.defaultSize) bot = true;
+          if (_height == 256 * 0.1 * SizeConfig.defaultSize) top = true;
         },
         onPanUpdate: (details) {
           setState(() {
@@ -90,62 +90,68 @@ class _VoteCardState extends State<VoteCard> {
 
             if ((currPos - initPress).abs() <= 117) {
               if (bot && currPos - initPress > 0) {
-                _height = currPos - initPress + 140;
+                _height =
+                    (currPos - initPress + 140) * 0.1 * SizeConfig.defaultSize;
               }
               if (top && currPos - initPress < 0) {
-                _height = currPos - initPress + 256;
+                _height =
+                    (currPos - initPress + 256) * 0.1 * SizeConfig.defaultSize;
               }
             }
-            widget.onVoteCardExtended(_height - 140);
+            widget.onVoteCardExtended(
+                _height - 140 * 0.1 * SizeConfig.defaultSize);
           });
         },
         onPanEnd: (_) {
+          print(148 * 0.1 * SizeConfig.defaultSize);
           setState(() {
-            if (bot && _height > 148) {
-              _height = 256;
+            if (bot && _height > 148 * 0.1 * SizeConfig.defaultSize) {
+              _height = 256 * 0.1 * SizeConfig.defaultSize;
               top = true;
               bot = false;
             } else if (bot) {
-              _height = 140;
+              _height = 140 * 0.1 * SizeConfig.defaultSize;
               top = false;
               bot = true;
             }
-            if (top && _height < 248) {
-              _height = 140;
+            if (top && _height < 248 * 0.1 * SizeConfig.defaultSize) {
+              _height = 140 * 0.1 * SizeConfig.defaultSize;
               top = false;
               bot = true;
             } else if (top) {
-              _height = 256;
+              _height = 256 * 0.1 * SizeConfig.defaultSize;
               top = true;
               bot = false;
             }
           });
           setState(() {});
-          widget.onVoteCardExtended(_height - 140);
+          widget
+              .onVoteCardExtended(_height - 140 * 0.1 * SizeConfig.defaultSize);
         },
         onTap: () {
           setState(() {
             if (bot) {
-              _height = 256;
+              _height = 256 * 0.1 * SizeConfig.defaultSize;
               top = true;
               bot = false;
             } else if (top) {
-              _height = 140;
+              _height = 140 * 0.1 * SizeConfig.defaultSize;
               top = false;
               bot = true;
             }
           });
-          widget.onVoteCardExtended(_height - 140);
+          widget
+              .onVoteCardExtended(_height - 140 * 0.1 * SizeConfig.defaultSize);
           setState(() {});
         },
         child: Stack(alignment: AlignmentDirectional.center, children: [
           AnimatedPositioned(
-            bottom: _height - 256,
+            bottom: _height - 256 * 0.1 * SizeConfig.defaultSize,
             duration: Duration(milliseconds: 150),
             curve: Curves.easeOut,
             child: Container(
               width: sWidth * 0.9,
-              height: 256,
+              height: 256 * 0.1 * SizeConfig.defaultSize,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(19)),
                 color: Colors.white,
@@ -165,14 +171,15 @@ class _VoteCardState extends State<VoteCard> {
                         child: Icon(
                           Icons.keyboard_arrow_up_rounded,
                           color: Colors.black26,
-                          size: 35,
+                          size: 35 * 0.1 * SizeConfig.defaultSize,
                         ),
                       )),
                   Stack(
                     alignment: AlignmentDirectional.topEnd,
                     children: [
                       Container(
-                        margin: EdgeInsets.only(left: 25),
+                        margin: EdgeInsets.only(
+                            left: 25 * 0.1 * SizeConfig.defaultSize),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -180,11 +187,12 @@ class _VoteCardState extends State<VoteCard> {
                               direction: Axis.vertical,
                               children: [
                                 Container(
-                                  width: 245,
+                                  width: 240 * 0.1 * SizeConfig.defaultSize,
                                   child: Text(
                                     '${widget.contInfo.teamName}',
                                     style: TextStyle(
-                                      fontSize: 25,
+                                      fontSize:
+                                          25 * 0.1 * SizeConfig.defaultSize,
                                       fontWeight: FontWeight.bold,
                                       color: Color(0xFF323A40),
                                     ),
@@ -193,35 +201,58 @@ class _VoteCardState extends State<VoteCard> {
                               ],
                             ), //name
                             SizedBox(
-                              height: 10,
+                              height: 10 * 0.1 * SizeConfig.defaultSize,
                             ),
                             Row(
                               children: [
                                 SizedBox(
-                                  width: 30,
+                                  width: 30 * 0.1 * SizeConfig.defaultSize,
                                 ),
-                                Text(
-                                  'Etablissement: ${widget.contInfo.etab}',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Color(0xFF323A40),
+                                Container(
+                                  width: 180 * 0.1 * SizeConfig.defaultSize,
+                                  child: Text(
+                                    'Etab.: ${widget.contInfo.etab}',
+                                    style: TextStyle(
+                                      fontSize:
+                                          14 * 0.1 * SizeConfig.defaultSize,
+                                      color: Color(0xFF323A40),
+                                    ),
                                   ),
                                 ),
                               ],
-                            ), //playin for
+                            ),
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: 30 * 0.1 * SizeConfig.defaultSize,
+                                ),
+                                Container(
+                                  width: 180 * 0.1 * SizeConfig.defaultSize,
+                                  child: Text(
+                                    'Leader: ${widget.contInfo.chef}',
+                                    style: TextStyle(
+                                      fontSize:
+                                          14 * 0.1 * SizeConfig.defaultSize,
+                                      color: Color(0xFF323A40),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                       ), //infoText
                       Container(
-                        margin: EdgeInsets.only(right: 25),
-                        width: 88,
-                        height: 88,
+                        margin: EdgeInsets.only(
+                            right: 25 * 0.1 * SizeConfig.defaultSize),
+                        width: 88 * 0.1 * SizeConfig.defaultSize,
+                        height: 88 * 0.1 * SizeConfig.defaultSize,
                         child: Center(
                           child: Text(
                             UsualFunctions.getInitials(widget.contInfo.teamName)
                                 .toUpperCase(),
                             style: TextStyle(
-                              fontSize: SizeConfig.defaultSize * 3.5,
+                              fontSize: SizeConfig.defaultSize * 3.0,
                               color: Color(0xFFFFFFFF),
                             ),
                           ),
@@ -237,14 +268,15 @@ class _VoteCardState extends State<VoteCard> {
                               spreadRadius: 1,
                             ),
                           ],
-                          border:
-                              Border.all(color: Color(0xFF323A40), width: 3),
+                          border: Border.all(
+                              color: Color(0xFF323A40),
+                              width: 3 * 0.1 * SizeConfig.defaultSize),
                         ),
                       ), //image
                     ],
                   ), //text+image
                   SizedBox(
-                    height: 30,
+                    height: 30 * 0.1 * SizeConfig.defaultSize,
                   ),
                   //button
                   GestureDetector(
@@ -263,8 +295,6 @@ class _VoteCardState extends State<VoteCard> {
                           String voteID = ds.get(
                             FieldPath(['voteID_' + widget.vCardEvent]),
                           );
-
-                          print("ID: " + widget.contInfo.id.toString());
 
                           if (voteID == widget.contInfo.id) {
                             userHasVoted = '';
@@ -359,15 +389,16 @@ class _VoteCardState extends State<VoteCard> {
                     },
                     child: AnimatedContainer(
                       width: SizeConfig.screenWidth * 0.65,
-                      height: 70,
+                      height: 70 * 0.1 * SizeConfig.defaultSize,
                       duration: Duration(milliseconds: 150),
                       curve: Curves.easeOut,
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: Color(0xFF323A40),
-                          width: 4,
+                          width: 4 * 0.1 * SizeConfig.defaultSize,
                         ),
-                        borderRadius: BorderRadius.all(Radius.circular(7)),
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(7 * 0.1 * SizeConfig.defaultSize)),
                         color: Color(userHasVoted == widget.contInfo.id &&
                                 FirebaseAuth.instance.currentUser != null
                             ? 0xFF323A40
@@ -378,7 +409,7 @@ class _VoteCardState extends State<VoteCard> {
                           'VOTE${userHasVoted == widget.contInfo.id && FirebaseAuth.instance.currentUser != null ? 'D' : ''}',
                           style: TextStyle(
                             color: Color(0xFF51A678),
-                            fontSize: 26,
+                            fontSize: 26 * 0.1 * SizeConfig.defaultSize,
                             fontWeight: FontWeight.w900,
                           ),
                         ),
