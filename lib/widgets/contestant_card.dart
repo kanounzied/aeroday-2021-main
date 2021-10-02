@@ -35,8 +35,8 @@ class _ContestantCardState extends State<ContestantCard> {
       },
       child: Container(
         width: screenWidth * 0.85,
-        height: 62,
-        margin: EdgeInsets.only(bottom: 16),
+        height: 6.2 * SizeConfig.defaultSize,
+        margin: EdgeInsets.only(bottom: 1.6 * SizeConfig.defaultSize),
         decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [
@@ -47,7 +47,8 @@ class _ContestantCardState extends State<ContestantCard> {
               spreadRadius: 0,
             ),
           ],
-          borderRadius: BorderRadius.all(Radius.circular(9.0)),
+          borderRadius:
+              BorderRadius.all(Radius.circular(0.9 * SizeConfig.defaultSize)),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -55,26 +56,29 @@ class _ContestantCardState extends State<ContestantCard> {
             Row(
               children: [
                 Container(
-                  margin: EdgeInsets.only(left: 14, right: 10),
+                  margin: EdgeInsets.only(
+                      left: 1.4 * SizeConfig.defaultSize,
+                      right: 0.5 * SizeConfig.defaultSize),
                   child: Container(
-                    width: 15,
+                    width: 1.5 * SizeConfig.defaultSize,
                     child: Text(
                       widget.index.toString(),
                       style: TextStyle(
-                        fontSize: 13,
+                        fontSize: 1.3 * SizeConfig.defaultSize,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                 ), //number
                 Container(
-                  width: 47,
-                  height: 47,
+                  width: 4.7 * SizeConfig.defaultSize,
+                  height: 4.7 * SizeConfig.defaultSize,
                   child: Center(
                     child: Text(
                       UsualFunctions.getInitials(widget.contestantInfo.teamName)
                           .toUpperCase(),
                       style: TextStyle(
+                        fontSize: 1.4 * SizeConfig.defaultSize,
                         color: Color(0xFFFFFFFF),
                       ),
                     ),
@@ -93,7 +97,9 @@ class _ContestantCardState extends State<ContestantCard> {
                   ),
                 ), //photo
                 Container(
-                  margin: EdgeInsets.only(top: 7, left: 12),
+                  margin: EdgeInsets.only(
+                      top: .7 * SizeConfig.defaultSize,
+                      left: 1.2 * SizeConfig.defaultSize),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -104,7 +110,7 @@ class _ContestantCardState extends State<ContestantCard> {
                               widget.contestantInfo.teamName,
                               style: TextStyle(
                                 color: dark,
-                                fontSize: 15,
+                                fontSize: 1.5 * SizeConfig.defaultSize,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -112,12 +118,14 @@ class _ContestantCardState extends State<ContestantCard> {
                         ],
                       ),
                       Container(
-                        margin: EdgeInsets.only(top: 5, left: 4),
+                        margin: EdgeInsets.only(
+                            top: .5 * SizeConfig.defaultSize,
+                            left: .4 * SizeConfig.defaultSize),
                         child: Text(
                           widget.contestantInfo.etab,
                           style: TextStyle(
                             color: light,
-                            fontSize: 14,
+                            fontSize: 1.4 * SizeConfig.defaultSize,
                           ),
                         ),
                       ),
@@ -126,33 +134,9 @@ class _ContestantCardState extends State<ContestantCard> {
                 ), //name+vot
               ],
             ),
-            /* widget.contestantInfo.isVoted
-                ? Padding(
-                    padding: const EdgeInsets.only(right: 15),
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.how_to_vote_sharp,
-                            color: green,
-                          ),
-                          SizedBox(
-                            height: 6,
-                          ),
-                          Text(
-                            'VOTED',
-                            style: TextStyle(
-                                fontSize: 9,
-                                letterSpacing: 2,
-                                fontWeight: FontWeight.w300),
-                          )
-                        ]),
-                  )
-                : Container(),*/
           ],
         ),
       ),
     );
-    ;
   }
 }

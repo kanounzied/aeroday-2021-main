@@ -2,6 +2,7 @@ import 'package:aeroday_2021/config/responsive_size.dart';
 import 'package:aeroday_2021/constants/eventInfo.dart';
 import 'package:aeroday_2021/services/contestant_info.dart';
 import 'package:aeroday_2021/widgets/appBar/appbar.dart';
+import 'package:aeroday_2021/widgets/upcomings_cercle/circle.dart';
 import 'package:aeroday_2021/widgets/vote_card.dart';
 import 'package:flutter/material.dart';
 import 'package:aeroday_2021/constants/app_constants.dart';
@@ -22,6 +23,7 @@ class _VoteVPDState extends State<VoteVPD> {
   int selectedNum = 0;
   List<ContestantInfo> _contestantsList = [];
   List<ContestantInfo> _searchList = [];
+
   bool openCard = false;
 
   Future<Null> getContestantDetails() async {
@@ -31,13 +33,12 @@ class _VoteVPDState extends State<VoteVPD> {
         .get()
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
-        print(doc.data());
         response = doc.data() as Map<String, dynamic>;
 
         _contestantsList.add(ContestantInfo.fromMap(response, doc.id));
       });
+      setState(() {});
     }); //TODO:Get the list of contestants and store it in responce
-    setState(() {});
   }
 
   @override
@@ -58,9 +59,10 @@ class _VoteVPDState extends State<VoteVPD> {
           child: Stack(
             children: [
               Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   AppBarCustom(
-                    title: 'VIDEOGRAPHIE PAR DRONE',
+                    title: 'VID. PAR DRONE',
                     c: c,
                   ),
                   SearchBar(
@@ -68,10 +70,26 @@ class _VoteVPDState extends State<VoteVPD> {
                   ),
                   AnimatedContainer(
                     duration: Duration(milliseconds: 150),
-                    width: SizeConfig.screenWidth * 0.84,
-                    height: SizeConfig.screenHeight * 0.54 -
-                        dynamicHeight, //height of list(maybe dynamic)
-                    margin: EdgeInsets.only(top: 50),
+                    width: SizeConfig.screenWidth * 0.9,
+                    height:
+                        /* SizeConfig.defaultSize * SizeConfig.screenHeight -
+                        (3.9 * SizeConfig.defaultSize +
+                            14 * SizeConfig.defaultSize +
+                            SizeConfig.defaultSize * 4.2)*/
+                        SizeConfig.screenWidth / SizeConfig.screenHeight < 0.75
+                            ? SizeConfig.screenHeight -
+                                (120 * 0.1 * SizeConfig.defaultSize +
+                                    5.0 * SizeConfig.defaultSize +
+                                    19.9 * SizeConfig.defaultSize +
+                                    SizeConfig.defaultSize * 4.2) -
+                                dynamicHeight
+                            : SizeConfig.screenHeight -
+                                (55 * 0.1 * SizeConfig.defaultSize +
+                                    5.0 * SizeConfig.defaultSize +
+                                    19.9 * SizeConfig.defaultSize +
+                                    SizeConfig.defaultSize * 4.2) -
+                                dynamicHeight, //height of list(dynamic)
+                    margin: EdgeInsets.only(top: 5 * SizeConfig.defaultSize),
                     child: Center(
                       child: _contestantsList.isEmpty
                           ? buildListLoader()
@@ -79,11 +97,14 @@ class _VoteVPDState extends State<VoteVPD> {
                               ? _searchList.isNotEmpty
                                   ? buildSearchList()
                                   : Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 70),
+                                      padding: EdgeInsets.only(
+                                          bottom: 7 * SizeConfig.defaultSize),
                                       child: Text(
                                         "no search results!",
-                                        style: TextStyle(color: Colors.white),
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize:
+                                                1.2 * SizeConfig.defaultSize),
                                       ),
                                     )
                               : buildContestantList(),
@@ -96,7 +117,6 @@ class _VoteVPDState extends State<VoteVPD> {
                       onVoteCardExtended: (h) {
                         setState(() {
                           dynamicHeight = h;
-                          print(dynamicHeight);
                         });
                       },
                       onVoted: () {},
@@ -191,6 +211,13 @@ class _VoteVPDState extends State<VoteVPD> {
             ],
             borderRadius: BorderRadius.all(Radius.circular(9.0)),
           ),
+          child: Container(
+            width: 25,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.black,
+            ),
+          ),
         );
       },
     );
@@ -221,50 +248,3 @@ class _VoteVPDState extends State<VoteVPD> {
     setState(() {});
   }
 }
-
-
-// class _VoteVPDState extends State<VoteVPD> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: dark,
-//       body: Builder(
-//         builder: (BuildContext c) => SafeArea(
-//           child: Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//             children: [
-//               IconButton(
-//                 padding: const EdgeInsets.all(12.0),
-//                 onPressed: () {
-//                   setState(() {
-//                     Scaffold.of(c).openDrawer();
-//                   });
-//                 },
-//                 color: Colors.white,
-//                 iconSize: 40,
-//                 icon: Icon(
-//                   Icons.menu_rounded,
-//                 ),
-//               ),
-//               Container(
-//                 child: Text(
-//                   'VIDEOGRAPHIE PAR DRONE',
-//                   style: TextStyle(
-//                     color: Colors.white,
-//                     fontWeight: FontWeight.w600,
-//                     letterSpacing: 1,
-//                   ),
-//                   textAlign: TextAlign.center,
-//                 ),
-//               ),
-//               SizedBox(
-//                 width: 64, //iconsize + horizontal padding (to center the title)
-//               )
-//             ],
-//           ),
-//         ),
-//       ),
-//       drawer: SideBar(),
-//     );
-//   }
-// }
