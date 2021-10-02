@@ -31,7 +31,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
   Future<Null> getLeaderboardDetails() async {
     disableEventNav = true;
     _contestantsList.clear();
-    print(_contestantsList.length);
+    //print(_contestantsList.length);
 
     await FirebaseFirestore.instance
         .collection('contestant_' + this.eventKey)
@@ -39,7 +39,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
         .get()
         .catchError(
       (err) {
-        print(err);
+        //print(err);
       },
     ).then((QuerySnapshot qs) {
       qs.docs.forEach((doc) {

@@ -102,7 +102,7 @@ class _VoteCardState extends State<VoteCard> {
           });
         },
         onPanEnd: (_) {
-          print(148 * 0.1 * SizeConfig.defaultSize);
+          //print(148 * 0.1 * SizeConfig.defaultSize);
           setState(() {
             if (bot && _height > 148 * 0.1 * SizeConfig.defaultSize) {
               _height = 256 * 0.1 * SizeConfig.defaultSize;
@@ -351,7 +351,7 @@ class _VoteCardState extends State<VoteCard> {
                           }
                         });
                       } else {
-                        print('couldnt vote');
+                        //print('couldnt vote');
                         showDialog(
                           context: context,
                           builder: (c) {

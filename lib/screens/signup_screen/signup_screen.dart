@@ -35,11 +35,11 @@ class _SignUpScreen extends State<SignUpScreen> {
   Future<bool> hasNetwork() async {
     try {
       final result = await InternetAddress.lookup('www.google.com');
-      print("h");
-      print(result);
+      //print("h");
+      //print(result);
       return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
     } on SocketException catch (_) {
-      print("false");
+      //print("false");
       return false;
     }
   }
@@ -83,7 +83,7 @@ class _SignUpScreen extends State<SignUpScreen> {
 
     bool check = await hasNetwork();
     if (!check) {
-      print("net");
+      //print("net");
       UsualFunctions.showErrorDialog(
         context: context,
         height: SizeConfig.screenHeight * 0.13,
@@ -102,7 +102,7 @@ class _SignUpScreen extends State<SignUpScreen> {
         title: "Sign up error",
         error: "You've used an invalid phone number.",
       );
-      print("num invalid");
+      //print("num invalid");
 
       toggleSignupButton(true);
       return;
@@ -113,7 +113,7 @@ class _SignUpScreen extends State<SignUpScreen> {
       // Verify phone number + password
       l = await FirebaseAuth.instance
           .fetchSignInMethodsForEmail(emailController.text + "@gmail.com");
-      print("hell");
+      //print("hell");
       if (l.length != 0) {
         UsualFunctions.showErrorDialog(
           context: context,
@@ -122,13 +122,13 @@ class _SignUpScreen extends State<SignUpScreen> {
           error: "Phone number is already registered.",
         );
 
-        print("Exists");
+        //print("Exists");
         toggleSignupButton(true);
         return;
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'network-request-failed') {
-        print("network error");
+        //print("network error");
         UsualFunctions.showErrorDialog(
           context: context,
           height: SizeConfig.screenHeight * 0.13,
@@ -147,8 +147,8 @@ class _SignUpScreen extends State<SignUpScreen> {
         error: "UNKNOWN: " + e.code,
       );
 
-      print("firebase error");
-      print(e.code);
+      //print("firebase error");
+      //print(e.code);
       toggleSignupButton(true);
       return;
     } catch (e) {
@@ -158,14 +158,14 @@ class _SignUpScreen extends State<SignUpScreen> {
         title: "Sign up error",
         error: "UNKNOWN: " + e.toString(),
       );
-      print("ERROR: ");
-      print(e);
+      //print("ERROR: ");
+      //print(e);
 
       toggleSignupButton(true);
       return;
     }
 
-    print("hi");
+    //print("hi");
 
     if (!RegExp("(?=.*[0-9a-zA-Z]).{6,}").hasMatch(passController.text)) {
       UsualFunctions.showErrorDialog(
@@ -175,7 +175,7 @@ class _SignUpScreen extends State<SignUpScreen> {
         error: "The password provided is too weak.",
       );
 
-      print('The password provided is too weak.');
+      //print('The password provided is too weak.');
       toggleSignupButton(true);
       return;
     }
@@ -185,7 +185,7 @@ class _SignUpScreen extends State<SignUpScreen> {
       await auth.verifyPhoneNumber(
         phoneNumber: '+216 ' + emailController.text,
         verificationCompleted: (PhoneAuthCredential credential) async {
-          print("auto verif");
+          //print("auto verif");
           // Delete phone number account
           //await FirebaseAuth.instance.currentUser?.delete();
 
@@ -221,11 +221,11 @@ class _SignUpScreen extends State<SignUpScreen> {
         },
         verificationFailed: (FirebaseAuthException e) {
           toggleSignupButton(true);
-          print("error verif failed");
-          print(e.code);
+          //print("error verif failed");
+          //print(e.code);
 
           if (e.code == 'invalid-phone-number') {
-            print('The provided phone number is not valid.');
+            //print('The provided phone number is not valid.');
             UsualFunctions.showErrorDialog(
               context: context,
               height: SizeConfig.screenHeight * 0.17,
@@ -233,8 +233,8 @@ class _SignUpScreen extends State<SignUpScreen> {
               error: "You've used an invalid phone number.",
             );
           } else {
-            print("error");
-            print(e.code);
+            //print("error");
+            //print(e.code);
 
             UsualFunctions.showErrorDialog(
               context: context,
@@ -245,7 +245,7 @@ class _SignUpScreen extends State<SignUpScreen> {
           }
         },
         codeSent: (String verificationId, int? resendToken) async {
-          print("codesent");
+          //print("codesent");
           // Ask to write 6 digits code
           toggleSignupButton(true);
           showDialog(
@@ -289,7 +289,7 @@ class _SignUpScreen extends State<SignUpScreen> {
                               child: ElevatedButton(
                                 onPressed: () async {
                                   toggleSignupButton(false);
-                                  print("tap");
+                                  //print("tap");
 
                                   if (codeController.text.length < 6) {
                                     UsualFunctions.showErrorDialog(
@@ -330,12 +330,12 @@ class _SignUpScreen extends State<SignUpScreen> {
                                         error: "Invalid code.",
                                       );
 
-                                      print("Invalid code");
+                                      //print("Invalid code");
                                       toggleSignupButton(true);
                                       return;
                                     } else {
-                                      print("unknown err");
-                                      print(e);
+                                      //print("unknown err");
+                                      //print(e);
 
                                       UsualFunctions.showErrorDialog(
                                         context: context,
@@ -364,7 +364,7 @@ class _SignUpScreen extends State<SignUpScreen> {
 
                                   // Redirect to login
                                   Navigator.pop(contextDia); // Close dialog
-                                  print(this.noRedirect);
+                                  //print(this.noRedirect);
                                   Navigator.pop(context); // Close signup_screen
                                   if (!this.noRedirect)
                                     Navigator.push(
@@ -387,12 +387,12 @@ class _SignUpScreen extends State<SignUpScreen> {
         },
         codeAutoRetrievalTimeout: (String verificationId) {},
       );
-      print('sent');
+      //print('sent');
 
       //await FirebaseAuth.instance.signOut();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'too-many-requests') {
-        print("network error");
+        //print("network error");
         UsualFunctions.showErrorDialog(
           context: context,
           height: SizeConfig.screenHeight * 0.13,
@@ -409,12 +409,12 @@ class _SignUpScreen extends State<SignUpScreen> {
         title: "Sign up error",
         error: "UNKNOWN: " + e.code,
       );
-      print(e);
+      //print(e);
       toggleSignupButton(true);
     }
 
     //toggleSignupButton(true);
-    print("signup");
+    //print("signup");
     return null;
   }
 
@@ -592,7 +592,7 @@ class _SignUpScreen extends State<SignUpScreen> {
                             child: GestureDetector(
                               onTap: () {
                                 // Redirect login_screen
-                                print("redirect login");
+                                //print("redirect login");
                                 //Navigator.pop(context);
                                 if (!this.noRedirect)
                                   Navigator.push(

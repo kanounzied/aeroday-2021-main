@@ -68,7 +68,7 @@ class _AppBar extends State<AppBarCustom> {
                   );
                   return;
                 }
-                print("logout tap");
+                //print("logout tap");
                 await FirebaseAuth.instance.signOut();
                 showDialog(
                     context: context,

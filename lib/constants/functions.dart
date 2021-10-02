@@ -5,7 +5,6 @@ import 'app_constants.dart';
 class UsualFunctions {
   static String getInitials(name) {
     List<String> names = name.split(" ");
-    //print(names);
     String initials = "";
     int numWords = 2;
     if (numWords > names.length) {

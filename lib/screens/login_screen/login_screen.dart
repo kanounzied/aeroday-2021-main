@@ -31,11 +31,11 @@ class _LoginScreen extends State<LoginScreen> {
   Future<bool> hasNetwork() async {
     try {
       final result = await InternetAddress.lookup('www.google.com');
-      print("h");
-      print(result);
+      //print("h");
+      //print(result);
       return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
     } on SocketException catch (_) {
-      print("false");
+      //print("false");
       return false;
     }
   }
@@ -98,13 +98,13 @@ class _LoginScreen extends State<LoginScreen> {
         password: passController.text,
       )
           .whenComplete(() {
-        print("signin complete");
+        //print("signin complete");
         if (FirebaseAuth.instance.currentUser == null) {
-          print("invalid login");
+          //print("invalid login");
           toggleSignupButton(true);
           return;
         } else {
-          print(FirebaseAuth.instance.currentUser);
+          //print(FirebaseAuth.instance.currentUser);
           // Redirect to home/voting page HERE
           Navigator.pop(context); // Close signup_screen
           if (!this.noRedirect)
@@ -112,11 +112,11 @@ class _LoginScreen extends State<LoginScreen> {
                 // Open HomeScreen
                 context,
                 MaterialPageRoute(builder: (context) => HomeScreen()));
-          print("login");
+          //print("login");
         }
       });
 
-      print("bla1");
+      //print("bla1");
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         toggleSignupButton(true);
@@ -128,7 +128,7 @@ class _LoginScreen extends State<LoginScreen> {
           error: "Your phone number doesn't exist.",
         );
 
-        print('No user found for that email.');
+        //print('No user found for that email.');
       } else if (e.code == 'wrong-password') {
         toggleSignupButton(true);
 
@@ -139,9 +139,9 @@ class _LoginScreen extends State<LoginScreen> {
           error: "Invalid password.",
         );
 
-        print('Wrong password provided for that user.');
+        //print('Wrong password provided for that user.');
       } else if (e.code == 'network-request-failed') {
-        print("network error");
+        //print("network error");
         UsualFunctions.showErrorDialog(
           context: context,
           height: SizeConfig.screenHeight * 0.13,
@@ -152,7 +152,7 @@ class _LoginScreen extends State<LoginScreen> {
         toggleSignupButton(true);
         return;
       } else if (e.code == 'too-many-requests') {
-        print("network error");
+        //print("network error");
         UsualFunctions.showErrorDialog(
           context: context,
           height: SizeConfig.screenHeight * 0.13,
@@ -163,8 +163,8 @@ class _LoginScreen extends State<LoginScreen> {
         toggleSignupButton(true);
         return;
       } else {
-        print("error:");
-        print(e.code);
+        //print("error:");
+        //print(e.code);
 
         UsualFunctions.showErrorDialog(
           context: context,
@@ -337,11 +337,11 @@ class _LoginScreen extends State<LoginScreen> {
                             child: GestureDetector(
                               onTap: () async {
                                 // Password lost click
-                                print("pass lost");
+                                //print("pass lost");
 
                                 await dialogResetPwd(
                                     context, emailController.text);
-                                print("back");
+                                //print("back");
 
                                 if (FirebaseAuth.instance.currentUser != null) {
                                   // Already logged in
@@ -382,7 +382,7 @@ class _LoginScreen extends State<LoginScreen> {
                             child: GestureDetector(
                               onTap: () async {
                                 // Signup click
-                                print("inscription");
+                                //print("inscription");
                                 //Navigator.pop(context);
                                 await Navigator.push(
                                   context,

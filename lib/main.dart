@@ -79,7 +79,7 @@ class _AppState extends State<MyApp> {
 
             EventStats.currentEvent = ds.get(FieldPath(['currentEvent']));
 
-            print(EventStats.airshowStats);
+            //print(EventStats.airshowStats);
             setState(() {});
           });
 

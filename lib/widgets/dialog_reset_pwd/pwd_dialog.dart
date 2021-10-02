@@ -244,7 +244,7 @@ class _PwdDialogState extends State<PwdDialog> {
                                 l = await FirebaseAuth.instance
                                     .fetchSignInMethodsForEmail(
                                         codeController.text + "@gmail.com");
-                                print("hh");
+                                //print("hh");
                               } on FirebaseAuthException catch (e) {
                                 if (e.code == 'network-request-failed') {
                                   UsualFunctions.showErrorDialog(
@@ -272,7 +272,7 @@ class _PwdDialogState extends State<PwdDialog> {
                                 );
                                 return;
                               }
-                              print("here");
+                              //print("here");
 
                               if (l.length == 0) {
                                 setState(() {
@@ -329,7 +329,7 @@ class _PwdDialogState extends State<PwdDialog> {
                                 );
                                 return;
                               }
-                              print("here2");
+                              //print("here2");
 
                               codeController.clear();
                               setState(() {
@@ -445,7 +445,7 @@ class _PwdDialogState extends State<PwdDialog> {
               "/" +
               MAX_ATTEMPTS.toString();
         });
-        print("Invalid code");
+        //print("Invalid code");
         setState(() {
           codeInputEnabled = true;
         });
