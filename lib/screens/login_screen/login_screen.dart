@@ -231,7 +231,7 @@ class _LoginScreen extends State<LoginScreen> {
                                 top: SizeConfig.screenHeight * 0.011),
                             child: new Image.asset(
                               "assets/login_icon.png",
-                              width: 50,
+                              width: SizeConfig.screenWidth * .1,
                             ),
                           ),
                           Container(
@@ -256,7 +256,13 @@ class _LoginScreen extends State<LoginScreen> {
                                   null,
                               decoration: InputDecoration(
                                 hintText: 'Phone number',
+                                hintStyle: TextStyle(
+                                  fontSize: SizeConfig.defaultSize * 1.3,
+                                ),
                                 labelText: 'Your phone number',
+                                labelStyle: TextStyle(
+                                  fontSize: SizeConfig.defaultSize * 1.6,
+                                ),
                                 contentPadding: new EdgeInsets.symmetric(
                                     vertical: 25.0, horizontal: 15.0),
                                 border: OutlineInputBorder(
@@ -276,7 +282,13 @@ class _LoginScreen extends State<LoginScreen> {
                               enableSuggestions: false,
                               decoration: InputDecoration(
                                 hintText: 'Password',
+                                hintStyle: TextStyle(
+                                  fontSize: SizeConfig.defaultSize * 1.3,
+                                ),
                                 labelText: 'Your password',
+                                labelStyle: TextStyle(
+                                  fontSize: SizeConfig.defaultSize * 1.6,
+                                ),
                                 contentPadding: new EdgeInsets.symmetric(
                                     vertical: 25.0, horizontal: 15.0),
                                 border: OutlineInputBorder(
@@ -347,6 +359,7 @@ class _LoginScreen extends State<LoginScreen> {
                               child: Text(
                                 "Forgot password?",
                                 style: TextStyle(
+                                  fontSize: SizeConfig.defaultSize * 1.2,
                                   color: Color(0xFF519DA6),
                                   decoration: TextDecoration.underline,
                                 ),
@@ -356,7 +369,12 @@ class _LoginScreen extends State<LoginScreen> {
                           Container(
                             margin: EdgeInsets.only(
                                 top: SizeConfig.screenHeight * 0.13),
-                            child: Text("Didn't signup yet?"),
+                            child: Text(
+                              "Didn't signup yet?",
+                              style: TextStyle(
+                                fontSize: SizeConfig.defaultSize * 1.3,
+                              ),
+                            ),
                           ),
                           Container(
                             margin: EdgeInsets.only(
@@ -388,6 +406,7 @@ class _LoginScreen extends State<LoginScreen> {
                               child: Text(
                                 "Create your account →",
                                 style: TextStyle(
+                                  fontSize: SizeConfig.defaultSize * 1.3,
                                   color: Color(0xFF519DA6),
                                   decoration: TextDecoration.underline,
                                 ),

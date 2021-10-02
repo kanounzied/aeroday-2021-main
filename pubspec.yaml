@@ -108,6 +108,3 @@ flutter:
         - asset: assets/fonts/Nexa/Nexa Bold.otf
           weight: 700
 
-    - family:  SignUpIcon
-      fonts:
-      - asset: assets/fonts/Icons/SignUpIcon.ttf

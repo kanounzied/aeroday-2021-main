@@ -1,7 +1,9 @@
 import 'package:aeroday_2021/config/responsive_size.dart';
+import 'package:aeroday_2021/constants/functions.dart';
 import 'package:aeroday_2021/widgets/dialog_reset_pwd/cercle_step.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 
 class PwdDialog extends StatefulWidget {
   String loginNumber = '';
@@ -49,17 +51,8 @@ class _PwdDialogState extends State<PwdDialog> {
         children: <Widget>[
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             CercleStep(0, true),
-            SizedBox(
-              width: SizeConfig.defaultSize * 2.5,
-            ),
             CercleStep(1, nbStep > 0),
-            SizedBox(
-              width: SizeConfig.defaultSize * 2.5,
-            ),
             CercleStep(2, nbStep > 1),
-            SizedBox(
-              width: SizeConfig.defaultSize * 2.5,
-            ),
             CercleStep(3, nbStep == 3),
           ]),
           SizedBox(
@@ -110,11 +103,12 @@ class _PwdDialogState extends State<PwdDialog> {
                         });
                       } else if (nbStep == 1 &&
                           value.length == 6 &&
-                          verifCodeError ==
-                              null) if (await handleCodeVerificationAndSignin())
-                        setState(() {
-                          nbStep = 2;
-                        });
+                          verifCodeError == null) {
+                        if (await handleCodeVerificationAndSignin())
+                          setState(() {
+                            nbStep = 2;
+                          });
+                      }
                     },
                     buildCounter: (
                       BuildContext context, {
@@ -124,9 +118,14 @@ class _PwdDialogState extends State<PwdDialog> {
                     }) =>
                         null,
                     decoration: InputDecoration(
+                      contentPadding: new EdgeInsets.symmetric(
+                          vertical: 30.0, horizontal: 15.0),
                       labelText: nbStep == 1
                           ? "Verification code"
                           : "Your phone number",
+                      labelStyle: TextStyle(
+                        fontSize: SizeConfig.defaultSize * 1.6,
+                      ),
                       enabled: nbStep == 1 ? codeInputEnabled : true,
                       errorText: verifCodeError,
                       border: OutlineInputBorder(
@@ -157,7 +156,13 @@ class _PwdDialogState extends State<PwdDialog> {
                             cursorColor: Color(0xffd95252),
                             decoration: InputDecoration(
                               //hintText: "Enter password",
+                              contentPadding: new EdgeInsets.symmetric(
+                                  vertical: 2 * SizeConfig.defaultSize,
+                                  horizontal: 15.0),
                               labelText: 'Your password',
+                              labelStyle: TextStyle(
+                                fontSize: SizeConfig.defaultSize * 1.6,
+                              ),
                               errorText: passErrorMsg,
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(32.0)),
@@ -165,7 +170,7 @@ class _PwdDialogState extends State<PwdDialog> {
                           ),
                         ),
                         SizedBox(
-                          height: SizeConfig.defaultSize,
+                          height: SizeConfig.defaultSize * .8,
                         ),
                         Container(
                           height: SizeConfig.screenHeight * 0.09,
@@ -186,8 +191,14 @@ class _PwdDialogState extends State<PwdDialog> {
                               }
                             },
                             decoration: InputDecoration(
+                              contentPadding: new EdgeInsets.symmetric(
+                                  vertical: 2 * SizeConfig.defaultSize,
+                                  horizontal: 15.0),
                               //hintText: 'Confirm password',
                               labelText: 'Confirm your password',
+                              labelStyle: TextStyle(
+                                fontSize: SizeConfig.defaultSize * 1.6,
+                              ),
                               errorText: confirmPassErrorMsg,
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(32.0)),
@@ -198,7 +209,7 @@ class _PwdDialogState extends State<PwdDialog> {
                     )
                   : Container()),
           SizedBox(
-            height: SizeConfig.defaultSize,
+            height: SizeConfig.defaultSize * .85,
           ),
           Align(
             alignment: Alignment.bottomRight,
@@ -227,40 +238,98 @@ class _PwdDialogState extends State<PwdDialog> {
                                 });
                                 return;
                               }
+                              List<String> l = [];
+                              try {
+                                l = await FirebaseAuth.instance
+                                    .fetchSignInMethodsForEmail(
+                                        codeController.text + "@gmail.com");
+                                print("hh");
+                              } on FirebaseAuthException catch (e) {
+                                if (e.code == 'network-request-failed') {
+                                  UsualFunctions.showErrorDialog(
+                                    context: context,
+                                    height: SizeConfig.screenHeight * 0.13,
+                                    title: "Reset password error",
+                                    error: "Verify your network access.",
+                                  );
+                                  return;
+                                } else {
+                                  UsualFunctions.showErrorDialog(
+                                    context: context,
+                                    height: SizeConfig.screenHeight * 0.13,
+                                    title: "Reset password error",
+                                    error: "UNKNOWN: " + e.code,
+                                  );
+                                  return;
+                                }
+                              } catch (e) {
+                                UsualFunctions.showErrorDialog(
+                                  context: context,
+                                  height: SizeConfig.screenHeight * 0.13,
+                                  title: "Reset password error",
+                                  error: "UNKNOWN: " + e.toString(),
+                                );
+                                return;
+                              }
+                              print("here");
 
-                              List<String> l = await FirebaseAuth.instance
-                                  .fetchSignInMethodsForEmail(
-                                      codeController.text + "@gmail.com");
                               if (l.length == 0) {
                                 setState(() {
                                   verifCodeError = "Phone number isn't used";
                                 });
                                 return;
                               }
-                              await FirebaseAuth.instance.verifyPhoneNumber(
-                                phoneNumber: '+216' + codeController.text,
-                                codeSent: (String verificationId,
-                                    int? resendingToken) {
-                                  setState(() {
-                                    verifId = verificationId;
-                                    codeInputEnabled = true;
-                                  });
-                                },
-                                verificationCompleted: (PhoneAuthCredential
-                                    phoneAuthCredential) async {
-                                  setState(() {
-                                    nbStep = 2;
-                                  });
-                                  await FirebaseAuth.instance
-                                      .signInWithCredential(
-                                    phoneAuthCredential,
-                                  );
-                                },
-                                verificationFailed:
-                                    (FirebaseAuthException error) {},
-                                codeAutoRetrievalTimeout:
-                                    (String verificationId) {},
-                              );
+                              try {
+                                await FirebaseAuth.instance.verifyPhoneNumber(
+                                  phoneNumber: '+216' + codeController.text,
+                                  codeSent: (String verificationId,
+                                      int? resendingToken) {
+                                    setState(() {
+                                      verifId = verificationId;
+                                      codeInputEnabled = true;
+                                    });
+                                  },
+                                  verificationCompleted: (PhoneAuthCredential
+                                      phoneAuthCredential) async {
+                                    setState(() {
+                                      nbStep = 2;
+                                    });
+                                    await FirebaseAuth.instance
+                                        .signInWithCredential(
+                                      phoneAuthCredential,
+                                    );
+                                  },
+                                  verificationFailed:
+                                      (FirebaseAuthException e) {
+                                    UsualFunctions.showErrorDialog(
+                                      context: context,
+                                      height: SizeConfig.screenHeight * 0.15,
+                                      title: "Verification failed",
+                                      error: "UNKNOWN: " + e.code,
+                                    );
+                                  },
+                                  codeAutoRetrievalTimeout:
+                                      (String verificationId) {},
+                                );
+                              } on FirebaseAuthException catch (e) {
+                                UsualFunctions.showErrorDialog(
+                                  context: context,
+                                  height: SizeConfig.screenHeight * 0.13,
+                                  title: "Reset password error",
+                                  error: "UNKNOWN: " + e.code,
+                                );
+                                return;
+                              } catch (e) {
+                                UsualFunctions.showErrorDialog(
+                                  context: context,
+                                  height: SizeConfig.screenHeight * 0.13,
+                                  title: "Reset password error",
+                                  error: "UNKNOWN: " + e.toString(),
+                                );
+                                return;
+                              }
+                              print("here2");
+
                               codeController.clear();
                               setState(() {
                                 nbStep = 1;
@@ -305,9 +374,12 @@ class _PwdDialogState extends State<PwdDialog> {
                       }
                       Focus.of(context).unfocus();
                     },
-              child: Text(
-                nbStep == 3 ? "Let's go!" : "Next",
-                style: TextStyle(fontSize: SizeConfig.defaultSize * 1.8),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  nbStep == 3 ? "Let's go!" : "Next",
+                  style: TextStyle(fontSize: SizeConfig.defaultSize * 1.8),
+                ),
               ),
             ),
           ),
@@ -339,6 +411,16 @@ class _PwdDialogState extends State<PwdDialog> {
       codeInputEnabled = false;
     });
 
+    if (codeController.text.length < 6) {
+      setState(() {
+        verifCodeError = "Invalid code.";
+      });
+      setState(() {
+        codeInputEnabled = true;
+      });
+      return false;
+    }
+
     attempts++;
     if (attempts > MAX_ATTEMPTS) {
       setState(() {
@@ -348,12 +430,11 @@ class _PwdDialogState extends State<PwdDialog> {
       return false;
     }
 
-    PhoneAuthCredential credential = PhoneAuthProvider.credential(
-      verificationId: verifId,
-      smsCode: codeController.text,
-    );
-
     try {
+      PhoneAuthCredential credential = PhoneAuthProvider.credential(
+        verificationId: verifId,
+        smsCode: codeController.text,
+      );
       await FirebaseAuth.instance.signInWithCredential(credential);
     } on FirebaseAuthException catch (e) {
       if (e.code == "invalid-verification-code") {
@@ -368,7 +449,29 @@ class _PwdDialogState extends State<PwdDialog> {
           codeInputEnabled = true;
         });
         return false;
+      } else {
+        UsualFunctions.showErrorDialog(
+          context: context,
+          height: SizeConfig.screenHeight * 0.15,
+          title: "Reset password error",
+          error: "UNKNOWN: " + e.code,
+        );
+        setState(() {
+          codeInputEnabled = true;
+        });
+        return false;
       }
+    } catch (e) {
+      UsualFunctions.showErrorDialog(
+        context: context,
+        height: SizeConfig.screenHeight * 0.13,
+        title: "Reset password error",
+        error: "UNKNOWN: " + e.toString(),
+      );
+      setState(() {
+        codeInputEnabled = true;
+      });
+      return false;
     }
     setState(() {
       codeInputEnabled = true;

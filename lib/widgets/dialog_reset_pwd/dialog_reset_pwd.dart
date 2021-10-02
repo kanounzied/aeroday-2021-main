@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 Future<void> dialogResetPwd(context, String loginNumber) async {
   await showDialog(
     context: context,
+    barrierDismissible: false,
     builder: (BuildContext context) {
       return PwdDialog(loginNumber);
     },

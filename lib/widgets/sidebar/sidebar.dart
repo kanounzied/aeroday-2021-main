@@ -142,7 +142,7 @@ class _SideBarState extends State<SideBar> {
             context: context,
             title: "Airshow",
             height: SizeConfig.screenHeight * .1,
-            content: "Wait till", // TODO : fix this msg
+            content: "Voting is not available yet!",
           );
           return;
         } else if (EventStats.airshowStats == "wait") {
@@ -150,7 +150,7 @@ class _SideBarState extends State<SideBar> {
             context: context,
             title: "Airshow",
             height: SizeConfig.screenHeight * .1,
-            content: "Wait till", // TODO : fix this msg
+            content: "Leaderboard will be available on the 10th of October.",
           );
           return;
         }
@@ -162,7 +162,7 @@ class _SideBarState extends State<SideBar> {
             context: context,
             title: "Videographie par drone",
             height: SizeConfig.screenHeight * .1,
-            content: "Wait till", // TODO : fix this msg
+            content: "Voting is not available yet!",
           );
           return;
         } else if (EventStats.vpdStats == "wait") {
@@ -170,7 +170,7 @@ class _SideBarState extends State<SideBar> {
             context: context,
             title: "Videographie par drone",
             height: SizeConfig.screenHeight * .1,
-            content: "Wait till", // TODO : fix this msg
+            content: "Leaderboard will be available on the 10th of October.",
           );
           return;
         }
@@ -181,7 +181,7 @@ class _SideBarState extends State<SideBar> {
     }
 
     selectedIndex = index;
-    Navigator.pop(context);
+    //Navigator.pop(context);
     Navigator.pushReplacementNamed(context, route);
   }
 }

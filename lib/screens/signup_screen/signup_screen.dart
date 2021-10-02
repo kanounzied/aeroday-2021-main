@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:aeroday_2021/constants/functions.dart';
-import 'package:aeroday_2021/constants/sign_up_icon_icons.dart';
 import 'package:aeroday_2021/screens/home_screen/home.dart';
 import 'package:aeroday_2021/screens/loading_screen/loading_screen.dart';
 import 'package:flutter/material.dart';
@@ -293,6 +292,17 @@ class _SignUpScreen extends State<SignUpScreen> {
                                   toggleSignupButton(false);
                                   print("tap");
 
+                                  if (codeController.text.length < 6) {
+                                    UsualFunctions.showErrorDialog(
+                                      context: context,
+                                      height: SizeConfig.screenHeight * 0.17,
+                                      title: "Sign up error",
+                                      error: "Invalid code.",
+                                    );
+                                    toggleSignupButton(true);
+                                    return;
+                                  }
+
                                   try {
                                     // Create a PhoneAuthCredential with the code
                                     PhoneAuthCredential credential =
@@ -310,14 +320,21 @@ class _SignUpScreen extends State<SignUpScreen> {
                                     await FirebaseAuth.instance.currentUser
                                         ?.linkWithCredential(credential);
                                   } on FirebaseAuthException catch (e) {
+                                    // Delete email account (invalid code)
+                                    await FirebaseAuth.instance.currentUser
+                                        ?.delete();
                                     if (e.code == "invalid-verification-code") {
-                                      // Delete email account (invalid code)
-                                      await FirebaseAuth.instance.currentUser
-                                          ?.delete();
-
                                       // TODO : invalid code handle
 
+                                      UsualFunctions.showErrorDialog(
+                                        context: context,
+                                        height: SizeConfig.screenHeight * 0.17,
+                                        title: "Sign up error",
+                                        error: "Invalid code.",
+                                      );
+
                                       print("Invalid code");
+                                      toggleSignupButton(true);
                                       return;
                                     } else {
                                       print("unknown err");
@@ -450,13 +467,17 @@ class _SignUpScreen extends State<SignUpScreen> {
                       width: SizeConfig.screenWidth,
                       child: Column(
                         children: <Widget>[
-                          Icon(
-                            SignUpIcon.male_add,
-                            size: SizeConfig.defaultSize,
+                          Container(
+                            margin: EdgeInsets.only(
+                                top: SizeConfig.screenHeight * 0.011),
+                            child: new Image.asset(
+                              "assets/signup.png",
+                              width: SizeConfig.screenWidth * .1,
+                            ),
                           ),
                           Container(
                             margin: EdgeInsets.only(
-                                top: SizeConfig.screenHeight * 0.1),
+                                top: SizeConfig.screenHeight * 0.03),
                             height: SizeConfig.screenHeight * 0.08,
                             width: SizeConfig.screenWidth * 0.75,
                             child: TextFormField(
@@ -476,8 +497,14 @@ class _SignUpScreen extends State<SignUpScreen> {
                                   null,
                               decoration: InputDecoration(
                                 hintText: 'Phone number',
+                                hintStyle: TextStyle(
+                                  fontSize: SizeConfig.defaultSize * 1.3,
+                                ),
                                 labelText: 'Your phone number',
-                                contentPadding: new EdgeInsets.symmetric(
+                                labelStyle: TextStyle(
+                                  fontSize: SizeConfig.defaultSize * 1.6,
+                                ),
+                                contentPadding: EdgeInsets.symmetric(
                                     vertical: 25.0, horizontal: 15.0),
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(32.0)),
@@ -496,7 +523,13 @@ class _SignUpScreen extends State<SignUpScreen> {
                               enableSuggestions: false,
                               decoration: InputDecoration(
                                 hintText: 'Password',
+                                hintStyle: TextStyle(
+                                  fontSize: SizeConfig.defaultSize * 1.3,
+                                ),
                                 labelText: 'Your passord',
+                                labelStyle: TextStyle(
+                                  fontSize: SizeConfig.defaultSize * 1.6,
+                                ),
                                 contentPadding: new EdgeInsets.symmetric(
                                     vertical: 25.0, horizontal: 15.0),
                                 border: OutlineInputBorder(
@@ -548,8 +581,13 @@ class _SignUpScreen extends State<SignUpScreen> {
                           ),
                           Container(
                             margin: EdgeInsets.only(
-                                top: SizeConfig.screenHeight * 0.08),
-                            child: Text("You already have an account?"),
+                                top: SizeConfig.screenHeight * 0.06),
+                            child: Text(
+                              "You already have an account?",
+                              style: TextStyle(
+                                fontSize: SizeConfig.defaultSize * 1.3,
+                              ),
+                            ),
                           ),
                           Container(
                             margin: EdgeInsets.only(
@@ -574,6 +612,7 @@ class _SignUpScreen extends State<SignUpScreen> {
                               child: Text(
                                 "Signin",
                                 style: TextStyle(
+                                  fontSize: SizeConfig.defaultSize * 1.3,
                                   color: Color(0xFF519DA6),
                                   decoration: TextDecoration.underline,
                                 ),
