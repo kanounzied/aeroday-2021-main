@@ -28,6 +28,8 @@ class _SignUpScreen extends State<SignUpScreen> {
   final codeController = TextEditingController();
   bool signupDisabled = false;
 
+  BuildContext? signUpContext;
+
   final bool noRedirect;
   _SignUpScreen({this.noRedirect = false});
 
@@ -198,10 +200,19 @@ class _SignUpScreen extends State<SignUpScreen> {
           await FirebaseAuth.instance.currentUser
               ?.linkWithCredential(credential);
 
+          await FirebaseFirestore.instance
+              .collection("users")
+              .doc(FirebaseAuth.instance.currentUser?.uid)
+              .set({
+            'hasVoted': false,
+            'voteID_Airshow': '',
+            'voteID_Videographie par drone': '',
+          });
+
           toggleSignupButton(true);
 
           // Redirect to home
-          Navigator.of(context).pop(); // Close signup_screen
+          Navigator.of(signUpContext!).pop(); // Close signup_screen
           Navigator.pop(context);
 
           if (!this.noRedirect)
@@ -243,6 +254,7 @@ class _SignUpScreen extends State<SignUpScreen> {
             barrierDismissible: false,
             context: context,
             builder: (BuildContext contextDia) {
+              signUpContext = contextDia;
               return new AlertDialog(
                   title: Text("Verification"),
                   content: SizedBox(
@@ -281,13 +293,13 @@ class _SignUpScreen extends State<SignUpScreen> {
                                   toggleSignupButton(false);
                                   print("tap");
 
-                                  // Create a PhoneAuthCredential with the code
-                                  PhoneAuthCredential credential =
-                                      PhoneAuthProvider.credential(
-                                          verificationId: verificationId,
-                                          smsCode: codeController.text);
-
                                   try {
+                                    // Create a PhoneAuthCredential with the code
+                                    PhoneAuthCredential credential =
+                                        PhoneAuthProvider.credential(
+                                            verificationId: verificationId,
+                                            smsCode: codeController.text);
+
                                     await FirebaseAuth.instance
                                         .createUserWithEmailAndPassword(
                                       email:
