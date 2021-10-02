@@ -85,8 +85,8 @@ class _SignUpScreen extends State<SignUpScreen> {
       UsualFunctions.showErrorDialog(
         context: context,
         height: SizeConfig.screenHeight * 0.13,
-        title: "Erreur d'inscription",
-        error: "Verifier votre accés à l'internet.",
+        title: "Sign up error",
+        error: "Verify your network access.",
       );
 
       toggleSignupButton(true);
@@ -97,8 +97,8 @@ class _SignUpScreen extends State<SignUpScreen> {
       UsualFunctions.showErrorDialog(
         context: context,
         height: SizeConfig.screenHeight * 0.16,
-        title: "Erreur d'inscription",
-        error: "Votre numéro du téléphone est invalid.",
+        title: "Sign up error",
+        error: "You've used an invalid phone number.",
       );
       print("num invalid");
 
@@ -116,8 +116,8 @@ class _SignUpScreen extends State<SignUpScreen> {
         UsualFunctions.showErrorDialog(
           context: context,
           height: SizeConfig.screenHeight * 0.13,
-          title: "Erreur d'inscription",
-          error: "Numéro du telephone est deja utilisé.",
+          title: "Sign up error",
+          error: "Phone number is already registered.",
         );
         // TODO : Redirect to login_screen
 
@@ -131,8 +131,8 @@ class _SignUpScreen extends State<SignUpScreen> {
         UsualFunctions.showErrorDialog(
           context: context,
           height: SizeConfig.screenHeight * 0.13,
-          title: "Erreur d'inscription",
-          error: "Verifier votre accés à l'internet.",
+          title: "Sign up error",
+          error: "Verify your network access.",
         );
 
         toggleSignupButton(true);
@@ -142,7 +142,7 @@ class _SignUpScreen extends State<SignUpScreen> {
       UsualFunctions.showErrorDialog(
         context: context,
         height: SizeConfig.screenHeight * 0.15,
-        title: "Erreur d'inscription",
+        title: "Sign up error",
         error: "UNKNOWN: " + e.code,
       );
 
@@ -154,7 +154,7 @@ class _SignUpScreen extends State<SignUpScreen> {
       UsualFunctions.showErrorDialog(
         context: context,
         height: SizeConfig.screenHeight * 0.15,
-        title: "Erreur d'inscription",
+        title: "Sign up error",
         error: "UNKNOWN: " + e.toString(),
       );
       print("ERROR: ");
@@ -170,8 +170,8 @@ class _SignUpScreen extends State<SignUpScreen> {
       UsualFunctions.showErrorDialog(
         context: context,
         height: SizeConfig.screenHeight * 0.15,
-        title: "Erreur d'inscription",
-        error: "Votre mot de passe est faible.",
+        title: "Sign up error",
+        error: "The password provided is too weak.",
       );
 
       print('The password provided is too weak.');
@@ -219,8 +219,8 @@ class _SignUpScreen extends State<SignUpScreen> {
             UsualFunctions.showErrorDialog(
               context: context,
               height: SizeConfig.screenHeight * 0.17,
-              title: "Erreur d'inscription",
-              error: "Votre numéro du téléphone est invalid.",
+              title: "Sign up error",
+              error: "You've used an invalid phone number.",
             );
           } else {
             print("error");
@@ -229,7 +229,7 @@ class _SignUpScreen extends State<SignUpScreen> {
             UsualFunctions.showErrorDialog(
               context: context,
               height: SizeConfig.screenHeight * 0.17,
-              title: "Erreur d'inscription",
+              title: "Sign up error",
               error: "UNKNOWN: " + e.code,
             );
           }
@@ -313,7 +313,7 @@ class _SignUpScreen extends State<SignUpScreen> {
                                       UsualFunctions.showErrorDialog(
                                         context: context,
                                         height: SizeConfig.screenHeight * 0.17,
-                                        title: "Erreur d'inscription",
+                                        title: "Sign up error",
                                         error: "UNKNOWN: " + e.toString(),
                                       );
 
@@ -364,10 +364,22 @@ class _SignUpScreen extends State<SignUpScreen> {
 
       //await FirebaseAuth.instance.signOut();
     } on FirebaseAuthException catch (e) {
+      if (e.code == 'too-many-requests') {
+        print("network error");
+        UsualFunctions.showErrorDialog(
+          context: context,
+          height: SizeConfig.screenHeight * 0.13,
+          title: "Sign up error",
+          error: "Too many invalid signin attemps, try again in few minutes.",
+        );
+
+        toggleSignupButton(true);
+        return;
+      }
       UsualFunctions.showErrorDialog(
         context: context,
         height: SizeConfig.screenHeight * 0.13,
-        title: "Erreur d'inscription",
+        title: "Sign up error",
         error: "UNKNOWN: " + e.code,
       );
       print(e);
@@ -449,8 +461,8 @@ class _SignUpScreen extends State<SignUpScreen> {
                               }) =>
                                   null,
                               decoration: InputDecoration(
-                                hintText: 'Numéro du téléphone',
-                                labelText: 'Votre numéro du téléphone',
+                                hintText: 'Phone number',
+                                labelText: 'Your phone number',
                                 contentPadding: new EdgeInsets.symmetric(
                                     vertical: 25.0, horizontal: 15.0),
                                 border: OutlineInputBorder(
@@ -469,8 +481,8 @@ class _SignUpScreen extends State<SignUpScreen> {
                               autocorrect: false,
                               enableSuggestions: false,
                               decoration: InputDecoration(
-                                hintText: 'Mot de passe',
-                                labelText: 'Votre mot de passe',
+                                hintText: 'Password',
+                                labelText: 'Your passord',
                                 contentPadding: new EdgeInsets.symmetric(
                                     vertical: 25.0, horizontal: 15.0),
                                 border: OutlineInputBorder(
@@ -523,7 +535,7 @@ class _SignUpScreen extends State<SignUpScreen> {
                           Container(
                             margin: EdgeInsets.only(
                                 top: SizeConfig.screenHeight * 0.08),
-                            child: Text("Vous avez déjà un compte?"),
+                            child: Text("You already have an account?"),
                           ),
                           Container(
                             margin: EdgeInsets.only(
@@ -533,13 +545,20 @@ class _SignUpScreen extends State<SignUpScreen> {
                                 // Redirect login_screen
                                 print("redirect login");
                                 //Navigator.pop(context);
-                                Navigator.push(
+                                if (!this.noRedirect)
+                                  Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => LoginScreen()));
+                                      builder: (context) => LoginScreen(
+                                        noRedirect: this.noRedirect,
+                                      ),
+                                    ),
+                                  );
+                                else
+                                  Navigator.pop(context);
                               },
                               child: Text(
-                                "Connectez-vous",
+                                "Signin",
                                 style: TextStyle(
                                   color: Color(0xFF519DA6),
                                   decoration: TextDecoration.underline,

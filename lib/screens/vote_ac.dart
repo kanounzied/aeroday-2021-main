@@ -2,7 +2,6 @@ import 'package:aeroday_2021/config/responsive_size.dart';
 import 'package:aeroday_2021/constants/eventInfo.dart';
 import 'package:aeroday_2021/services/contestant_info.dart';
 import 'package:aeroday_2021/widgets/appBar/appbar.dart';
-import 'package:aeroday_2021/widgets/upcomings_cercle/circle.dart';
 import 'package:aeroday_2021/widgets/vote_card.dart';
 import 'package:flutter/material.dart';
 import 'package:aeroday_2021/constants/app_constants.dart';
@@ -103,6 +102,7 @@ class _VoteACState extends State<VoteAC> {
                       onVoted: () {},
                       contInfo: _contestantsList[selectedNum],
                       index: selectedNum,
+                      vCardEvent: EventStats.EventList[0],
                       openUp: openCard
                           ? () {
                               openCard = false;
@@ -190,13 +190,6 @@ class _VoteACState extends State<VoteAC> {
               ),
             ],
             borderRadius: BorderRadius.all(Radius.circular(9.0)),
-          ),
-          child: Container(
-            width: 25,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.black,
-            ),
           ),
         );
       },

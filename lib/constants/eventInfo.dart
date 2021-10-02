@@ -5,6 +5,9 @@ class EventStats {
     Videographie par drone
   */
   static String currentEvent = '';
+
+  /// 0 --> Airshow
+  /// 1 --> Vpd
   static const List<String> EventList = [
     'Airshow',
     'Videographie par drone'
