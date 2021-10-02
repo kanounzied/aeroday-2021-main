@@ -197,26 +197,131 @@ class _VoteVPDState extends State<VoteVPD> {
       itemBuilder: (context, index) {
         return Container(
           width: SizeConfig.screenWidth * 0.85,
-          height: 62,
-          margin: EdgeInsets.only(bottom: 16),
+          height: 6.2 * SizeConfig.defaultSize,
+          margin: EdgeInsets.only(bottom: 1.6 * SizeConfig.defaultSize),
           decoration: BoxDecoration(
-            color: Colors.grey[350],
+            color: Colors.white,
             boxShadow: [
               BoxShadow(
                 color: Colors.black26,
                 offset: Offset.zero,
-                blurRadius: 4,
+                blurRadius: 7,
                 spreadRadius: 0,
               ),
             ],
-            borderRadius: BorderRadius.all(Radius.circular(9.0)),
+            borderRadius:
+                BorderRadius.all(Radius.circular(0.9 * SizeConfig.defaultSize)),
           ),
-          child: Container(
-            width: 25,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.black,
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(
+                        left: 1.4 * SizeConfig.defaultSize,
+                        right: 0.5 * SizeConfig.defaultSize),
+                    child: Container(
+                      width: 1.5 * SizeConfig.defaultSize,
+                      child: Text(
+                        '',
+                        style: TextStyle(
+                          fontSize: 1.3 * SizeConfig.defaultSize,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ), //number
+                  Container(
+                    width: 4.7 * SizeConfig.defaultSize,
+                    height: 4.7 * SizeConfig.defaultSize,
+                    child: Center(
+                      child: Text(
+                        '',
+                        style: TextStyle(
+                          fontSize: 1.4 * SizeConfig.defaultSize,
+                          color: Color(0xFFFFFFFF),
+                        ),
+                      ),
+                    ),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black26,
+                          offset: Offset.zero,
+                          blurRadius: 5,
+                          spreadRadius: 1,
+                        ),
+                      ],
+                      color: Colors.grey[350],
+                    ),
+                  ), //photo
+                  Container(
+                    margin: EdgeInsets.only(
+                        top: 1 * SizeConfig.defaultSize,
+                        left: 1.2 * SizeConfig.defaultSize),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
+                          children: [
+                            Container(
+                              height: 1.5 * SizeConfig.defaultSize,
+                              width: .15 * SizeConfig.screenWidth,
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black26,
+                                    offset: Offset.zero,
+                                    blurRadius: 5,
+                                    spreadRadius: 1,
+                                  ),
+                                ],
+                                color: Colors.grey[350],
+                              ),
+                              child: Text(
+                                '',
+                                style: TextStyle(
+                                  color: dark,
+                                  fontSize: 1.5 * SizeConfig.defaultSize,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          height: 1.5 * SizeConfig.defaultSize,
+                          width: .2 * SizeConfig.screenWidth,
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black26,
+                                offset: Offset.zero,
+                                blurRadius: 5,
+                                spreadRadius: 1,
+                              ),
+                            ],
+                            color: Colors.grey[350],
+                          ),
+                          margin: EdgeInsets.only(
+                              top: 1 * SizeConfig.defaultSize,
+                              left: .4 * SizeConfig.defaultSize),
+                          child: Text(
+                            '',
+                            style: TextStyle(
+                              color: light,
+                              fontSize: 1.4 * SizeConfig.defaultSize,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ), //name + vote number
+                  ), //name+vot
+                ],
+              ),
+            ],
           ),
         );
       },
