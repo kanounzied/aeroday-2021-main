@@ -11,14 +11,25 @@ import 'package:firebase_core/firebase_core.dart';
 
 import 'constants/eventInfo.dart';
 
-void main() {
-  runApp(Home());
-}
+import 'package:device_preview/device_preview.dart';
+
+// void main() {
+//   runApp(Home());
+// }
+
+void main() => runApp(
+      DevicePreview(
+        enabled: true,
+        builder: (context) => Home(), // Wrap your app
+      ),
+    );
 
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      locale: DevicePreview.locale(context), // Add the locale here
+      builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(

@@ -71,8 +71,8 @@ class _VoteCardState extends State<VoteCard> {
       widget.openUp = false;
     }
 
-    double sHeight = MediaQuery.of(context).size.height;
-    double sWidth = MediaQuery.of(context).size.width;
+    double sHeight = SizeConfig.screenHeight;
+    double sWidth = SizeConfig.screenWidth;
     double currPos = 0;
     return Center(
       child: GestureDetector(
@@ -358,7 +358,7 @@ class _VoteCardState extends State<VoteCard> {
                       }
                     },
                     child: AnimatedContainer(
-                      width: MediaQuery.of(context).size.width * 0.65,
+                      width: SizeConfig.screenWidth * 0.65,
                       height: 70,
                       duration: Duration(milliseconds: 150),
                       curve: Curves.easeOut,

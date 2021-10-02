@@ -30,13 +30,13 @@ class _SideBarState extends State<SideBar> {
   static const IconData air = IconData(0xe064, fontFamily: 'MaterialIcons');
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = SizeConfig.screenWidth;
+    double screenHeight = SizeConfig.screenHeight;
     return SafeArea(
       child: ClipRRect(
         borderRadius: BorderRadius.horizontal(right: Radius.circular(20)),
         child: SizedBox(
-          width: screenWidth * 0.6,
+          width: screenWidth * 0.65,
           child: Drawer(
             elevation: 5,
             child: Column(
