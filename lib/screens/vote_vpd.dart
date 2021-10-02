@@ -68,8 +68,8 @@ class _VoteVPDState extends State<VoteVPD> {
                   ),
                   AnimatedContainer(
                     duration: Duration(milliseconds: 150),
-                    width: MediaQuery.of(context).size.width * 0.84,
-                    height: MediaQuery.of(context).size.height * 0.54 -
+                    width: SizeConfig.screenWidth * 0.84,
+                    height: SizeConfig.screenHeight * 0.54 -
                         dynamicHeight, //height of list(maybe dynamic)
                     margin: EdgeInsets.only(top: 50),
                     child: Center(
@@ -116,8 +116,8 @@ class _VoteVPDState extends State<VoteVPD> {
                         child: Container(
                           height: 140,
                           margin: EdgeInsets.only(
-                              left: MediaQuery.of(context).size.width * 0.05),
-                          width: MediaQuery.of(context).size.width * 0.9,
+                              left: SizeConfig.screenWidth * 0.05),
+                          width: SizeConfig.screenWidth * 0.9,
                           decoration: BoxDecoration(
                             color: Colors.grey[350],
                             borderRadius:
@@ -176,7 +176,7 @@ class _VoteVPDState extends State<VoteVPD> {
       itemCount: 5,
       itemBuilder: (context, index) {
         return Container(
-          width: MediaQuery.of(context).size.width * 0.85,
+          width: SizeConfig.screenWidth * 0.85,
           height: 62,
           margin: EdgeInsets.only(bottom: 16),
           decoration: BoxDecoration(

@@ -1,5 +1,6 @@
 import 'package:aeroday_2021/constants/app_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:aeroday_2021/config/responsive_size.dart';
 
 class SearchBar extends StatefulWidget {
   Function(String) onSearchTextChanged;
@@ -15,7 +16,7 @@ class _SearchBarState extends State<SearchBar> {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        width: MediaQuery.of(context).size.width * 0.85,
+        width: SizeConfig.screenWidth * 0.85,
         height: 40,
         decoration: BoxDecoration(
           color: Colors.white10,

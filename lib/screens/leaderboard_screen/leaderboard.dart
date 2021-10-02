@@ -86,15 +86,15 @@ class _LeaderBoardState extends State<LeaderBoard> {
                       borderRadius:
                           BorderRadius.vertical(top: Radius.circular(24)),
                     ),
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.50 +
+                    width: SizeConfig.screenWidth,
+                    height: SizeConfig.screenHeight * 0.50 +
                         30 * 2, //to center the list add 2*margin of list
                   ),
                   Center(
                     child: Container(
                       margin: EdgeInsets.only(top: 30),
-                      width: MediaQuery.of(context).size.width * 0.84,
-                      height: MediaQuery.of(context).size.height * 0.50,
+                      width: SizeConfig.screenWidth * 0.84,
+                      height: SizeConfig.screenHeight * 0.50,
                       child: _contestantsList.isEmpty
                           ? buildListLoader()
                           : buildLeaderboardList(),
@@ -127,7 +127,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
       itemCount: 5,
       itemBuilder: (context, index) {
         return Container(
-          width: MediaQuery.of(context).size.width * 0.85,
+          width: SizeConfig.screenWidth * 0.85,
           height: 62,
           margin: EdgeInsets.only(bottom: 16),
           decoration: BoxDecoration(

@@ -9,7 +9,7 @@ import 'package:flutter/services.dart';
 
 import '../login_screen/login_screen.dart';
 
-import '../../config/responsive_size.dart';
+import 'package:aeroday_2021/config/responsive_size.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -434,7 +434,7 @@ class _SignUpScreen extends State<SignUpScreen> {
                             topLeft: Radius.circular(50),
                             topRight: Radius.circular(50)),
                       ),
-                      width: MediaQuery.of(context).size.width,
+                      width: SizeConfig.screenWidth,
                       child: Column(
                         children: <Widget>[
                           Text(

@@ -124,7 +124,7 @@ class _HomeState extends State<HomeScreen> {
                                     rad: timeCircleRad,
                                     drawLine: true,
                                     lineColor: Color(0xFFe3aeb3),
-                                    lineLen: SizeConfig.screenHeight * .125,
+                                    lineLen: SizeConfig.screenHeight * .2,
                                     drawUpperLine: true,
                                     lineUpperColor: Color(0xFFeae5ee),
                                     lineUpperLen:
@@ -265,7 +265,7 @@ class _HomeState extends State<HomeScreen> {
                                     rad: timeCircleRad,
                                     drawLine: true,
                                     lineColor: Color(0xFFe4b9be),
-                                    lineLen: SizeConfig.screenHeight * .070,
+                                    lineLen: SizeConfig.screenHeight * .15,
                                   ),
                                 ),
                               )
@@ -365,7 +365,7 @@ class _HomeState extends State<HomeScreen> {
                                     rad: timeCircleRad,
                                     drawLine: true,
                                     lineColor: Color(0xFFe4c3c8),
-                                    lineLen: SizeConfig.screenHeight * .070,
+                                    lineLen: SizeConfig.screenHeight * .15,
                                   ),
                                 ),
                               )
@@ -465,7 +465,7 @@ class _HomeState extends State<HomeScreen> {
                                     rad: timeCircleRad,
                                     drawLine: true,
                                     lineColor: Color(0xFFe6ced3),
-                                    lineLen: SizeConfig.screenHeight * .070,
+                                    lineLen: SizeConfig.screenHeight * .15,
                                   ),
                                 ),
                               )
@@ -565,7 +565,7 @@ class _HomeState extends State<HomeScreen> {
                                     rad: timeCircleRad,
                                     drawLine: true,
                                     lineColor: Color(0xFFeae0e3),
-                                    lineLen: SizeConfig.screenHeight * .070,
+                                    lineLen: SizeConfig.screenHeight * .15,
                                   ),
                                 ),
                               )
@@ -614,7 +614,7 @@ class _HomeState extends State<HomeScreen> {
                                     rad: timeCircleRad,
                                     drawLine: true,
                                     lineColor: Color(0xFFe9e1de),
-                                    lineLen: SizeConfig.screenHeight * .29,
+                                    lineLen: SizeConfig.screenHeight * .45,
                                   ),
                                 ),
                               )
@@ -684,6 +684,9 @@ class _HomeState extends State<HomeScreen> {
                                                     Text(
                                                       "Salle de lecture",
                                                       style: TextStyle(
+                                                        fontSize: SizeConfig
+                                                                .defaultSize *
+                                                            1.4,
                                                         color:
                                                             Color(0xff523e43),
                                                       ),
@@ -748,6 +751,9 @@ class _HomeState extends State<HomeScreen> {
                                                     Text(
                                                       "Salle de lecture",
                                                       style: TextStyle(
+                                                        fontSize: SizeConfig
+                                                                .defaultSize *
+                                                            1.4,
                                                         color:
                                                             Color(0xff523e43),
                                                       ),
@@ -821,7 +827,7 @@ class _HomeState extends State<HomeScreen> {
                                     rad: timeCircleRad,
                                     drawLine: true,
                                     lineColor: Color(0xFFd9dde3),
-                                    lineLen: SizeConfig.screenHeight * .42,
+                                    lineLen: SizeConfig.screenHeight * .6,
                                   ),
                                 ),
                               )
@@ -899,6 +905,9 @@ class _HomeState extends State<HomeScreen> {
                                                     Text(
                                                       "Salles 155, 157, 159",
                                                       style: TextStyle(
+                                                        fontSize: SizeConfig
+                                                                .defaultSize *
+                                                            1.4,
                                                         color:
                                                             Color(0xff523e43),
                                                       ),
@@ -925,6 +934,13 @@ class _HomeState extends State<HomeScreen> {
                                                     ),
                                                     Text(
                                                       "L'extérieur du hall",
+                                                      style: TextStyle(
+                                                        fontSize: SizeConfig
+                                                                .defaultSize *
+                                                            1.4,
+                                                        color:
+                                                            Color(0xff523e43),
+                                                      ),
                                                     ),
                                                   ],
                                                 )
@@ -978,6 +994,9 @@ class _HomeState extends State<HomeScreen> {
                                                     Text(
                                                       "Partie gauche du hall",
                                                       style: TextStyle(
+                                                        fontSize: SizeConfig
+                                                                .defaultSize *
+                                                            1.4,
                                                         color:
                                                             Color(0xff523e43),
                                                       ),
@@ -1034,6 +1053,9 @@ class _HomeState extends State<HomeScreen> {
                                                     Text(
                                                       "Partie droite du hall",
                                                       style: TextStyle(
+                                                        fontSize: SizeConfig
+                                                                .defaultSize *
+                                                            1.4,
                                                         color:
                                                             Color(0xff523e43),
                                                       ),
@@ -1090,6 +1112,9 @@ class _HomeState extends State<HomeScreen> {
                                                     Text(
                                                       "Salles de conference",
                                                       style: TextStyle(
+                                                        fontSize: SizeConfig
+                                                                .defaultSize *
+                                                            1.4,
                                                         color:
                                                             Color(0xff523e43),
                                                       ),
@@ -1102,6 +1127,9 @@ class _HomeState extends State<HomeScreen> {
                                                   child: Text(
                                                     "B26/B28",
                                                     style: TextStyle(
+                                                      fontSize: SizeConfig
+                                                              .defaultSize *
+                                                          1.4,
                                                       color: Color(0xff523e43),
                                                     ),
                                                   ),
@@ -1154,7 +1182,7 @@ class _HomeState extends State<HomeScreen> {
                                     rad: timeCircleRad,
                                     drawLine: true,
                                     lineColor: Color.fromRGBO(202, 208, 222, 1),
-                                    lineLen: SizeConfig.screenHeight * .070,
+                                    lineLen: SizeConfig.screenHeight * .15,
                                   ),
                                 ),
                               )
@@ -1261,7 +1289,7 @@ class _HomeState extends State<HomeScreen> {
                                     rad: timeCircleRad,
                                     drawLine: true,
                                     lineColor: Color.fromRGBO(198, 218, 221, 1),
-                                    lineLen: SizeConfig.screenHeight * .26,
+                                    lineLen: SizeConfig.screenHeight * .4,
                                   ),
                                 ),
                               )
@@ -1307,10 +1335,12 @@ class _HomeState extends State<HomeScreen> {
                                             height: 0,
                                             child: CustomPaint(
                                               painter: CirclePaint(
-                                                  innerColor: Color.fromRGBO(
-                                                      126, 179, 185, 1),
-                                                  outerColor: Color(0xff3b2d30),
-                                                  rad: boxCircleRad),
+                                                innerColor: Color.fromRGBO(
+                                                    126, 179, 185, 1),
+                                                outerColor: Color(0xff3b2d30),
+                                                rad: boxCircleRad,
+                                                drawLine: true,
+                                              ),
                                             ),
                                           ),
                                           Container(
@@ -1449,10 +1479,11 @@ class _HomeState extends State<HomeScreen> {
                                             height: 0,
                                             child: CustomPaint(
                                               painter: CirclePaint(
-                                                  innerColor: Color.fromRGBO(
-                                                      126, 179, 185, 1),
-                                                  outerColor: Color(0xff3b2d30),
-                                                  rad: boxCircleRad),
+                                                innerColor: Color.fromRGBO(
+                                                    126, 179, 185, 1),
+                                                outerColor: Color(0xff3b2d30),
+                                                rad: boxCircleRad,
+                                              ),
                                             ),
                                           ),
                                           Container(
@@ -1481,6 +1512,9 @@ class _HomeState extends State<HomeScreen> {
                                                     Text(
                                                       "Auditorium",
                                                       style: TextStyle(
+                                                        fontSize: SizeConfig
+                                                                .defaultSize *
+                                                            1.4,
                                                         color:
                                                             Color(0xff523e43),
                                                       ),
@@ -1531,7 +1565,10 @@ class _HomeState extends State<HomeScreen> {
                                       innerColor: Color(0xFFF2F2F2),
                                       outerColor:
                                           Color.fromRGBO(129, 181, 185, 1),
-                                      rad: timeCircleRad),
+                                      rad: timeCircleRad,
+                                      drawLine: true,
+                                      lineLen: SizeConfig.screenHeight * .1,
+                                      lineColor: Color(0xFFFFFFFFFF)),
                                 ),
                               )
                             ],
