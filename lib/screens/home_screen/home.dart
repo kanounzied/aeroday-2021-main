@@ -1318,41 +1318,6 @@ class _HomeState extends State<HomeScreen> {
                                   // Box 8 content
                                   child: Column(
                                     children: [
-                                      // Ligne 1 of box 8
-                                      Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                              left:
-                                                  SizeConfig.screenWidth * .035,
-                                              top: 10,
-                                            ),
-                                            width: 10,
-                                            height: 0,
-                                            child: CustomPaint(
-                                              painter: CirclePaint(
-                                                innerColor: Color.fromRGBO(
-                                                    126, 179, 185, 1),
-                                                outerColor: Color(0xff3b2d30),
-                                                rad: boxCircleRad,
-                                                drawLine: true,
-                                              ),
-                                            ),
-                                          ),
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                              left:
-                                                  SizeConfig.screenWidth * .03,
-                                            ),
-                                            child: Text(
-                                              "Aerochallenge",
-                                              style: boxContentStyle,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
                                       // Ligne 2 of box 8
                                       Row(
                                         crossAxisAlignment:
@@ -1362,8 +1327,7 @@ class _HomeState extends State<HomeScreen> {
                                             margin: EdgeInsets.only(
                                               left:
                                                   SizeConfig.screenWidth * .035,
-                                              top: SizeConfig.screenHeight *
-                                                  .025,
+                                              top: 10,
                                             ),
                                             width: 10,
                                             height: 0,
@@ -1379,8 +1343,6 @@ class _HomeState extends State<HomeScreen> {
                                             margin: EdgeInsets.only(
                                               left:
                                                   SizeConfig.screenWidth * .03,
-                                              top: SizeConfig.screenHeight *
-                                                  .015,
                                             ),
                                             child: Text(
                                               "Videographie par drone",
@@ -1425,6 +1387,45 @@ class _HomeState extends State<HomeScreen> {
                                           ),
                                         ],
                                       ),
+                                      // Ligne 1 of box 8
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            margin: EdgeInsets.only(
+                                              left:
+                                                  SizeConfig.screenWidth * .035,
+                                              top: SizeConfig.screenHeight *
+                                                  .025,
+                                            ),
+                                            width: 10,
+                                            height: 0,
+                                            child: CustomPaint(
+                                              painter: CirclePaint(
+                                                innerColor: Color.fromRGBO(
+                                                    126, 179, 185, 1),
+                                                outerColor: Color(0xff3b2d30),
+                                                rad: boxCircleRad,
+                                                drawLine: true,
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            margin: EdgeInsets.only(
+                                              left:
+                                                  SizeConfig.screenWidth * .03,
+                                              top: SizeConfig.screenHeight *
+                                                  .015,
+                                            ),
+                                            child: Text(
+                                              "Aerochallenge",
+                                              style: boxContentStyle,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+
                                       // Ligne 4 of box 8
                                       Row(
                                         crossAxisAlignment:
@@ -1500,7 +1501,7 @@ class _HomeState extends State<HomeScreen> {
                                                       SizeConfig.screenWidth *
                                                           .53,
                                                   child: Text(
-                                                    "Challenge et remise des prix",
+                                                    "Remise des prix",
                                                     style: boxContentStyle,
                                                   ),
                                                 ),
