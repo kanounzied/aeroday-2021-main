@@ -1,6 +1,8 @@
 import 'package:aeroday_2021/config/responsive_size.dart';
 import 'package:flutter/material.dart';
 
+import 'app_constants.dart';
+
 class UsualFunctions {
   static String getInitials(name) {
     List<String> names = name.split(" ");
@@ -22,31 +24,27 @@ class UsualFunctions {
     showDialog(
         context: context,
         builder: (BuildContext context) {
-          return new AlertDialog(
-              title: Text(title),
-              content: SizedBox(
-                height: height,
-                child: Column(
-                  children: <Widget>[
-                    Text(error),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(
-                              top: SizeConfig.screenHeight * 0.03),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: Text("Ok"),
-                          ),
-                        )
-                      ],
+          return AlertDialog(
+            title: Text(title),
+            content: Container(
+              margin: EdgeInsets.only(right: 14),
+              child: Text(error),
+            ),
+            actions: [
+              Container(
+                margin: const EdgeInsets.only(right: 14.0),
+                child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.resolveWith((states) => red),
                     ),
-                  ],
-                ),
-              ));
+                    child: Text('Dismiss')),
+              ),
+            ],
+          );
         });
   }
 }

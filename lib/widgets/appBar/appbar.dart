@@ -1,4 +1,6 @@
 import 'package:aeroday_2021/config/responsive_size.dart';
+import 'package:aeroday_2021/constants/app_constants.dart';
+import 'package:aeroday_2021/widgets/sidebar/button.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -56,14 +58,41 @@ class _AppBar extends State<AppBarCustom> {
               if (FirebaseAuth.instance.currentUser == null) return;
               print("logout tap");
               await FirebaseAuth.instance.signOut();
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text('Done!'),
+                      content: Text('You are now logged out.'),
+                      actions: [
+                        Container(
+                          margin: const EdgeInsets.only(right: 14.0),
+                          child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.resolveWith(
+                                        (states) => red),
+                              ),
+                              child: Text('Dismiss')),
+                        ),
+                      ],
+                    );
+                  });
               setState(() {});
             },
-            child: Icon(
-              Icons.logout,
-              color: FirebaseAuth.instance.currentUser == null
-                  ? Color(0x00FFFFFF)
-                  : Color(0xFFFFFFFF),
-              size: SizeConfig.defaultSize * 3,
+            child: Column(
+              children: [
+                Icon(
+                  Icons.logout,
+                  color: FirebaseAuth.instance.currentUser == null
+                      ? Color(0x00FFFFFF)
+                      : Color(0xFFFFFFFF),
+                  size: SizeConfig.defaultSize * 3,
+                ),
+              ],
             ),
           ),
         ),

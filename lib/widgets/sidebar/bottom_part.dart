@@ -35,7 +35,7 @@ class BottomPart extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 10),
+                /*SizedBox(height: 00),
                 Row(
                   children: [
                     Icon(
@@ -46,7 +46,7 @@ class BottomPart extends StatelessWidget {
                     SizedBox(
                       width: 12,
                     ),
-                    Row(
+                   Row(
                       children: [
                         Text(
                           'ID : ',
@@ -61,7 +61,7 @@ class BottomPart extends StatelessWidget {
                       ],
                     ),
                   ],
-                ),
+                ),*/
                 SizedBox(height: 10),
                 Row(
                   children: [
