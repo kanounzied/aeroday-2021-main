@@ -12,7 +12,7 @@ class LoadingScreen extends StatelessWidget {
       height: SizeConfig.screenHeight,
       child: Center(
         child: CircularProgressIndicator(
-          color: red,
+          valueColor: AlwaysStoppedAnimation<Color>(red),
           backgroundColor: Colors.transparent,
         ),
       ),
