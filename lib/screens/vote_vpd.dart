@@ -26,7 +26,7 @@ class _VoteVPDState extends State<VoteVPD> {
 
   Future<Null> getContestantDetails() async {
     Map<String, dynamic> response;
-    dynamic collection = await FirebaseFirestore.instance
+    await FirebaseFirestore.instance
         .collection('contestant_' + EventStats.EventList[1])
         .get()
         .then((QuerySnapshot querySnapshot) {
@@ -77,8 +77,8 @@ class _VoteVPDState extends State<VoteVPD> {
                         SizeConfig.screenWidth / SizeConfig.screenHeight < 0.75
                             ? SizeConfig.screenHeight -
                                 (120 * 0.1 * SizeConfig.defaultSize +
-                                    5.0 * SizeConfig.defaultSize +
-                                    19.9 * SizeConfig.defaultSize +
+                                    SizeConfig.defaultSize +
+                                    18 * SizeConfig.defaultSize +
                                     SizeConfig.defaultSize * 4.2) -
                                 dynamicHeight
                             : SizeConfig.screenHeight -

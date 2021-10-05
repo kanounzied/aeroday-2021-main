@@ -17,6 +17,11 @@ class UsualFunctions {
     return initials;
   }
 
+  static bool validateEmail(String email) {
+    if (!email.contains('@')) return false;
+    return true;
+  }
+
   static void showErrorDialog(
       {required context, required height, required title, required error}) {
     showDialog(

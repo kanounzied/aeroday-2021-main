@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:aeroday_2021/constants/functions.dart';
 import 'package:aeroday_2021/screens/loading_screen/loading_screen.dart';
 import 'package:aeroday_2021/screens/signup_screen/signup_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/services.dart';
 
 import 'package:aeroday_2021/screens/home_screen/home.dart';
 import 'package:aeroday_2021/widgets/dialog_reset_pwd/dialog_reset_pwd.dart';
@@ -68,18 +68,20 @@ class _LoginScreen extends State<LoginScreen> {
   void signupButtonCalled() async {
     toggleSignupButton(false);
 
-    if (emailController.text.isEmpty || emailController.text.length < 8) {
-      toggleSignupButton(true);
-
+    if (!UsualFunctions.validateEmail(emailController.text)) {
       UsualFunctions.showErrorDialog(
         context: context,
-        height: SizeConfig.screenHeight * 0.13,
+        height: SizeConfig.screenHeight * 0.16,
         title: "Sign in error",
-        error: "Invalid phone number.",
+        error: "You've used an invalid email address.",
       );
+
+      toggleSignupButton(true);
       return;
     }
-    if (passController.text.isEmpty) {
+
+    if (passController.text.isEmpty ||
+        !RegExp("(?=.*[0-9a-zA-Z]).{6,}").hasMatch(passController.text)) {
       toggleSignupButton(true);
 
       UsualFunctions.showErrorDialog(
@@ -94,7 +96,7 @@ class _LoginScreen extends State<LoginScreen> {
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(
-        email: emailController.text + "@gmail.com",
+        email: emailController.text,
         password: passController.text,
       )
           .whenComplete(() {
@@ -104,9 +106,37 @@ class _LoginScreen extends State<LoginScreen> {
           toggleSignupButton(true);
           return;
         } else {
-          //print(FirebaseAuth.instance.currentUser);
+          if (!FirebaseAuth.instance.currentUser!.emailVerified) {
+            FirebaseFirestore.instance
+                .collection('users')
+                .doc(FirebaseAuth.instance.currentUser?.uid)
+                .get()
+                .then((DocumentSnapshot ds) {
+              setState(() {
+                // Custom email verification
+                bool emailVerif = ds.get(
+                  FieldPath(['emailValidated']),
+                );
+                if (emailVerif == false) {
+                  UsualFunctions.showErrorDialog(
+                    context: context,
+                    height: SizeConfig.screenHeight * 0.15,
+                    title: "Sign in error",
+                    error: "You must verify your email address.",
+                  );
+
+                  FirebaseAuth.instance.currentUser?.sendEmailVerification();
+                  FirebaseAuth.instance.signOut();
+                  toggleSignupButton(true);
+                  return;
+                }
+              });
+            });
+            return;
+          }
+
           // Redirect to home/voting page HERE
-          Navigator.pop(context); // Close signup_screen
+          Navigator.pop(context); // Close signin_screen
           if (!this.noRedirect)
             Navigator.push(
                 // Open HomeScreen
@@ -125,7 +155,7 @@ class _LoginScreen extends State<LoginScreen> {
           context: context,
           height: SizeConfig.screenHeight * 0.15,
           title: "Sign in error",
-          error: "Your phone number doesn't exist.",
+          error: "Your email address doesn't exist.",
         );
 
         //print('No user found for that email.');
@@ -178,18 +208,11 @@ class _LoginScreen extends State<LoginScreen> {
       }
     }
     toggleSignupButton(true);
-    return null;
+    return;
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xFF323A40),
@@ -240,26 +263,26 @@ class _LoginScreen extends State<LoginScreen> {
                             height: SizeConfig.screenHeight * 0.08,
                             width: SizeConfig.screenWidth * 0.75,
                             child: TextFormField(
-                              keyboardType: TextInputType.number,
-                              inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.allow(
-                                    RegExp(r'[0-9]')),
-                              ],
+                              // keyboardType: TextInputType.number,
+                              // inputFormatters: <TextInputFormatter>[
+                              //   FilteringTextInputFormatter.allow(
+                              //       RegExp(r'[0-9]')),
+                              // ],
                               controller: emailController,
-                              maxLength: 8,
-                              buildCounter: (
-                                BuildContext context, {
-                                required int currentLength,
-                                int? maxLength,
-                                required bool isFocused,
-                              }) =>
-                                  null,
+                              // maxLength: 8,
+                              // buildCounter: (
+                              //   BuildContext context, {
+                              //   required int currentLength,
+                              //   int? maxLength,
+                              //   required bool isFocused,
+                              // }) =>
+                              //     null,
                               decoration: InputDecoration(
-                                hintText: 'Phone number',
+                                hintText: 'Email address',
                                 hintStyle: TextStyle(
                                   fontSize: SizeConfig.defaultSize * 1.3,
                                 ),
-                                labelText: 'Your phone number',
+                                labelText: 'Your email address',
                                 labelStyle: TextStyle(
                                   fontSize: SizeConfig.defaultSize * 1.6,
                                 ),
@@ -322,7 +345,7 @@ class _LoginScreen extends State<LoginScreen> {
                                 ),
                               ),
                               child: Text(
-                                "Sign in",
+                                "Login",
                                 style: TextStyle(
                                   fontSize: SizeConfig.defaultSize * 1.8,
                                 ),

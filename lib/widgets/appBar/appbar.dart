@@ -1,6 +1,6 @@
 import 'package:aeroday_2021/config/responsive_size.dart';
 import 'package:aeroday_2021/constants/app_constants.dart';
-import 'package:aeroday_2021/screens/signup_screen/signup_screen.dart';
+import 'package:aeroday_2021/screens/login_screen/login_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -61,7 +61,7 @@ class _AppBar extends State<AppBarCustom> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => SignUpScreen(
+                      builder: (context) => LoginScreen(
                         noRedirect: false,
                       ),
                     ),

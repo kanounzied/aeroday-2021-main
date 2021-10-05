@@ -5,7 +5,6 @@ import 'package:aeroday_2021/screens/home_screen/home.dart';
 import 'package:aeroday_2021/screens/loading_screen/loading_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/services.dart';
 
 import '../login_screen/login_screen.dart';
 
@@ -26,8 +25,6 @@ class _SignUpScreen extends State<SignUpScreen> {
   final passController = TextEditingController();
   final codeController = TextEditingController();
   bool signupDisabled = false;
-
-  BuildContext? signUpContext;
 
   final bool noRedirect;
   _SignUpScreen({this.noRedirect = false});
@@ -61,10 +58,10 @@ class _SignUpScreen extends State<SignUpScreen> {
     }
   }
 
-  bool validateNumber(String number) {
-    number = number.replaceAll(' ', '');
-    return RegExp("[0-9]").hasMatch(number) && number.length == 8;
-  }
+  // bool validateNumber(String number) {
+  //   number = number.replaceAll(' ', '');
+  //   return RegExp("[0-9]").hasMatch(number) && number.length == 8;
+  // }
 
   void toggleSignupButton(bool state) {
     // True : active
@@ -83,7 +80,6 @@ class _SignUpScreen extends State<SignUpScreen> {
 
     bool check = await hasNetwork();
     if (!check) {
-      //print("net");
       UsualFunctions.showErrorDialog(
         context: context,
         height: SizeConfig.screenHeight * 0.13,
@@ -95,77 +91,17 @@ class _SignUpScreen extends State<SignUpScreen> {
       return;
     }
 
-    if (!validateNumber(emailController.text)) {
+    if (!UsualFunctions.validateEmail(emailController.text)) {
       UsualFunctions.showErrorDialog(
         context: context,
         height: SizeConfig.screenHeight * 0.16,
         title: "Sign up error",
-        error: "You've used an invalid phone number.",
+        error: "You've used an invalid email address.",
       );
-      //print("num invalid");
 
       toggleSignupButton(true);
       return;
     }
-
-    List<String> l;
-    try {
-      // Verify phone number + password
-      l = await FirebaseAuth.instance
-          .fetchSignInMethodsForEmail(emailController.text + "@gmail.com");
-      //print("hell");
-      if (l.length != 0) {
-        UsualFunctions.showErrorDialog(
-          context: context,
-          height: SizeConfig.screenHeight * 0.13,
-          title: "Sign up error",
-          error: "Phone number is already registered.",
-        );
-
-        //print("Exists");
-        toggleSignupButton(true);
-        return;
-      }
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'network-request-failed') {
-        //print("network error");
-        UsualFunctions.showErrorDialog(
-          context: context,
-          height: SizeConfig.screenHeight * 0.13,
-          title: "Sign up error",
-          error: "Verify your network access.",
-        );
-
-        toggleSignupButton(true);
-        return;
-      }
-
-      UsualFunctions.showErrorDialog(
-        context: context,
-        height: SizeConfig.screenHeight * 0.15,
-        title: "Sign up error",
-        error: "UNKNOWN: " + e.code,
-      );
-
-      //print("firebase error");
-      //print(e.code);
-      toggleSignupButton(true);
-      return;
-    } catch (e) {
-      UsualFunctions.showErrorDialog(
-        context: context,
-        height: SizeConfig.screenHeight * 0.15,
-        title: "Sign up error",
-        error: "UNKNOWN: " + e.toString(),
-      );
-      //print("ERROR: ");
-      //print(e);
-
-      toggleSignupButton(true);
-      return;
-    }
-
-    //print("hi");
 
     if (!RegExp("(?=.*[0-9a-zA-Z]).{6,}").hasMatch(passController.text)) {
       UsualFunctions.showErrorDialog(
@@ -180,217 +116,46 @@ class _SignUpScreen extends State<SignUpScreen> {
       return;
     }
 
-    FirebaseAuth auth = FirebaseAuth.instance;
     try {
-      await auth.verifyPhoneNumber(
-        phoneNumber: '+216 ' + emailController.text,
-        verificationCompleted: (PhoneAuthCredential credential) async {
-          //print("auto verif");
-          // Delete phone number account
-          //await FirebaseAuth.instance.currentUser?.delete();
-
-          // Login/Signup
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-            email: emailController.text + "@gmail.com",
-            password: passController.text,
-          );
-
-          await FirebaseAuth.instance.currentUser
-              ?.linkWithCredential(credential);
-
-          await FirebaseFirestore.instance
-              .collection("users")
-              .doc(FirebaseAuth.instance.currentUser?.uid)
-              .set({
-            'hasVoted': false,
-            'voteID_Airshow': '',
-            'voteID_Videographie par drone': '',
-          });
-
-          toggleSignupButton(true);
-
-          // Redirect to home
-          Navigator.of(signUpContext!).pop(); // Close signup_screen
-          Navigator.pop(context);
-
-          if (!this.noRedirect)
-            Navigator.push(
-                // Open HomeScreen
-                context,
-                MaterialPageRoute(builder: (context) => HomeScreen()));
-        },
-        verificationFailed: (FirebaseAuthException e) {
-          toggleSignupButton(true);
-          //print("error verif failed");
-          //print(e.code);
-
-          if (e.code == 'invalid-phone-number') {
-            //print('The provided phone number is not valid.');
-            UsualFunctions.showErrorDialog(
-              context: context,
-              height: SizeConfig.screenHeight * 0.17,
-              title: "Sign up error",
-              error: "You've used an invalid phone number.",
-            );
-          } else {
-            //print("error");
-            //print(e.code);
-
-            UsualFunctions.showErrorDialog(
-              context: context,
-              height: SizeConfig.screenHeight * 0.17,
-              title: "Sign up error",
-              error: "UNKNOWN: " + e.code,
-            );
-          }
-        },
-        codeSent: (String verificationId, int? resendToken) async {
-          //print("codesent");
-          // Ask to write 6 digits code
-          toggleSignupButton(true);
-          showDialog(
-            barrierDismissible: false,
-            context: context,
-            builder: (BuildContext contextDia) {
-              signUpContext = contextDia;
-              return new AlertDialog(
-                  title: Text("Verification"),
-                  content: SizedBox(
-                    height: 195,
-                    child: Column(
-                      children: <Widget>[
-                        Text("Saisir le code composé de 6 chiffre."),
-                        Container(
-                          width: 150,
-                          margin: EdgeInsets.only(top: 20),
-                          child: TextFormField(
-                            maxLength: 6,
-                            keyboardType: TextInputType.number,
-                            inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.allow(
-                                  RegExp(r'[0-9]')),
-                            ],
-                            controller: codeController,
-                            decoration: InputDecoration(
-                              hintText: 'Code',
-                              labelText: 'Code',
-                              contentPadding: new EdgeInsets.symmetric(
-                                  vertical: 25.0, horizontal: 15.0),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(32.0)),
-                            ),
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(top: 15),
-                              child: ElevatedButton(
-                                onPressed: () async {
-                                  toggleSignupButton(false);
-                                  //print("tap");
-
-                                  if (codeController.text.length < 6) {
-                                    UsualFunctions.showErrorDialog(
-                                      context: context,
-                                      height: SizeConfig.screenHeight * 0.17,
-                                      title: "Sign up error",
-                                      error: "Invalid code.",
-                                    );
-                                    toggleSignupButton(true);
-                                    return;
-                                  }
-
-                                  try {
-                                    // Create a PhoneAuthCredential with the code
-                                    PhoneAuthCredential credential =
-                                        PhoneAuthProvider.credential(
-                                            verificationId: verificationId,
-                                            smsCode: codeController.text);
-
-                                    await FirebaseAuth.instance
-                                        .createUserWithEmailAndPassword(
-                                      email:
-                                          emailController.text + "@gmail.com",
-                                      password: passController.text,
-                                    );
-
-                                    await FirebaseAuth.instance.currentUser
-                                        ?.linkWithCredential(credential);
-                                  } on FirebaseAuthException catch (e) {
-                                    // Delete email account (invalid code)
-                                    await FirebaseAuth.instance.currentUser
-                                        ?.delete();
-                                    if (e.code == "invalid-verification-code") {
-                                      UsualFunctions.showErrorDialog(
-                                        context: context,
-                                        height: SizeConfig.screenHeight * 0.17,
-                                        title: "Sign up error",
-                                        error: "Invalid code.",
-                                      );
-
-                                      //print("Invalid code");
-                                      toggleSignupButton(true);
-                                      return;
-                                    } else {
-                                      //print("unknown err");
-                                      //print(e);
-
-                                      UsualFunctions.showErrorDialog(
-                                        context: context,
-                                        height: SizeConfig.screenHeight * 0.17,
-                                        title: "Sign up error",
-                                        error: "UNKNOWN: " + e.toString(),
-                                      );
-
-                                      toggleSignupButton(true);
-                                      return;
-                                    }
-                                  }
-
-                                  // Store user in db
-                                  FirebaseFirestore.instance
-                                      .collection("users")
-                                      .doc(FirebaseAuth
-                                          .instance.currentUser?.uid)
-                                      .set({
-                                    'hasVoted': false,
-                                    'voteID_Airshow': '',
-                                    'voteID_Videographie par drone': '',
-                                  });
-
-                                  toggleSignupButton(true);
-
-                                  // Redirect to login
-                                  Navigator.pop(contextDia); // Close dialog
-                                  //print(this.noRedirect);
-                                  Navigator.pop(context); // Close signup_screen
-                                  if (!this.noRedirect)
-                                    Navigator.push(
-                                        // Open HomeScreen
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                HomeScreen()));
-                                },
-                                child: Text("Ok"),
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  ));
-            },
-          );
-        },
-        codeAutoRetrievalTimeout: (String verificationId) {},
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text,
+        password: passController.text,
       );
-      //print('sent');
 
-      //await FirebaseAuth.instance.signOut();
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(FirebaseAuth.instance.currentUser?.uid)
+          .set({
+        'hasVoted': false,
+        'voteID_Airshow': '',
+        'voteID_Videographie par drone': '',
+        'emailValidated': false,
+      });
+
+      FirebaseAuth.instance.currentUser?.sendEmailVerification();
+      UsualFunctions.showErrorDialog(
+        context: context,
+        height: SizeConfig.screenHeight * 0.13,
+        title: "Sign up Completed",
+        error: "Check your email for a verification link.",
+      );
+      await FirebaseAuth.instance.signOut();
+
+      toggleSignupButton(true);
+
+      // Redirect to home
+      Navigator.pop(context);
+
+      //if (!this.noRedirect)
+      Navigator.push(
+          // Open HomeScreen
+          context,
+          MaterialPageRoute(
+              builder: (context) => LoginScreen(noRedirect: this.noRedirect)));
     } on FirebaseAuthException catch (e) {
+      // Error handling
+      toggleSignupButton(true);
+
       if (e.code == 'too-many-requests') {
         //print("network error");
         UsualFunctions.showErrorDialog(
@@ -400,21 +165,43 @@ class _SignUpScreen extends State<SignUpScreen> {
           error: "Too many invalid signin attemps, try again in few minutes.",
         );
 
-        toggleSignupButton(true);
         return;
       }
+      if (e.code == 'email-already-in-use') {
+        UsualFunctions.showErrorDialog(
+          context: context,
+          height: SizeConfig.screenHeight * 0.13,
+          title: "Sign up error",
+          error: "Email address is already registered.",
+        );
+        return;
+      }
+      if (e.code == 'network-request-failed') {
+        UsualFunctions.showErrorDialog(
+          context: context,
+          height: SizeConfig.screenHeight * 0.13,
+          title: "Sign up error",
+          error: "Verify your network access.",
+        );
+        return;
+      }
+      if (e.code == 'invalid-email') {
+        UsualFunctions.showErrorDialog(
+          context: context,
+          height: SizeConfig.screenHeight * 0.16,
+          title: "Sign up error",
+          error: "You've used an invalid email address.",
+        );
+        return;
+      }
+
       UsualFunctions.showErrorDialog(
         context: context,
         height: SizeConfig.screenHeight * 0.13,
         title: "Sign up error",
         error: "UNKNOWN: " + e.code,
       );
-      //print(e);
-      toggleSignupButton(true);
     }
-
-    //toggleSignupButton(true);
-    //print("signup");
     return null;
   }
 
@@ -478,26 +265,26 @@ class _SignUpScreen extends State<SignUpScreen> {
                             height: SizeConfig.screenHeight * 0.08,
                             width: SizeConfig.screenWidth * 0.75,
                             child: TextFormField(
-                              keyboardType: TextInputType.number,
-                              inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.allow(
-                                    RegExp(r'[0-9]')),
-                              ],
+                              // keyboardType: TextInputType.number,
+                              // inputFormatters: <TextInputFormatter>[
+                              //   FilteringTextInputFormatter.allow(
+                              //       RegExp(r'[0-9]')),
+                              // ],
                               controller: emailController,
-                              maxLength: 8,
-                              buildCounter: (
-                                BuildContext context, {
-                                required int currentLength,
-                                int? maxLength,
-                                required bool isFocused,
-                              }) =>
-                                  null,
+                              // maxLength: 8,
+                              // buildCounter: (
+                              //   BuildContext context, {
+                              //   required int currentLength,
+                              //   int? maxLength,
+                              //   required bool isFocused,
+                              // }) =>
+                              //     null,
                               decoration: InputDecoration(
-                                hintText: 'Phone number',
+                                hintText: 'Email address',
                                 hintStyle: TextStyle(
                                   fontSize: SizeConfig.defaultSize * 1.3,
                                 ),
-                                labelText: 'Your phone number',
+                                labelText: 'Your email address',
                                 labelStyle: TextStyle(
                                   fontSize: SizeConfig.defaultSize * 1.6,
                                 ),

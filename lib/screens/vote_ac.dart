@@ -26,7 +26,7 @@ class _VoteACState extends State<VoteAC> {
 
   Future<Null> getContestantDetails() async {
     Map<String, dynamic> response;
-    dynamic collection = await FirebaseFirestore.instance
+    await FirebaseFirestore.instance
         .collection('contestant_' + EventStats.EventList[0])
         .get()
         .then((QuerySnapshot querySnapshot) {
@@ -42,6 +42,7 @@ class _VoteACState extends State<VoteAC> {
   @override
   void initState() {
     super.initState();
+    print("init");
 
     getContestantDetails();
   }
@@ -49,6 +50,7 @@ class _VoteACState extends State<VoteAC> {
   double dynamicHeight = 0;
   @override
   Widget build(BuildContext context) {
+    print("build");
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: dark,
@@ -77,8 +79,8 @@ class _VoteACState extends State<VoteAC> {
                         SizeConfig.screenWidth / SizeConfig.screenHeight < 0.75
                             ? SizeConfig.screenHeight -
                                 (120 * 0.1 * SizeConfig.defaultSize +
-                                    5.0 * SizeConfig.defaultSize +
-                                    19.9 * SizeConfig.defaultSize +
+                                    SizeConfig.defaultSize +
+                                    18 * SizeConfig.defaultSize +
                                     SizeConfig.defaultSize * 4.2) -
                                 dynamicHeight
                             : SizeConfig.screenHeight -

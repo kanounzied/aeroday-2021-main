@@ -11,29 +11,19 @@ class PwdDialog extends StatefulWidget {
   PwdDialog(this.loginNumber);
 
   @override
-  _PwdDialogState createState() => _PwdDialogState(this.loginNumber);
+  _PwdDialogState createState() => _PwdDialogState();
 }
 
 class _PwdDialogState extends State<PwdDialog> {
-  String? passErrorMsg, confirmPassErrorMsg, verifCodeError;
-
-  String verifId = '';
-  bool codeInputEnabled = false;
+  String? verifCodeError;
 
   int nbStep = 0;
 
-  TextEditingController pwd1 = new TextEditingController();
-  TextEditingController pwd2 = new TextEditingController();
   TextEditingController codeController = new TextEditingController();
 
-  int attempts = 0;
-  static const int MAX_ATTEMPTS = 4;
-
-  _PwdDialogState(loginNumber) {
-    codeController.text = loginNumber;
-  }
-
   Widget contentBox(context) {
+    codeController.text = widget.loginNumber;
+
     return Container(
       padding: EdgeInsets.all(SizeConfig.defaultSize * 2.5),
       decoration: BoxDecoration(
@@ -50,11 +40,10 @@ class _PwdDialogState extends State<PwdDialog> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            CercleStep(0, true),
-            CercleStep(1, nbStep > 0),
-            CercleStep(2, nbStep > 1),
-            CercleStep(3, nbStep == 3),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+            CercleStep(1, true),
+            CercleStep(2, nbStep >= 1),
+            CercleStep(3, nbStep == 2),
           ]),
           SizedBox(
             height: SizeConfig.defaultSize,
@@ -69,146 +58,47 @@ class _PwdDialogState extends State<PwdDialog> {
             height: SizeConfig.defaultSize * 1.5,
           ),
           Text(
-            nbStep == 1 || nbStep == 0
-                ? (nbStep == 1
-                    ? "We sent you an SMS with a verification code. \n Please insert that code."
-                    : "Please insert your phone number.")
-                : (nbStep == 2
-                    ? "Insert your new password"
-                    : "All set! Now go enjoy Aeroday 2021!"),
+            nbStep == 0
+                ? "Please insert your email address."
+                : nbStep == 1
+                    ? "We sent you an email with a verification link. \n Please open that link in order to change your password."
+                    : "All set! Now go enjoy Aeroday 2021!",
             style: TextStyle(fontSize: SizeConfig.defaultSize * 1.4),
             textAlign: TextAlign.center,
           ),
           SizedBox(
             height: SizeConfig.defaultSize * 2.2,
           ),
-          nbStep == 1 || nbStep == 0
+          nbStep == 0
               ? Container(
                   height: SizeConfig.screenHeight * 0.09,
                   width: SizeConfig.screenWidth * 0.75,
                   child: TextFormField(
-                    keyboardType: TextInputType.number,
                     cursorColor: Color(0xffd95252),
-                    maxLength: nbStep == 0 ? 8 : 6,
+                    maxLength: nbStep == 0 ? 60 : 6,
                     controller: codeController,
                     onChanged: (value) async {
-                      if (nbStep == 0) {
+                      if (verifCodeError != null) {
                         setState(() {
                           verifCodeError = null;
                         });
-                      } else if (nbStep == 1 &&
-                          value.length <= 5 &&
-                          verifCodeError != null) {
-                        setState(() {
-                          verifCodeError = null;
-                        });
-                      } else if (nbStep == 1 &&
-                          value.length == 6 &&
-                          verifCodeError == null) {
-                        if (await handleCodeVerificationAndSignin())
-                          setState(() {
-                            nbStep = 2;
-                          });
                       }
                     },
-                    buildCounter: (
-                      BuildContext context, {
-                      required int currentLength,
-                      int? maxLength,
-                      required bool isFocused,
-                    }) =>
-                        null,
                     decoration: InputDecoration(
                       contentPadding: new EdgeInsets.symmetric(
                           vertical: 30.0, horizontal: 15.0),
-                      labelText: nbStep == 1
-                          ? "Verification code"
-                          : "Your phone number",
+                      labelText: "Your email address",
                       labelStyle: TextStyle(
                         fontSize: SizeConfig.defaultSize * 1.6,
                       ),
-                      enabled: nbStep == 1 ? codeInputEnabled : true,
+                      enabled: true,
                       errorText: verifCodeError,
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(32.0)),
                     ),
                   ),
                 )
-              : (nbStep == 2
-                  ? Column(
-                      children: [
-                        Container(
-                          height: SizeConfig.screenHeight * 0.09,
-                          width: SizeConfig.screenWidth * 0.75,
-                          child: TextFormField(
-                            obscureText: true,
-                            controller: pwd1,
-                            onChanged: (text) {
-                              if (text != pwd2.text) {
-                                setState(() {
-                                  confirmPassErrorMsg = 'Password mismatch';
-                                });
-                              } else {
-                                setState(() {
-                                  confirmPassErrorMsg = null;
-                                });
-                              }
-                            },
-                            cursorColor: Color(0xffd95252),
-                            decoration: InputDecoration(
-                              //hintText: "Enter password",
-                              contentPadding: new EdgeInsets.symmetric(
-                                  vertical: 2 * SizeConfig.defaultSize,
-                                  horizontal: 15.0),
-                              labelText: 'Your password',
-                              labelStyle: TextStyle(
-                                fontSize: SizeConfig.defaultSize * 1.6,
-                              ),
-                              errorText: passErrorMsg,
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(32.0)),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: SizeConfig.defaultSize * .8,
-                        ),
-                        Container(
-                          height: SizeConfig.screenHeight * 0.09,
-                          width: SizeConfig.screenWidth * 0.75,
-                          child: TextFormField(
-                            controller: pwd2,
-                            obscureText: true,
-                            cursorColor: Color(0xffd95252),
-                            onChanged: (text) {
-                              if (text != pwd1.text) {
-                                setState(() {
-                                  confirmPassErrorMsg = 'Password mismatch';
-                                });
-                              } else {
-                                setState(() {
-                                  confirmPassErrorMsg = null;
-                                });
-                              }
-                            },
-                            decoration: InputDecoration(
-                              contentPadding: new EdgeInsets.symmetric(
-                                  vertical: 2 * SizeConfig.defaultSize,
-                                  horizontal: 15.0),
-                              //hintText: 'Confirm password',
-                              labelText: 'Confirm your password',
-                              labelStyle: TextStyle(
-                                fontSize: SizeConfig.defaultSize * 1.6,
-                              ),
-                              errorText: confirmPassErrorMsg,
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(32.0)),
-                            ),
-                          ),
-                        )
-                      ],
-                    )
-                  : Container()),
+              : Container(),
           SizedBox(
             height: SizeConfig.defaultSize * .85,
           ),
@@ -226,159 +116,85 @@ class _PwdDialogState extends State<PwdDialog> {
                   },
                 ),
               ),
-              onPressed: nbStep == 1 && verifId == ''
-                  ? null
-                  : () async {
-                      if (nbStep < 3) {
-                        switch (nbStep) {
-                          case 0:
-                            {
-                              if (!validateNumber(codeController.text)) {
-                                setState(() {
-                                  verifCodeError = "Invalid phone number";
-                                });
-                                return;
-                              }
-                              List<String> l = [];
-                              try {
-                                l = await FirebaseAuth.instance
-                                    .fetchSignInMethodsForEmail(
-                                        codeController.text + "@gmail.com");
-                                //print("hh");
-                              } on FirebaseAuthException catch (e) {
-                                if (e.code == 'network-request-failed') {
-                                  UsualFunctions.showErrorDialog(
-                                    context: context,
-                                    height: SizeConfig.screenHeight * 0.13,
-                                    title: "Reset password error",
-                                    error: "Verify your network access.",
-                                  );
-                                  return;
-                                } else {
-                                  UsualFunctions.showErrorDialog(
-                                    context: context,
-                                    height: SizeConfig.screenHeight * 0.13,
-                                    title: "Reset password error",
-                                    error: "UNKNOWN: " + e.code,
-                                  );
-                                  return;
-                                }
-                              } catch (e) {
-                                UsualFunctions.showErrorDialog(
-                                  context: context,
-                                  height: SizeConfig.screenHeight * 0.13,
-                                  title: "Reset password error",
-                                  error: "UNKNOWN: " + e.toString(),
-                                );
-                                return;
-                              }
-                              //print("here");
-
-                              if (l.length == 0) {
-                                setState(() {
-                                  verifCodeError = "Phone number isn't used";
-                                });
-                                return;
-                              }
-                              try {
-                                await FirebaseAuth.instance.verifyPhoneNumber(
-                                  phoneNumber: '+216' + codeController.text,
-                                  codeSent: (String verificationId,
-                                      int? resendingToken) {
-                                    setState(() {
-                                      verifId = verificationId;
-                                      codeInputEnabled = true;
-                                    });
-                                  },
-                                  verificationCompleted: (PhoneAuthCredential
-                                      phoneAuthCredential) async {
-                                    setState(() {
-                                      nbStep = 2;
-                                    });
-                                    await FirebaseAuth.instance
-                                        .signInWithCredential(
-                                      phoneAuthCredential,
-                                    );
-                                  },
-                                  verificationFailed:
-                                      (FirebaseAuthException e) {
-                                    UsualFunctions.showErrorDialog(
-                                      context: context,
-                                      height: SizeConfig.screenHeight * 0.15,
-                                      title: "Verification failed",
-                                      error: "UNKNOWN: " + e.code,
-                                    );
-                                  },
-                                  codeAutoRetrievalTimeout:
-                                      (String verificationId) {},
-                                );
-                              } on FirebaseAuthException catch (e) {
-                                UsualFunctions.showErrorDialog(
-                                  context: context,
-                                  height: SizeConfig.screenHeight * 0.13,
-                                  title: "Reset password error",
-                                  error: "UNKNOWN: " + e.code,
-                                );
-                                return;
-                              } catch (e) {
-                                UsualFunctions.showErrorDialog(
-                                  context: context,
-                                  height: SizeConfig.screenHeight * 0.13,
-                                  title: "Reset password error",
-                                  error: "UNKNOWN: " + e.toString(),
-                                );
-                                return;
-                              }
-                              //print("here2");
-
-                              codeController.clear();
-                              setState(() {
-                                nbStep = 1;
-                              });
-                              break;
-                            }
-                          case 1:
-                            {
-                              if (await handleCodeVerificationAndSignin())
-                                setState(() {
-                                  nbStep = 2;
-                                });
-                              break;
-                            }
-                          case 2:
-                            {
-                              if (pwd1.text != pwd2.text) {
-                                return;
-                              }
-                              if (!RegExp("(?=.*[0-9a-zA-Z]).{6,}")
-                                  .hasMatch(pwd1.text)) {
-                                setState(() {
-                                  passErrorMsg =
-                                      "Weak password - At least 6 characters";
-                                });
-                                return;
-                              }
-
-                              await FirebaseAuth.instance.currentUser
-                                  ?.updatePassword(pwd1.text);
-
-                              setState(() {
-                                nbStep = 3;
-                              });
-
-                              break;
-                            }
+              onPressed: () async {
+                if (nbStep <= 1) {
+                  switch (nbStep) {
+                    case 0:
+                      {
+                        if (!UsualFunctions.validateEmail(
+                            codeController.text)) {
+                          setState(() {
+                            verifCodeError = "Invalid email address";
+                          });
+                          return;
                         }
-                      } else {
-                        Navigator.pop(context);
-                        setState(() {});
+
+                        try {
+                          print("sent");
+                          FirebaseAuth.instance.sendPasswordResetEmail(
+                            email: codeController.text,
+                          );
+                        } on FirebaseAuthException catch (e) {
+                          if (e.code == 'user-not-found') {
+                            setState(() {
+                              verifCodeError = "Email address isn't used.";
+                            });
+                            return;
+                          }
+                          if (e.code == 'invalid-email') {
+                            setState(() {
+                              verifCodeError = "Invalid email address.";
+                            });
+                            return;
+                          }
+                          if (e.code == 'network-request-failed') {
+                            UsualFunctions.showErrorDialog(
+                              context: context,
+                              height: SizeConfig.screenHeight * 0.13,
+                              title: "Reset password error",
+                              error: "Verify your network access.",
+                            );
+                            return;
+                          }
+                          UsualFunctions.showErrorDialog(
+                            context: context,
+                            height: SizeConfig.screenHeight * 0.13,
+                            title: "Reset password error",
+                            error: "UNKNOWN: " + e.code,
+                          );
+                          return;
+                        } catch (e) {
+                          UsualFunctions.showErrorDialog(
+                            context: context,
+                            height: SizeConfig.screenHeight * 0.13,
+                            title: "Reset password error",
+                            error: "UNKNOWN: " + e.toString(),
+                          );
+                          return;
+                        }
+
+                        codeController.clear();
+                        setState(() {
+                          nbStep = 1;
+                        });
+                        break;
                       }
-                      Focus.of(context).unfocus();
-                    },
+                    case 1:
+                      {
+                        setState(() {
+                          nbStep = 2;
+                        });
+                        break;
+                      }
+                  }
+                } else {
+                  Navigator.pop(context);
+                }
+              },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  nbStep == 3 ? "Let's go!" : "Next",
+                  nbStep == 2 ? "Let's go!" : "Next",
                   style: TextStyle(fontSize: SizeConfig.defaultSize * 1.8),
                 ),
               ),
@@ -399,84 +215,5 @@ class _PwdDialogState extends State<PwdDialog> {
       backgroundColor: Colors.transparent,
       child: contentBox(context),
     );
-  }
-
-  bool validateNumber(String number) {
-    number = number.replaceAll(' ', '');
-    return RegExp("[0-9]").hasMatch(number) && number.length == 8;
-  }
-
-  Future<bool> handleCodeVerificationAndSignin() async {
-    // Disable input field while verifying
-    setState(() {
-      codeInputEnabled = false;
-    });
-
-    if (codeController.text.length < 6) {
-      setState(() {
-        verifCodeError = "Invalid code.";
-      });
-      setState(() {
-        codeInputEnabled = true;
-      });
-      return false;
-    }
-
-    attempts++;
-    if (attempts > MAX_ATTEMPTS) {
-      setState(() {
-        verifCodeError = "Max attempts exceeded!";
-      });
-      // Keep input field disabled
-      return false;
-    }
-
-    try {
-      PhoneAuthCredential credential = PhoneAuthProvider.credential(
-        verificationId: verifId,
-        smsCode: codeController.text,
-      );
-      await FirebaseAuth.instance.signInWithCredential(credential);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == "invalid-verification-code") {
-        setState(() {
-          verifCodeError = "Invalid code - Attempt " +
-              attempts.toString() +
-              "/" +
-              MAX_ATTEMPTS.toString();
-        });
-        //print("Invalid code");
-        setState(() {
-          codeInputEnabled = true;
-        });
-        return false;
-      } else {
-        UsualFunctions.showErrorDialog(
-          context: context,
-          height: SizeConfig.screenHeight * 0.15,
-          title: "Reset password error",
-          error: "UNKNOWN: " + e.code,
-        );
-        setState(() {
-          codeInputEnabled = true;
-        });
-        return false;
-      }
-    } catch (e) {
-      UsualFunctions.showErrorDialog(
-        context: context,
-        height: SizeConfig.screenHeight * 0.13,
-        title: "Reset password error",
-        error: "UNKNOWN: " + e.toString(),
-      );
-      setState(() {
-        codeInputEnabled = true;
-      });
-      return false;
-    }
-    setState(() {
-      codeInputEnabled = true;
-    });
-    return true;
   }
 }
