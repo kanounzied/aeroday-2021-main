@@ -1,8 +1,8 @@
-import 'package:aeroday_2021/screens/home_screen/home.dart';
-import 'package:aeroday_2021/screens/leaderboard_screen/leaderboard.dart';
-import 'package:aeroday_2021/screens/loading_screen/loading_screen.dart';
-import 'package:aeroday_2021/screens/vote_ac.dart';
-import 'package:aeroday_2021/screens/vote_vpd.dart';
+import 'package:aeroday2021/screens/home_screen/home.dart';
+import 'package:aeroday2021/screens/leaderboard_screen/leaderboard.dart';
+import 'package:aeroday2021/screens/loading_screen/loading_screen.dart';
+import 'package:aeroday2021/screens/vote_ac.dart';
+import 'package:aeroday2021/screens/vote_vpd.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
