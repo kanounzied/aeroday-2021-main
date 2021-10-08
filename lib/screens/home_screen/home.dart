@@ -1,6 +1,6 @@
-import 'package:aeroday_2021/constants/app_constants.dart';
-import 'package:aeroday_2021/widgets/appBar/appbar.dart';
-import 'package:aeroday_2021/widgets/sidebar/sidebar.dart';
+import 'package:aeroday2021/constants/app_constants.dart';
+import 'package:aeroday2021/widgets/appBar/appbar.dart';
+import 'package:aeroday2021/widgets/sidebar/sidebar.dart';
 import 'package:flutter/material.dart';
 
 import '../../widgets/upcomings_cercle/circle.dart';

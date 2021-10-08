@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:aeroday_2021/config/responsive_size.dart';
+import 'package:aeroday2021/config/responsive_size.dart';
 
 void showLockedMessage({context, height, title, content}) {
   // TODO : design

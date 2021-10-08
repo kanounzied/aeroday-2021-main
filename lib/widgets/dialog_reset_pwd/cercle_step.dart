@@ -1,4 +1,4 @@
-import 'package:aeroday_2021/config/responsive_size.dart';
+import 'package:aeroday2021/config/responsive_size.dart';
 import 'package:flutter/material.dart';
 
 class CercleStep extends StatelessWidget {

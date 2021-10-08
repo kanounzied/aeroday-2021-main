@@ -1,4 +1,4 @@
-# aeroday_2021
+# aeroday2021
 
 Aeroday 2021's mobile app.
 

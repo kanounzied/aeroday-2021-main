@@ -1,6 +1,6 @@
-import 'package:aeroday_2021/config/responsive_size.dart';
-import 'package:aeroday_2021/constants/functions.dart';
-import 'package:aeroday_2021/widgets/dialog_reset_pwd/cercle_step.dart';
+import 'package:aeroday2021/config/responsive_size.dart';
+import 'package:aeroday2021/constants/functions.dart';
+import 'package:aeroday2021/widgets/dialog_reset_pwd/cercle_step.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';

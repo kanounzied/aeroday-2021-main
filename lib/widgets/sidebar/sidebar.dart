@@ -1,10 +1,10 @@
-import 'package:aeroday_2021/config/responsive_size.dart';
-import 'package:aeroday_2021/constants/eventInfo.dart';
-import 'package:aeroday_2021/services/showLockedMessage.dart';
+import 'package:aeroday2021/config/responsive_size.dart';
+import 'package:aeroday2021/constants/eventInfo.dart';
+import 'package:aeroday2021/services/showLockedMessage.dart';
 import 'package:flutter/material.dart';
-import 'package:aeroday_2021/constants/app_constants.dart';
-import 'package:aeroday_2021/widgets/sidebar/button.dart';
-import 'package:aeroday_2021/widgets/sidebar/bottom_part.dart';
+import 'package:aeroday2021/constants/app_constants.dart';
+import 'package:aeroday2021/widgets/sidebar/button.dart';
+import 'package:aeroday2021/widgets/sidebar/bottom_part.dart';
 
 int userId = 45416;
 

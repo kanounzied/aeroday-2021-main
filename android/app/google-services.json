@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:875669636989:android:06f4c9d6e847453f176e14",
         "android_client_info": {
-          "package_name": "com.example.aeroday_2021"
+          "package_name": "com.example.aeroday2021"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "875669636989-o4u5ajmrotru4avea7ooifrka4gkmmbv.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.aeroday_2021",
+            "package_name": "com.example.aeroday2021",
             "certificate_hash": "4abd9cdf907a202679aafa1e26786ea8d845b0cb"
           }
         },

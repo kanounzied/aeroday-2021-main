@@ -1,13 +1,13 @@
-import 'package:aeroday_2021/config/responsive_size.dart';
-import 'package:aeroday_2021/constants/eventInfo.dart';
-import 'package:aeroday_2021/services/contestant_info.dart';
-import 'package:aeroday_2021/widgets/appBar/appbar.dart';
-import 'package:aeroday_2021/widgets/vote_card.dart';
+import 'package:aeroday2021/config/responsive_size.dart';
+import 'package:aeroday2021/constants/eventInfo.dart';
+import 'package:aeroday2021/services/contestant_info.dart';
+import 'package:aeroday2021/widgets/appBar/appbar.dart';
+import 'package:aeroday2021/widgets/vote_card.dart';
 import 'package:flutter/material.dart';
-import 'package:aeroday_2021/constants/app_constants.dart';
-import 'package:aeroday_2021/widgets/search_bar.dart';
-import 'package:aeroday_2021/widgets/sidebar/sidebar.dart';
-import 'package:aeroday_2021/widgets/contestant_card.dart';
+import 'package:aeroday2021/constants/app_constants.dart';
+import 'package:aeroday2021/widgets/search_bar.dart';
+import 'package:aeroday2021/widgets/sidebar/sidebar.dart';
+import 'package:aeroday2021/widgets/contestant_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class VoteAC extends StatefulWidget {

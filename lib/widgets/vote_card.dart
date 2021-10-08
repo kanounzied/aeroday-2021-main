@@ -1,9 +1,9 @@
 import 'dart:math';
-import 'package:aeroday_2021/config/responsive_size.dart';
-import 'package:aeroday_2021/constants/colors_hex.dart';
-import 'package:aeroday_2021/constants/functions.dart';
-import 'package:aeroday_2021/screens/login_screen/login_screen.dart';
-import 'package:aeroday_2021/services/contestant_info.dart';
+import 'package:aeroday2021/config/responsive_size.dart';
+import 'package:aeroday2021/constants/colors_hex.dart';
+import 'package:aeroday2021/constants/functions.dart';
+import 'package:aeroday2021/screens/login_screen/login_screen.dart';
+import 'package:aeroday2021/services/contestant_info.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

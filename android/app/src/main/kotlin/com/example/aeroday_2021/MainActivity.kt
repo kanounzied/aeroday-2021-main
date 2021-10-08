@@ -1,4 +1,4 @@
-package com.example.aeroday_2021
+package com.example.aeroday2021
 
 import io.flutter.embedding.android.FlutterActivity
 

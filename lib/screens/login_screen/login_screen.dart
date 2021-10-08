@@ -1,16 +1,16 @@
 import 'dart:io';
 
-import 'package:aeroday_2021/constants/functions.dart';
-import 'package:aeroday_2021/screens/loading_screen/loading_screen.dart';
-import 'package:aeroday_2021/screens/signup_screen/signup_screen.dart';
+import 'package:aeroday2021/constants/functions.dart';
+import 'package:aeroday2021/screens/loading_screen/loading_screen.dart';
+import 'package:aeroday2021/screens/signup_screen/signup_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'package:aeroday_2021/screens/home_screen/home.dart';
-import 'package:aeroday_2021/widgets/dialog_reset_pwd/dialog_reset_pwd.dart';
+import 'package:aeroday2021/screens/home_screen/home.dart';
+import 'package:aeroday2021/widgets/dialog_reset_pwd/dialog_reset_pwd.dart';
 
-import 'package:aeroday_2021/config/responsive_size.dart';
+import 'package:aeroday2021/config/responsive_size.dart';
 
 class LoginScreen extends StatefulWidget {
   final bool noRedirect;

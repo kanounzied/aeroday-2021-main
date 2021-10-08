@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.aeroday_2021">
+    package="com.example.aeroday2021">
    <application
         android:label="Aeroday 2021"
         android:icon="@mipmap/ic_launcher">
