@@ -64,6 +64,7 @@ class _VoteACState extends State<VoteAC> {
                   AppBarCustom(
                     title: 'AIRSHOW',
                     c: c,
+                    noRedirect: true,
                   ),
                   SearchBar(
                     onSearchTextChanged: _onSearchTextChanged,

@@ -79,9 +79,6 @@ class _AppState extends State<MyApp> {
 
             EventStats.currentEvent = ds.get(FieldPath(['currentEvent']));
 
-            EventStats.vpdStats = 'vote';
-
-            //print(EventStats.airshowStats);
             setState(() {});
           });
 

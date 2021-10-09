@@ -8,6 +8,7 @@ class ContestantInfo {
   String membres;
   String chef;
   String etab;
+  String vidNum; // For VPD
 
   int votes;
   ContestantInfo({
@@ -17,6 +18,7 @@ class ContestantInfo {
     required this.membres,
     required this.id,
     required this.votes,
+    required this.vidNum,
   });
 
   //returns a ContestantInfo() object filled with data from the map r
@@ -29,6 +31,7 @@ class ContestantInfo {
       teamName: r['equipe'],
       id: id,
       votes: r['votes'],
+      vidNum: r['numVid'],
     );
   }
 }

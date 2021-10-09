@@ -68,6 +68,8 @@ class _LoginScreen extends State<LoginScreen> {
   void signupButtonCalled() async {
     toggleSignupButton(false);
 
+    emailController.text = emailController.text.trim();
+
     if (!UsualFunctions.validateEmail(emailController.text)) {
       UsualFunctions.showErrorDialog(
         context: context,

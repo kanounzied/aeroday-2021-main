@@ -28,6 +28,7 @@ class _VoteVPDState extends State<VoteVPD> {
     Map<String, dynamic> response;
     await FirebaseFirestore.instance
         .collection('contestant_' + EventStats.EventList[1])
+        .orderBy('numVid')
         .get()
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
@@ -62,6 +63,7 @@ class _VoteVPDState extends State<VoteVPD> {
                   AppBarCustom(
                     title: 'VID. PAR DRONE',
                     c: c,
+                    noRedirect: true,
                   ),
                   SearchBar(
                     onSearchTextChanged: _onSearchTextChanged,

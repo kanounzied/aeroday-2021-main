@@ -71,6 +71,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
               AppBarCustom(
                 title: 'LEADERBOARD',
                 c: c,
+                noRedirect: true,
               ),
               SizedBox(height: 1 * SizeConfig.defaultSize),
               _contestantsList.isEmpty ? buildTopThreeGray() : buildTopThree(),
