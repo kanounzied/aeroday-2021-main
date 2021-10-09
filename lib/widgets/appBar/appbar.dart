@@ -8,17 +8,21 @@ import 'package:firebase_auth/firebase_auth.dart';
 class AppBarCustom extends StatefulWidget {
   final String title;
   final BuildContext c;
-  AppBarCustom({required this.title, required this.c});
+  final bool noRedirect;
+  AppBarCustom(
+      {required this.title, required this.c, required this.noRedirect});
 
   @override
-  _AppBar createState() => _AppBar(title: this.title, c: this.c);
+  _AppBar createState() =>
+      _AppBar(title: this.title, c: this.c, noRedirect: this.noRedirect);
 }
 
 class _AppBar extends State<AppBarCustom> {
   String title;
   BuildContext c;
+  bool noRedirect;
 
-  _AppBar({required this.title, required this.c});
+  _AppBar({required this.title, required this.c, required this.noRedirect});
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +66,7 @@ class _AppBar extends State<AppBarCustom> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => LoginScreen(
-                        noRedirect: false,
+                        noRedirect: this.noRedirect,
                       ),
                     ),
                   );

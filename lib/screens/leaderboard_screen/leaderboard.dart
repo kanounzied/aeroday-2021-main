@@ -49,6 +49,9 @@ class _LeaderBoardState extends State<LeaderBoard> {
       });
     });
     //setState(() {});
+    _contestantsList.forEach((e) {
+      e.votes = (e.votes * 100) ~/ totalVotes;
+    });
     disableEventNav = false;
   }
 
@@ -71,6 +74,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
               AppBarCustom(
                 title: 'LEADERBOARD',
                 c: c,
+                noRedirect: true,
               ),
               SizedBox(height: 1 * SizeConfig.defaultSize),
               _contestantsList.isEmpty ? buildTopThreeGray() : buildTopThree(),
@@ -284,7 +288,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
                 ),
                 SizedBox(height: 0.4 * SizeConfig.defaultSize),
                 Text(
-                  'voted by %${(_contestantsList[1].votes * 100 / totalVotes).floor()}',
+                  'voted by %${_contestantsList[1].votes}',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
@@ -359,7 +363,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
                   ),
                   SizedBox(height: 0.4 * SizeConfig.defaultSize),
                   Text(
-                    'voted by %${(_contestantsList[0].votes * 100 / totalVotes).floor()}',
+                    'voted by %${_contestantsList[0].votes}',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 1.2 * SizeConfig.defaultSize,
@@ -432,7 +436,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
                   ),
                   SizedBox(height: 4),
                   Text(
-                    'voted by %${(_contestantsList[2].votes * 100 / totalVotes).floor()}',
+                    'voted by %${_contestantsList[2].votes}',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 1.2 * SizeConfig.defaultSize,

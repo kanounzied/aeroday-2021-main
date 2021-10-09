@@ -102,26 +102,25 @@ class _ContestantCardState extends State<ContestantCard> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Row(
-                        children: [
-                          Container(
-                            child: Text(
-                              widget.contestantInfo.teamName,
-                              style: TextStyle(
-                                color: dark,
-                                fontSize: 1.5 * SizeConfig.defaultSize,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          widget.contestantInfo.teamName,
+                          style: TextStyle(
+                            color: dark,
+                            fontSize: 1.5 * SizeConfig.defaultSize,
+                            fontWeight: FontWeight.w600,
                           ),
-                        ],
+                        ),
                       ),
                       Container(
                         margin: EdgeInsets.only(
                             top: .5 * SizeConfig.defaultSize,
                             left: .4 * SizeConfig.defaultSize),
                         child: Text(
-                          widget.contestantInfo.etab,
+                          widget.contestantInfo.etab == 'solo'
+                              ? 'Video numéro ' + widget.contestantInfo.vidNum
+                              : widget.contestantInfo.etab,
                           style: TextStyle(
                             color: light,
                             fontSize: 1.4 * SizeConfig.defaultSize,

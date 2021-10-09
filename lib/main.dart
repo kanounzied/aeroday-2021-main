@@ -79,9 +79,6 @@ class _AppState extends State<MyApp> {
 
             EventStats.currentEvent = ds.get(FieldPath(['currentEvent']));
 
-            EventStats.vpdStats = 'vote';
-
-            //print(EventStats.airshowStats);
             setState(() {});
           });
 
@@ -104,7 +101,6 @@ class _AppState extends State<MyApp> {
                             eventKey: EventStats.EventList[1],
                           )
                         : Home())),
-                // '/leaderboard': (context) => LeaderBoard(),
               });
         } else {
           // Otherwise, show something whilst waiting for initialization to complete

@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:aeroday_2021/config/responsive_size.dart';
+import 'package:aeroday_2021/constants/app_constants.dart';
 import 'package:aeroday_2021/constants/colors_hex.dart';
 import 'package:aeroday_2021/constants/functions.dart';
 import 'package:aeroday_2021/screens/login_screen/login_screen.dart';
@@ -210,34 +211,42 @@ class _VoteCardState extends State<VoteCard> {
                                 Container(
                                   width: 180 * 0.1 * SizeConfig.defaultSize,
                                   child: Text(
-                                    'Etab.: ${widget.contInfo.etab}',
+                                    widget.contInfo.etab == 'solo'
+                                        ? 'Video numéro ' +
+                                            widget.contInfo.vidNum
+                                        : 'Etab: ${widget.contInfo.etab}',
                                     style: TextStyle(
                                       fontSize:
                                           14 * 0.1 * SizeConfig.defaultSize,
-                                      color: Color(0xFF323A40),
+                                      color: light,
                                     ),
                                   ),
                                 ),
                               ],
                             ),
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width: 30 * 0.1 * SizeConfig.defaultSize,
-                                ),
-                                Container(
-                                  width: 180 * 0.1 * SizeConfig.defaultSize,
-                                  child: Text(
-                                    'Leader: ${widget.contInfo.chef}',
-                                    style: TextStyle(
-                                      fontSize:
-                                          14 * 0.1 * SizeConfig.defaultSize,
-                                      color: Color(0xFF323A40),
-                                    ),
+                            widget.contInfo.chef == 'solo'
+                                ? Container()
+                                : Row(
+                                    children: [
+                                      SizedBox(
+                                        width:
+                                            30 * 0.1 * SizeConfig.defaultSize,
+                                      ),
+                                      Container(
+                                        width:
+                                            180 * 0.1 * SizeConfig.defaultSize,
+                                        child: Text(
+                                          'Leader: ${widget.contInfo.chef}',
+                                          style: TextStyle(
+                                            fontSize: 14 *
+                                                0.1 *
+                                                SizeConfig.defaultSize,
+                                            color: Color(0xFF323A40),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ],
-                            ),
                           ],
                         ),
                       ), //infoText

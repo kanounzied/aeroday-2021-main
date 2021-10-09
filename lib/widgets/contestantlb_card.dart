@@ -133,7 +133,9 @@ class _ContestantLbCardState extends State<ContestantLbCard> {
                     Container(
                       margin: EdgeInsets.only(top: 5, left: 4),
                       child: Text(
-                        'Votes: ' + widget.contestantInfo.votes.toString(),
+                        'Votes: ' +
+                            widget.contestantInfo.votes.toString() +
+                            '%',
                         style: TextStyle(
                           color: light,
                           fontSize: 1.4 * SizeConfig.defaultSize,

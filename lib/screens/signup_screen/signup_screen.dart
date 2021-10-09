@@ -77,6 +77,7 @@ class _SignUpScreen extends State<SignUpScreen> {
   // Signup button event
   void signupButtonCalled() async {
     toggleSignupButton(false);
+    emailController.text = emailController.text.trim();
 
     bool check = await hasNetwork();
     if (!check) {

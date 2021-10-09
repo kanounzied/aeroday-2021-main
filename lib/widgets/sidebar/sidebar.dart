@@ -138,7 +138,7 @@ class _SideBarState extends State<SideBar> {
           showLockedMessage(
             context: context,
             title: "Airshow",
-            height: SizeConfig.screenHeight * .1,
+            height: SizeConfig.screenHeight * .12,
             content: "Voting is not available yet!",
           );
           return;
@@ -146,7 +146,7 @@ class _SideBarState extends State<SideBar> {
           showLockedMessage(
             context: context,
             title: "Airshow",
-            height: SizeConfig.screenHeight * .1,
+            height: SizeConfig.screenHeight * .12,
             content: "Leaderboard will be available on the 10th of October.",
           );
           return;
@@ -158,7 +158,7 @@ class _SideBarState extends State<SideBar> {
           showLockedMessage(
             context: context,
             title: "Videographie par drone",
-            height: SizeConfig.screenHeight * .1,
+            height: SizeConfig.screenHeight * .12,
             content: "Voting is not available yet!",
           );
           return;
@@ -166,7 +166,7 @@ class _SideBarState extends State<SideBar> {
           showLockedMessage(
             context: context,
             title: "Videographie par drone",
-            height: SizeConfig.screenHeight * .1,
+            height: SizeConfig.screenHeight * .12,
             content: "Leaderboard will be available on the 10th of October.",
           );
           return;
@@ -178,7 +178,8 @@ class _SideBarState extends State<SideBar> {
     }
 
     selectedIndex = index;
-    //Navigator.pop(context);
+    Navigator.pop(context);
     Navigator.pushReplacementNamed(context, route);
+    //Navigator.pushNamed(context, route);
   }
 }

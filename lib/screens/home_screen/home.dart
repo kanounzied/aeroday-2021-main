@@ -41,6 +41,7 @@ class _HomeState extends State<HomeScreen> {
               AppBarCustom(
                 title: 'TIMELINE',
                 c: c,
+                noRedirect: false,
               ),
               // White box for timeline
               Expanded(
